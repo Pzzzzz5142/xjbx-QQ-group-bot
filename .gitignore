@@ -3,3 +3,4 @@
 张贴gre.py
 /.vscode/*
 /__pycache__/*
+/log/mybot.log
