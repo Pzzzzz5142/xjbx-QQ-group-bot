@@ -1,0 +1,1691 @@
+2020-04-03 14:10:12,276 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:10:12,547 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:10:12,558 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:10:12,559 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:10:12,560 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:10:12,574 - nonebot - INFO - Scheduler started
+2020-04-03 14:24:45,136 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:24:45,137 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: invalid character in identifier (__init__.py, line 41)
+2020-04-03 14:24:45,138 - nonebot - ERROR - invalid character in identifier (__init__.py, line 41)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 41
+    parser.add_argument('-p', '--price'，type=int,help="大头菜的价格")
+                                           ^
+SyntaxError: invalid character in identifier
+2020-04-03 14:24:45,140 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:24:45,141 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:24:45,142 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:24:45,148 - nonebot - INFO - Scheduler started
+2020-04-03 14:25:06,425 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:25:06,538 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:25:06,539 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:25:06,541 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:25:06,542 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:25:06,562 - nonebot - INFO - Scheduler started
+2020-04-03 14:25:28,216 - nonebot - INFO - Self: 3418961367, Message 256 from 545870222: 'try'
+2020-04-03 14:25:28,809 - nonebot - INFO - Message 256 is handled as a command
+2020-04-03 14:25:42,043 - nonebot - INFO - Self: 3418961367, Message 263 from 545870222: '大头菜'
+2020-04-03 14:25:42,046 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 14:25:42,046 - nonebot - ERROR - name 'ArgumentParser' is not defined
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 40, in bighead
+    parser = ArgumentParser(session=session, usage=USAGE)
+NameError: name 'ArgumentParser' is not defined
+2020-04-03 14:25:42,047 - nonebot - INFO - Message 263 is handled as a command
+2020-04-03 14:26:37,797 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:26:37,936 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:26:37,938 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:26:37,939 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:26:37,940 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:26:37,948 - nonebot - INFO - Scheduler started
+2020-04-03 14:26:46,961 - nonebot - INFO - Self: 3418961367, Message 264 from 545870222: '大头菜'
+2020-04-03 14:26:46,971 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 14:26:46,971 - nonebot - ERROR - name 'USAGE' is not defined
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 41, in bighead
+    parser = ArgumentParser(session=session, usage=USAGE)
+NameError: name 'USAGE' is not defined
+2020-04-03 14:26:46,973 - nonebot - INFO - Message 264 is handled as a command
+2020-04-03 14:27:41,971 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:27:42,067 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:27:42,068 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:27:42,069 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:27:42,070 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:27:42,076 - nonebot - INFO - Scheduler started
+2020-04-03 14:27:48,890 - nonebot - INFO - Self: 3418961367, Message 265 from 545870222: '大头菜'
+2020-04-03 14:27:48,895 - nonebot - INFO - Message 265 is handled as a command
+2020-04-03 14:28:19,033 - nonebot - INFO - Self: 3418961367, Message 266 from 545870222: 'echo as'
+2020-04-03 14:28:19,139 - nonebot - INFO - Message 266 is handled as a command
+2020-04-03 14:29:45,491 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:29:45,577 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:29:45,579 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:29:45,580 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:29:45,580 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:29:45,586 - nonebot - INFO - Scheduler started
+2020-04-03 14:29:56,145 - nonebot - INFO - Self: 3418961367, Message 268 from 545870222: '大头菜'
+2020-04-03 14:29:56,150 - nonebot - INFO - Message 268 is handled as a command
+2020-04-03 14:30:00,490 - nonebot - INFO - Self: 3418961367, Message 269 from 545870222: 'echo asd'
+2020-04-03 14:30:00,629 - nonebot - INFO - Message 269 is handled as a command
+2020-04-03 14:30:44,179 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:30:44,341 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:30:44,342 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:30:44,344 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:30:44,344 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:30:44,357 - nonebot - INFO - Scheduler started
+2020-04-03 14:30:49,198 - nonebot - INFO - Self: 3418961367, Message 271 from 545870222: '大头菜'
+2020-04-03 14:30:49,208 - nonebot - INFO - Message 271 is handled as a command
+2020-04-03 14:31:53,510 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:31:53,670 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:31:53,672 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:31:53,673 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:31:53,674 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:31:53,685 - nonebot - INFO - Scheduler started
+2020-04-03 14:32:05,680 - nonebot - INFO - Self: 3418961367, Message 272 from 545870222: '大头菜'
+2020-04-03 14:32:12,533 - nonebot - INFO - Message 272 is handled as a command
+2020-04-03 14:32:26,744 - nonebot - INFO - Self: 3418961367, Message 273 from 545870222: '大头菜'
+2020-04-03 14:32:45,988 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:32:46,201 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:32:46,203 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:32:46,204 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:32:46,204 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:32:46,228 - nonebot - INFO - Scheduler started
+2020-04-03 14:32:52,205 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:32:52,364 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:32:52,365 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:32:52,367 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:32:52,368 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:32:52,379 - nonebot - INFO - Scheduler started
+2020-04-03 14:32:56,089 - nonebot - INFO - Self: 3418961367, Message 274 from 545870222: '大头菜'
+2020-04-03 14:33:43,573 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:33:43,756 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:33:43,757 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:33:43,760 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:33:43,760 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:33:43,781 - nonebot - INFO - Scheduler started
+2020-04-03 14:33:51,521 - nonebot - INFO - Self: 3418961367, Message 275 from 545870222: '大头菜'
+2020-04-03 14:34:34,025 - nonebot - INFO - Message 275 is handled as a command
+2020-04-03 14:34:56,731 - nonebot - INFO - Self: 3418961367, Message 277 from 545870222: '大头菜 —help'
+2020-04-03 14:35:02,264 - nonebot - INFO - Message 277 is handled as a command
+2020-04-03 14:37:57,880 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:37:58,043 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:37:58,045 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:37:58,046 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:37:58,047 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:37:58,059 - nonebot - INFO - Scheduler started
+2020-04-03 14:38:08,354 - nonebot - INFO - Self: 3418961367, Message 279 from 545870222: '大头菜 —help'
+2020-04-03 14:38:21,653 - nonebot - INFO - Message 279 is handled as a command
+2020-04-03 14:38:37,916 - nonebot - INFO - Self: 3418961367, Message 281 from 545870222: '大头菜 --help'
+2020-04-03 14:38:46,668 - nonebot - INFO - Message 281 is handled as a command
+2020-04-03 14:38:57,688 - nonebot - INFO - Self: 3418961367, Message 283 from 545870222: '大头菜 -h'
+2020-04-03 14:39:05,992 - nonebot - INFO - Message 283 is handled as a command
+2020-04-03 14:40:10,147 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:40:10,314 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:40:10,315 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:40:10,317 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:40:10,318 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:40:10,330 - nonebot - INFO - Scheduler started
+2020-04-03 14:40:14,699 - nonebot - INFO - Self: 3418961367, Message 285 from 545870222: '大头菜'
+2020-04-03 14:40:21,440 - nonebot - INFO - Message 285 is handled as a command
+2020-04-03 14:40:49,839 - nonebot - INFO - Self: 3418961367, Message 287 from 545870222: '大头菜 -h'
+2020-04-03 14:40:58,569 - nonebot - INFO - Message 287 is handled as a command
+2020-04-03 14:43:18,176 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:43:18,261 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:43:18,262 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:43:18,263 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:43:18,263 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:43:18,269 - nonebot - INFO - Scheduler started
+2020-04-03 14:43:26,990 - nonebot - INFO - Self: 3418961367, Message 289 from 545870222: '大头菜 -h'
+2020-04-03 14:43:26,996 - nonebot - INFO - Message 289 is handled as a command
+2020-04-03 14:50:32,470 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:50:32,471 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: positional argument follows keyword argument (__init__.py, line 59)
+2020-04-03 14:50:32,472 - nonebot - ERROR - positional argument follows keyword argument (__init__.py, line 59)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 59
+    parser = ArgumentParser(session=session,BIGUSAGE)
+                                           ^
+SyntaxError: positional argument follows keyword argument
+2020-04-03 14:50:32,474 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:50:32,475 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:50:32,476 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:50:32,481 - nonebot - INFO - Scheduler started
+2020-04-03 14:50:36,300 - nonebot - INFO - Self: 3418961367, Message 291 from 545870222: '大头菜'
+2020-04-03 14:51:02,424 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:51:02,511 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:51:02,515 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:51:02,517 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:51:02,518 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:51:02,523 - nonebot - INFO - Scheduler started
+2020-04-03 14:51:07,294 - nonebot - INFO - Self: 3418961367, Message 292 from 545870222: '大头菜'
+2020-04-03 14:51:07,300 - nonebot - INFO - Message 292 is handled as a command
+2020-04-03 14:51:16,212 - nonebot - INFO - Self: 3418961367, Message 294 from 545870222: '大头菜-h'
+2020-04-03 14:51:23,927 - nonebot - INFO - Self: 3418961367, Message 295 from 545870222: '大头菜 -h'
+2020-04-03 14:51:23,931 - nonebot - INFO - Message 295 is handled as a command
+2020-04-03 14:51:46,812 - nonebot - INFO - Self: 3418961367, Message 297 from 545870222: '大头菜 --help'
+2020-04-03 14:51:46,816 - nonebot - INFO - Message 297 is handled as a command
+2020-04-03 14:52:06,652 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:52:06,812 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:52:06,813 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:52:06,815 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:52:06,815 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:52:06,832 - nonebot - INFO - Scheduler started
+2020-04-03 14:52:13,948 - nonebot - INFO - Self: 3418961367, Message 299 from 545870222: '大头菜 -h'
+2020-04-03 14:52:44,883 - nonebot - INFO - Message 299 is handled as a command
+2020-04-03 14:52:52,188 - nonebot - INFO - Self: 3418961367, Message 301 from 545870222: 'echo 2'
+2020-04-03 14:52:52,328 - nonebot - INFO - Message 301 is handled as a command
+2020-04-03 14:54:16,942 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:54:17,161 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:54:17,173 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:54:17,175 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:54:17,175 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:54:17,198 - nonebot - INFO - Scheduler started
+2020-04-03 14:54:23,378 - nonebot - INFO - Self: 3418961367, Message 304 from 545870222: '大头菜'
+2020-04-03 14:54:23,579 - nonebot - INFO - Message 304 is handled as a command
+2020-04-03 14:54:55,046 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:54:55,253 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:54:55,259 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:54:55,261 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:54:55,261 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:54:55,284 - nonebot - INFO - Scheduler started
+2020-04-03 14:55:00,399 - nonebot - INFO - Self: 3418961367, Message 307 from 545870222: '大头菜'
+2020-04-03 14:55:00,547 - nonebot - INFO - Message 307 is handled as a command
+2020-04-03 14:55:40,125 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:55:40,304 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:55:40,309 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:55:40,311 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:55:40,311 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:55:40,322 - nonebot - INFO - Scheduler started
+2020-04-03 14:55:42,625 - nonebot - INFO - Self: 3418961367, Message 310 from 545870222: '大头菜'
+2020-04-03 14:55:42,767 - nonebot - INFO - Message 310 is handled as a command
+2020-04-03 14:56:10,257 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:56:10,374 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:56:10,375 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:56:10,377 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:56:10,377 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:56:10,387 - nonebot - INFO - Scheduler started
+2020-04-03 14:56:12,474 - nonebot - INFO - Self: 3418961367, Message 313 from 545870222: '大头菜'
+2020-04-03 14:56:12,672 - nonebot - INFO - Message 313 is handled as a command
+2020-04-03 14:56:26,179 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:56:26,392 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:56:26,398 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:56:26,400 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:56:26,401 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:56:26,416 - nonebot - INFO - Scheduler started
+2020-04-03 14:56:32,094 - nonebot - INFO - Self: 3418961367, Message 317 from 545870222: '大头菜'
+2020-04-03 14:56:32,315 - nonebot - INFO - Message 317 is handled as a command
+2020-04-03 14:56:45,184 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:56:45,369 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:56:45,370 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:56:45,374 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:56:45,375 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:56:45,386 - nonebot - INFO - Scheduler started
+2020-04-03 14:56:49,626 - nonebot - INFO - Self: 3418961367, Message 320 from 545870222: '大头菜'
+2020-04-03 14:56:49,722 - nonebot - INFO - Message 320 is handled as a command
+2020-04-03 14:59:51,982 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 14:59:52,067 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 14:59:52,068 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 14:59:52,069 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 14:59:52,070 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 14:59:52,075 - nonebot - INFO - Scheduler started
+2020-04-03 14:59:54,805 - nonebot - INFO - Self: 3418961367, Message 323 from 545870222: '大头菜'
+2020-04-03 14:59:54,975 - nonebot - INFO - Message 323 is handled as a command
+2020-04-03 15:00:30,047 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 15:00:30,133 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 15:00:30,142 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 15:00:30,143 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 15:00:30,143 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 15:00:30,152 - nonebot - INFO - Scheduler started
+2020-04-03 15:00:32,785 - nonebot - INFO - Self: 3418961367, Message 326 from 545870222: '大头菜'
+2020-04-03 15:00:32,927 - nonebot - INFO - Message 326 is handled as a command
+2020-04-03 15:03:34,604 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 15:03:34,688 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 15:03:34,690 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 15:03:34,691 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 15:03:34,691 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 15:03:34,697 - nonebot - INFO - Scheduler started
+2020-04-03 15:03:39,022 - nonebot - INFO - Self: 3418961367, Message 329 from 545870222: '大头菜'
+2020-04-03 15:03:39,131 - nonebot - INFO - Message 329 is handled as a command
+2020-04-03 15:03:48,444 - nonebot - INFO - Self: 3418961367, Message 332 from 545870222: '大头菜 -h'
+2020-04-03 15:03:48,555 - nonebot - INFO - Message 332 is handled as a command
+2020-04-03 15:06:16,188 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 15:06:16,285 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 15:06:16,286 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 15:06:16,287 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 15:06:16,287 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 15:06:16,294 - nonebot - INFO - Scheduler started
+2020-04-03 15:06:20,174 - nonebot - INFO - Self: 3418961367, Message 335 from 545870222: '大头菜'
+2020-04-03 15:06:20,318 - nonebot - INFO - Message 335 is handled as a command
+2020-04-03 15:06:30,222 - nonebot - INFO - Self: 3418961367, Message 338 from 545870222: '大头菜 -h'
+2020-04-03 15:06:30,375 - nonebot - INFO - Message 338 is handled as a command
+2020-04-03 15:23:46,804 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 15:23:46,805 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: invalid syntax (__init__.py, line 40)
+2020-04-03 15:23:46,806 - nonebot - ERROR - invalid syntax (__init__.py, line 40)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 40
+    global conn = await asyncpg.connect(user=config['user'], password=config['password'],
+                ^
+SyntaxError: invalid syntax
+2020-04-03 15:23:46,808 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 15:23:46,809 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 15:23:46,810 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 15:23:46,815 - nonebot - INFO - Scheduler started
+2020-04-03 16:14:37,876 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:14:38,014 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: name 'char' is not defined
+2020-04-03 16:14:38,015 - nonebot - ERROR - name 'char' is not defined
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 85, in <module>
+    def isdigit(c: char) -> bool:
+NameError: name 'char' is not defined
+2020-04-03 16:14:38,017 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:14:38,019 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:14:38,020 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:14:38,030 - nonebot - INFO - Scheduler started
+2020-04-03 16:14:53,877 - nonebot - INFO - Self: 3418961367, Message 341 from 545870222: '大头菜 -p 123'
+2020-04-03 16:14:53,886 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 16:14:53,887 - nonebot - ERROR - name 'swFormatter' is not defined
+Traceback (most recent call last):
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 74, in bighead
+    values = await conn.execute('''insert into datouroom (qid,price) values ('{0}',{1});'''.format(session.event.sender['user_id'], args.price))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.ForeignKeyViolationError: insert or update on table "datouroom" violates foreign key constraint "datouroom_qid_fkey"
+DETAIL:  Key (qid)=(545870222) is not present in table "quser".
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 76, in bighead
+    values = await conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.sender['user_id'], swFormatter(session.event.sender['card'])))
+NameError: name 'swFormatter' is not defined
+2020-04-03 16:14:53,888 - nonebot - INFO - Message 341 is handled as a command
+2020-04-03 16:15:31,561 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:15:31,607 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: name 'char' is not defined
+2020-04-03 16:15:31,608 - nonebot - ERROR - name 'char' is not defined
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 37, in <module>
+    def isdigit(c: char) -> bool:
+NameError: name 'char' is not defined
+2020-04-03 16:15:31,609 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:15:31,610 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:15:31,611 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:15:31,621 - nonebot - INFO - Scheduler started
+2020-04-03 16:15:39,036 - nonebot - INFO - Self: 3418961367, Message 342 from 545870222: '大头菜 -p 123'
+2020-04-03 16:16:26,460 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:16:26,551 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:16:26,553 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:16:26,554 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:16:26,554 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:16:26,560 - nonebot - INFO - Scheduler started
+2020-04-03 16:16:34,394 - nonebot - INFO - Self: 3418961367, Message 343 from 545870222: '大头菜 -p 123'
+2020-04-03 16:16:34,400 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 16:16:34,401 - nonebot - ERROR - 'card'
+Traceback (most recent call last):
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 98, in bighead
+    values = await conn.execute('''insert into datouroom (qid,price) values ('{0}',{1});'''.format(session.event.sender['user_id'], args.price))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.ForeignKeyViolationError: insert or update on table "datouroom" violates foreign key constraint "datouroom_qid_fkey"
+DETAIL:  Key (qid)=(545870222) is not present in table "quser".
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 100, in bighead
+    values = await conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.sender['user_id'], swFormatter(session.event.sender['card'])))
+KeyError: 'card'
+2020-04-03 16:16:34,404 - nonebot - INFO - Message 343 is handled as a command
+2020-04-03 16:20:32,178 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:20:32,265 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:20:32,266 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:20:32,267 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:20:32,268 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:20:32,274 - nonebot - INFO - Scheduler started
+2020-04-03 16:20:46,799 - nonebot - INFO - Self: 3418961367, Message 344 from 545870222: '大头菜 -p 123'
+2020-04-03 16:20:46,807 - nonebot - INFO - 操作完成
+2020-04-03 16:20:46,808 - nonebot - INFO - Message 344 is handled as a command
+2020-04-03 16:24:07,863 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:24:08,206 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:24:08,208 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:24:08,210 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:24:08,210 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:24:08,235 - nonebot - INFO - Scheduler started
+2020-04-03 16:24:17,586 - nonebot - INFO - Self: 3418961367, Message 345 from 545870222: '大头菜 -p 124'
+2020-04-03 16:26:54,166 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:26:54,251 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:26:54,252 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:26:54,253 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:26:54,253 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:26:54,261 - nonebot - INFO - Scheduler started
+2020-04-03 16:27:06,408 - nonebot - INFO - Self: 3418961367, Message 346 from 545870222: '大头菜 -p 125'
+2020-04-03 16:27:06,414 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 16:27:06,415 - nonebot - ERROR - 'Connection' object has no attribute 'excute'
+Traceback (most recent call last):
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 98, in bighead
+    await conn.execute('''insert into datouroom (qid,price) values ('{0}',{1});'''.format(session.event.sender['user_id'], args.price))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.UniqueViolationError: duplicate key value violates unique constraint "datouroom_pkey"
+DETAIL:  Key (qid)=(545870222) already exists.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 103, in bighead
+    await conn.excute('''update datouroom set price = {1} where qid='{0}';'''.format(session.event.sender['user_id'], args.price))
+AttributeError: 'Connection' object has no attribute 'excute'
+2020-04-03 16:27:06,417 - nonebot - INFO - Message 346 is handled as a command
+2020-04-03 16:27:41,131 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:27:41,218 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:27:41,220 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:27:41,221 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:27:41,221 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:27:41,227 - nonebot - INFO - Scheduler started
+2020-04-03 16:27:51,300 - nonebot - INFO - Self: 3418961367, Message 347 from 545870222: '大头菜 -p 1200'
+2020-04-03 16:27:51,314 - nonebot - INFO - Message 347 is handled as a command
+2020-04-03 16:28:12,034 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:28:12,197 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:28:12,199 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:28:12,200 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:28:12,201 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:28:12,212 - nonebot - INFO - Scheduler started
+2020-04-03 16:28:14,208 - nonebot - INFO - Self: 3418961367, Message 349 from 545870222: '大头菜 -p 123'
+2020-04-03 16:35:14,719 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:35:14,800 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:35:14,801 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:35:14,802 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:35:14,803 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:35:14,808 - nonebot - INFO - Scheduler started
+2020-04-03 16:35:27,141 - nonebot - INFO - Self: 3418961367, Message 350 from 545870222: '大头菜 -p 123'
+2020-04-03 16:35:27,150 - nonebot - INFO - Message 350 is handled as a command
+2020-04-03 16:36:07,186 - nonebot - INFO - Self: 3418961367, Message 352 from 545870222: '大头菜 -p 598'
+2020-04-03 16:36:07,192 - nonebot - INFO - Message 352 is handled as a command
+2020-04-03 16:42:15,110 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:42:15,221 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: __init__() got an unexpected keyword argument 'minutes'
+2020-04-03 16:42:15,222 - nonebot - ERROR - __init__() got an unexpected keyword argument 'minutes'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 75, in <module>
+    @nonebot.scheduler.scheduled_job('cron', hour='12/16', day_of_week='0-6', minutes='*')
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 467, in inner
+    max_instances, next_run_time, jobstore, executor, True, **trigger_args)
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 420, in add_job
+    'trigger': self._create_trigger(trigger, trigger_args),
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 921, in _create_trigger
+    return self._create_plugin_instance('trigger', trigger, trigger_args)
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 906, in _create_plugin_instance
+    return plugin_cls(**constructor_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'minutes'
+2020-04-03 16:42:15,226 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:42:15,228 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:42:15,228 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:42:15,242 - nonebot - INFO - Scheduler started
+2020-04-03 16:50:23,153 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:50:23,233 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: __init__() got an unexpected keyword argument 'minutes'
+2020-04-03 16:50:23,234 - nonebot - ERROR - __init__() got an unexpected keyword argument 'minutes'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 75, in <module>
+    @nonebot.scheduler.scheduled_job('cron', hour='12,16', day_of_week='0-6', minutes='*')
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 467, in inner
+    max_instances, next_run_time, jobstore, executor, True, **trigger_args)
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 420, in add_job
+    'trigger': self._create_trigger(trigger, trigger_args),
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 921, in _create_trigger
+    return self._create_plugin_instance('trigger', trigger, trigger_args)
+  File "/root/anaconda3/lib/python3.7/site-packages/apscheduler/schedulers/base.py", line 906, in _create_plugin_instance
+    return plugin_cls(**constructor_kwargs)
+TypeError: __init__() got an unexpected keyword argument 'minutes'
+2020-04-03 16:50:23,236 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:50:23,236 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:50:23,237 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:50:23,242 - nonebot - INFO - Scheduler started
+2020-04-03 16:51:02,204 - nonebot - INFO - Self: 3418961367, Message 354 from 545870222: '大头菜'
+2020-04-03 16:51:32,344 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 16:51:32,426 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 16:51:32,426 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 16:51:32,427 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 16:51:32,428 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 16:51:32,433 - nonebot - INFO - Scheduler started
+2020-04-03 16:51:41,878 - nonebot - INFO - Self: 3418961367, Message 355 from 545870222: '大头菜'
+2020-04-03 16:51:41,886 - nonebot - INFO - Message 355 is handled as a command
+2020-04-03 16:51:59,169 - nonebot - INFO - Self: 3418961367, Message 357 from 545870222: '大头菜'
+2020-04-03 16:51:59,173 - nonebot - INFO - Message 357 is handled as a command
+2020-04-03 17:15:38,490 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 17:15:38,670 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 17:15:38,674 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 17:15:38,678 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 17:15:38,678 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 17:15:38,698 - nonebot - INFO - Scheduler started
+2020-04-03 17:15:43,091 - nonebot - INFO - Self: 3418961367, Message 361 from 545870222: '天气'
+2020-04-03 17:15:43,101 - nonebot - INFO - Message 361 is handled as a command
+2020-04-03 17:15:47,420 - nonebot - INFO - Self: 3418961367, Message 363 from 545870222: ' '
+2020-04-03 17:15:47,423 - nonebot - INFO - Message 363 is handled as a command
+2020-04-03 17:15:51,577 - nonebot - INFO - Self: 3418961367, Message 365 from 545870222: ' '
+2020-04-03 17:15:51,579 - nonebot - INFO - Message 365 is handled as a command
+2020-04-03 17:15:56,041 - nonebot - INFO - Self: 3418961367, Message 367 from 545870222: '天'
+2020-04-03 17:15:56,147 - nonebot - INFO - Message 367 is handled as a command
+2020-04-03 18:35:27,032 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:35:27,033 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:35:27,038 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:35:27,114 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: 'await' outside function (db.py, line 6)
+2020-04-03 18:35:27,115 - nonebot - ERROR - 'await' outside function (db.py, line 6)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 14, in <module>
+    from db import conn
+  File "/root/VSCode/db.py", line 6
+    conn = await asyncpg.connect(user=config['user'], password=config['password'],
+          ^
+SyntaxError: 'await' outside function
+2020-04-03 18:35:27,117 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:35:27,118 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:35:27,119 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:35:27,129 - nonebot - INFO - Scheduler started
+2020-04-03 18:36:33,758 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:36:33,759 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:36:33,761 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:36:33,808 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:36:33,808 - nonebot - ERROR - cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 14, in <module>
+    from db import conn
+ImportError: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:36:33,810 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:36:33,810 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:36:33,811 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:36:33,817 - nonebot - INFO - Scheduler started
+2020-04-03 18:37:05,840 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:37:05,841 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:37:05,842 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:37:05,934 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 18:37:05,936 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:37:05,937 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:37:05,937 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:37:05,943 - nonebot - INFO - Scheduler started
+2020-04-03 18:38:16,602 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:38:16,603 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:38:16,604 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:38:16,783 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 18:38:16,790 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:38:16,793 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:38:16,793 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:38:16,806 - nonebot - INFO - Scheduler started
+2020-04-03 18:38:53,226 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:38:53,227 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:38:53,228 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:38:53,409 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 18:38:53,414 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:38:53,418 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:38:53,419 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:38:53,430 - nonebot - INFO - Scheduler started
+2020-04-03 18:39:09,232 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:39:09,238 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:39:09,239 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:39:09,414 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 18:39:09,418 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:39:09,419 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:39:09,419 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:39:09,430 - nonebot - INFO - Scheduler started
+2020-04-03 18:39:24,338 - nonebot - INFO - Self: 3418961367, Message 370 from 545870222@[群:1037557679]: 'echo asd'
+2020-04-03 18:39:32,000 - nonebot - INFO - Self: 3418961367, Message 371 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] echo asd'
+2020-04-03 18:39:32,005 - nonebot - INFO - Message 371 is handled as a command
+2020-04-03 18:39:36,511 - nonebot - INFO - Self: 3418961367, Message 372 from 545870222@[群:1037557679]: '淦'
+2020-04-03 18:39:41,264 - nonebot - INFO - Self: 3418961367, Message 373 from 545870222: 'echo asd'
+2020-04-03 18:39:41,267 - nonebot - INFO - Message 373 is handled as a command
+2020-04-03 18:39:54,763 - nonebot - INFO - Self: 3418961367, Message 374 from 750535232@[群:1037557679]: '[CQ:at,qq=3418961367] '
+2020-04-03 18:40:01,304 - nonebot - INFO - Self: 3418961367, Message 375 from 750535232@[群:1037557679]: '@。 echo asd'
+2020-04-03 18:40:14,552 - nonebot - INFO - Self: 3418961367, Message 376 from 750535232@[群:1037557679]: '他怎么了'
+2020-04-03 18:40:20,478 - nonebot - INFO - Self: 3418961367, Message 377 from 750535232@[群:1037557679]: '大头菜'
+2020-04-03 18:40:24,666 - nonebot - INFO - Self: 3418961367, Message 378 from 545870222@[群:1037557679]: 'echo asd'
+2020-04-03 18:40:56,622 - nonebot - INFO - Self: 3418961367, Message 379 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] echo asd'
+2020-04-03 18:40:56,759 - nonebot - INFO - Message 379 is handled as a command
+2020-04-03 18:40:59,358 - nonebot - INFO - Self: 3418961367, Message 381 from 545870222@[群:1037557679]: '好了'
+2020-04-03 18:41:00,098 - nonebot - INFO - Self: 3418961367, Message 382 from 545870222@[群:1037557679]: '淦'
+2020-04-03 18:41:05,397 - nonebot - INFO - Self: 3418961367, Message 383 from 545870222@[群:1037557679]: '大头菜'
+2020-04-03 18:41:17,986 - nonebot - INFO - Self: 3418961367, Message 384 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] 大头菜'
+2020-04-03 18:41:17,991 - nonebot - INFO - Message 384 is handled as a command
+2020-04-03 18:41:48,622 - nonebot - INFO - Self: 3418961367, Message 386 from 750535232@[群:1037557679]: '[CQ:at,qq=3418961367] 大头菜 -5'
+2020-04-03 18:41:48,720 - nonebot - INFO - Message 386 is handled as a command
+2020-04-03 18:41:57,844 - nonebot - INFO - Self: 3418961367, Message 388 from 750535232@[群:1037557679]: '这个参数是啥'
+2020-04-03 18:42:03,380 - nonebot - INFO - Self: 3418961367, Message 389 from 750535232@[群:1037557679]: '🐋'
+2020-04-03 18:42:06,668 - nonebot - INFO - Self: 3418961367, Message 390 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] 大头菜 -h'
+2020-04-03 18:42:06,769 - nonebot - INFO - Message 390 is handled as a command
+2020-04-03 18:42:13,587 - nonebot - INFO - Self: 3418961367, Message 392 from 545870222@[群:1037557679]: '要这样用'
+2020-04-03 18:42:14,588 - nonebot - INFO - Self: 3418961367, Message 393 from 545870222@[群:1037557679]: '弟弟'
+2020-04-03 18:42:18,401 - nonebot - INFO - Self: 3418961367, Message 394 from 750535232@[群:1037557679]: '！'
+2020-04-03 18:42:19,792 - nonebot - INFO - Self: 3418961367, Message 395 from 750535232@[群:1037557679]: '[CQ:image,file=A563A26557C6011762DC18C4960160C6.jpg,url=https://gchat.qpic.cn/gchatpic_new/750535232/1037557679-3039155288-A563A26557C6011762DC18C4960160C6/0?term=2]'
+2020-04-03 18:42:52,272 - nonebot - INFO - Self: 3418961367, Message 396 from 750535232@[群:1037557679]: '[CQ:at,qq=3418961367] 大头菜 -p 32768'
+2020-04-03 18:42:52,275 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 18:42:52,275 - nonebot - ERROR - 'NoneType' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 87, in bighead
+    await conn.execute('''insert into datouroom (qid,price) values ('{0}',{1});'''.format(session.event.sender['user_id'], args.price))
+AttributeError: 'NoneType' object has no attribute 'execute'
+2020-04-03 18:42:52,276 - nonebot - INFO - Message 396 is handled as a command
+2020-04-03 18:43:22,342 - nonebot - INFO - Self: 3418961367, Message 397 from 545870222@[群:1037557679]: '哦'
+2020-04-03 18:43:23,085 - nonebot - INFO - Self: 3418961367, Message 398 from 545870222@[群:1037557679]: '弟弟'
+2020-04-03 18:43:25,412 - nonebot - INFO - Self: 3418961367, Message 399 from 545870222@[群:1037557679]: '等等*'
+2020-04-03 18:43:31,728 - nonebot - INFO - Self: 3418961367, Message 400 from 545870222@[群:1037557679]: '我刚刚改了一下结构'
+2020-04-03 18:43:32,177 - nonebot - INFO - Self: 3418961367, Message 401 from 750535232@[群:1037557679]: '那我的天价大头菜上市了🐴'
+2020-04-03 18:43:37,238 - nonebot - INFO - Self: 3418961367, Message 402 from 545870222@[群:1037557679]: '貌似改炸了'
+2020-04-03 18:43:42,288 - nonebot - INFO - Self: 3418961367, Message 403 from 545870222@[群:1037557679]: '没有'
+2020-04-03 18:43:43,969 - nonebot - INFO - Self: 3418961367, Message 404 from 750535232@[群:1037557679]: '🐋'
+2020-04-03 18:44:17,274 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:44:17,275 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:44:17,276 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:44:17,322 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:44:17,323 - nonebot - ERROR - cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 14, in <module>
+    from db import conn
+ImportError: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:44:17,324 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:44:17,325 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:44:17,326 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:44:17,332 - nonebot - INFO - Scheduler started
+2020-04-03 18:46:30,061 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:46:30,063 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:46:30,064 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:46:30,148 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 18:46:30,149 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:46:30,150 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:46:30,151 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:46:30,156 - nonebot - INFO - Scheduler started
+2020-04-03 18:46:49,111 - nonebot - INFO - Self: 3418961367, Message 405 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] 大头菜 -p 23'
+2020-04-03 18:46:49,208 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 18:46:49,209 - nonebot - ERROR - 'NoneType' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 87, in bighead
+    await conn.execute('''insert into datouroom (qid,price) values ('{0}',{1});'''.format(session.event.sender['user_id'], args.price))
+AttributeError: 'NoneType' object has no attribute 'execute'
+2020-04-03 18:46:49,211 - nonebot - INFO - Message 405 is handled as a command
+2020-04-03 18:47:31,809 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:47:31,810 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:47:31,821 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:47:31,873 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:47:31,873 - nonebot - ERROR - cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 14, in <module>
+    from db import conn
+ImportError: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:47:31,875 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:47:31,876 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:47:31,876 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:47:31,888 - nonebot - INFO - Scheduler started
+2020-04-03 18:51:54,693 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.notebook", error: unexpected EOF while parsing (__init__.py, line 47)
+2020-04-03 18:51:54,694 - nonebot - ERROR - unexpected EOF while parsing (__init__.py, line 47)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 724, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 860, in get_code
+  File "<frozen importlib._bootstrap_external>", line 791, in source_to_code
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/notebook/__init__.py", line 47
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+2020-04-03 18:51:54,701 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 18:51:54,872 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:51:54,877 - nonebot - ERROR - cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 14, in <module>
+    from db import conn
+ImportError: cannot import name 'conn' from 'db' (/root/VSCode/db.py)
+2020-04-03 18:51:54,881 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 18:51:54,883 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 18:51:54,884 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 18:51:54,906 - nonebot - INFO - Scheduler started
+2020-04-03 18:53:02,543 - nonebot - INFO - Self: 3418961367, Message 407 from 545870222: '大头菜 '
+2020-04-03 19:36:20,226 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 19:36:20,269 - nonebot - ERROR - Failed to import "Pzzzzz.plugins.bighead", error: No module named 'db'
+2020-04-03 19:36:20,270 - nonebot - ERROR - No module named 'db'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/plugin.py", line 31, in load_plugin
+    module = importlib.import_module(module_name)
+  File "/root/anaconda3/lib/python3.7/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 14, in <module>
+    from db import conn
+ModuleNotFoundError: No module named 'db'
+2020-04-03 19:36:20,271 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 19:36:20,272 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 19:36:20,272 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 19:36:20,278 - nonebot - INFO - Scheduler started
+2020-04-03 19:36:51,371 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 19:36:51,554 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 19:36:51,558 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 19:36:51,559 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 19:36:51,560 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 19:36:51,576 - nonebot - INFO - Scheduler started
+2020-04-03 19:37:00,986 - nonebot - INFO - Self: 3418961367, Message 408 from 545870222: 'echo asd'
+2020-04-03 19:37:00,993 - nonebot - INFO - Message 408 is handled as a command
+2020-04-03 19:37:38,873 - nonebot - INFO - Self: 3418961367, Message 409 from 545870222: 'echo asd'
+2020-04-03 19:37:38,968 - nonebot - INFO - Message 409 is handled as a command
+2020-04-03 19:37:45,314 - nonebot - INFO - Self: 3418961367, Message 411 from 545870222: '大头菜 -p 123'
+2020-04-03 19:37:45,318 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 19:37:45,319 - nonebot - ERROR - null value in column "roomnum" violates not-null constraint
+DETAIL:  Failing row contains (545870222, 123, null).
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 112, in bighead
+    await conn.execute('''insert into datouroom (qid,price) values ('{0}',{1});'''.format(session.event.sender['user_id'], args.price))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.NotNullViolationError: null value in column "roomnum" violates not-null constraint
+DETAIL:  Failing row contains (545870222, 123, null).
+2020-04-03 19:37:45,320 - nonebot - INFO - Message 411 is handled as a command
+2020-04-03 19:48:18,974 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 19:48:19,098 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 19:48:19,099 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 19:48:19,102 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 19:48:19,103 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 19:48:19,114 - nonebot - INFO - Scheduler started
+2020-04-03 19:48:29,419 - nonebot - INFO - Self: 3418961367, Message 412 from 545870222: '大头菜 -p 123'
+2020-04-03 19:48:29,430 - nonebot - INFO - Message 412 is handled as a command
+2020-04-03 19:49:07,736 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 19:49:07,916 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 19:49:07,918 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 19:49:07,922 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 19:49:07,923 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 19:49:07,934 - nonebot - INFO - Scheduler started
+2020-04-03 19:49:22,839 - nonebot - INFO - Self: 3418961367, Message 414 from 545870222@[群:1037557679]: '大头菜 -p 1233'
+2020-04-03 19:49:22,938 - nonebot - INFO - Message 414 is handled as a command
+2020-04-03 19:49:29,019 - nonebot - INFO - Self: 3418961367, Message 416 from 545870222@[群:1037557679]: '成了'
+2020-04-03 19:49:45,348 - nonebot - INFO - Self: 3418961367, Message 417 from 545870222@[群:1037557679]: '大头菜 -p 123'
+2020-04-03 19:49:45,354 - nonebot - INFO - Message 417 is handled as a command
+2020-04-03 19:51:34,378 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 19:51:34,546 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 19:51:34,548 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 19:51:34,549 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 19:51:34,550 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 19:51:34,562 - nonebot - INFO - Scheduler started
+2020-04-03 19:51:40,345 - nonebot - INFO - Self: 3418961367, Message 419 from 545870222@[群:1037557679]: '大头菜 -'
+2020-04-03 19:51:53,912 - nonebot - INFO - Message 419 is handled as a command
+2020-04-03 19:51:53,923 - nonebot - INFO - Self: 3418961367, Message 420 from 545870222@[群:1037557679]: 'p'
+2020-04-03 19:52:21,808 - nonebot - INFO - Self: 3418961367, Message 422 from 545870222@[群:1037557679]: '大头菜 -p 123'
+2020-04-03 19:54:12,703 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 19:54:12,888 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 19:54:12,894 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 19:54:12,895 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 19:54:12,896 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 19:54:12,906 - nonebot - INFO - Scheduler started
+2020-04-03 19:54:22,810 - nonebot - INFO - Self: 3418961367, Message 428 from 545870222@[群:1037557679]: '大头菜 -p 432'
+2020-04-03 19:54:22,923 - nonebot - INFO - Message 428 is handled as a command
+2020-04-03 19:54:26,059 - nonebot - INFO - Self: 3418961367, Message 430 from 545870222@[群:1037557679]: '好了'
+2020-04-03 19:54:28,083 - nonebot - INFO - Self: 3418961367, Message 431 from 545870222@[群:1037557679]: '他有了'
+2020-04-03 19:54:31,458 - nonebot - INFO - Self: 3418961367, Message 432 from 545870222@[群:1037557679]: '您试试呢'
+2020-04-03 19:54:37,975 - nonebot - INFO - Self: 3418961367, Message 433 from 750535232@[群:1037557679]: '@。 大头菜 -p 32768 '
+2020-04-03 19:54:43,088 - nonebot - INFO - Self: 3418961367, Message 434 from 545870222@[群:1037557679]: '貌似'
+2020-04-03 19:54:45,915 - nonebot - INFO - Self: 3418961367, Message 435 from 545870222@[群:1037557679]: '不用[CQ:at,qq=all] '
+2020-04-03 19:54:59,482 - nonebot - INFO - Self: 3418961367, Message 436 from 750535232@[群:1037557679]: '大头菜 -p 32768 '
+2020-04-03 19:54:59,588 - nonebot - INFO - Message 436 is handled as a command
+2020-04-03 19:55:17,203 - nonebot - INFO - Self: 3418961367, Message 438 from 545870222@[群:1037557679]: '你再输一遍'
+2020-04-03 19:55:18,879 - nonebot - INFO - Self: 3418961367, Message 439 from 750535232@[群:1037557679]: '大头菜 -p -1'
+2020-04-03 19:55:18,889 - nonebot - INFO - Message 439 is handled as a command
+2020-04-03 19:55:23,820 - nonebot - INFO - Self: 3418961367, Message 441 from 545870222@[群:1037557679]: '他就显示的是更新了'
+2020-04-03 19:55:27,097 - nonebot - INFO - Self: 3418961367, Message 442 from 545870222@[群:1037557679]: '真棒'
+2020-04-03 19:55:27,149 - nonebot - INFO - Self: 3418961367, Message 443 from 750535232@[群:1037557679]: '大头菜 -p 1.3'
+2020-04-03 19:55:27,154 - nonebot - INFO - Message 443 is handled as a command
+2020-04-03 19:55:40,503 - nonebot - INFO - Self: 3418961367, Message 445 from 545870222@[群:1037557679]: '限制了int型'
+2020-04-03 19:55:44,103 - nonebot - INFO - Self: 3418961367, Message 446 from 545870222@[群:1037557679]: '没想到吧'
+2020-04-03 19:55:47,582 - nonebot - INFO - Self: 3418961367, Message 447 from 545870222@[群:1037557679]: '[CQ:image,file=681ADB6C48777E0EF7B36AC847BB9673.gif,url=https://gchat.qpic.cn/gchatpic_new/545870222/1037557679-2485383400-681ADB6C48777E0EF7B36AC847BB9673/0?term=2]'
+2020-04-03 19:56:28,326 - nonebot - INFO - Self: 3418961367, Message 448 from 545870222@[群:1037557679]: '该煎牛排了'
+2020-04-03 19:56:30,884 - nonebot - INFO - Self: 3418961367, Message 449 from 545870222@[群:1037557679]: '[CQ:image,file=681ADB6C48777E0EF7B36AC847BB9673.gif,url=https://gchat.qpic.cn/gchatpic_new/545870222/1037557679-2485383400-681ADB6C48777E0EF7B36AC847BB9673/0?term=2]'
+2020-04-03 19:56:32,529 - nonebot - INFO - Self: 3418961367, Message 450 from 750535232@[群:1037557679]: '大头菜 -p 65536'
+2020-04-03 19:56:32,535 - nonebot - INFO - Message 450 is handled as a command
+2020-04-03 19:56:59,128 - nonebot - INFO - Self: 3418961367, Message 452 from 750535232@[群:1037557679]: '大头菜 -p 4,294,967,296'
+2020-04-03 19:56:59,132 - nonebot - INFO - Message 452 is handled as a command
+2020-04-03 19:57:13,383 - nonebot - INFO - Self: 3418961367, Message 454 from 750535232@[群:1037557679]: '大头菜 -p 4294967296'
+2020-04-03 19:57:13,472 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 19:57:13,473 - nonebot - ERROR - integer out of range
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 125, in bighead
+    state = await conn.execute('''insert into datouroom (qid,price,roomnum) values ('{0}',{1},{2});'''.format(session.event.sender['user_id'], args.price, roomnum))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.NumericValueOutOfRangeError: integer out of range
+2020-04-03 19:57:13,474 - nonebot - INFO - Message 454 is handled as a command
+2020-04-03 19:58:02,355 - nonebot - INFO - Self: 3418961367, Message 455 from 750535232@[群:1037557679]: '大头菜 -p 131072'
+2020-04-03 19:58:02,361 - nonebot - INFO - Message 455 is handled as a command
+2020-04-03 19:58:12,480 - nonebot - INFO - Self: 3418961367, Message 457 from 750535232@[群:1037557679]: '大头菜 -p 4294967295'
+2020-04-03 19:58:12,484 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 19:58:12,484 - nonebot - ERROR - integer out of range
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 125, in bighead
+    state = await conn.execute('''insert into datouroom (qid,price,roomnum) values ('{0}',{1},{2});'''.format(session.event.sender['user_id'], args.price, roomnum))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.NumericValueOutOfRangeError: integer out of range
+2020-04-03 19:58:12,494 - nonebot - INFO - Message 457 is handled as a command
+2020-04-03 19:58:45,479 - nonebot - INFO - Self: 3418961367, Message 458 from 750535232@[群:1037557679]: '大头菜 -p 2147483647'
+2020-04-03 19:58:45,485 - nonebot - INFO - Message 458 is handled as a command
+2020-04-03 19:58:56,670 - nonebot - INFO - Self: 3418961367, Message 460 from 750535232@[群:1037557679]: '大头菜 -p 2147483648'
+2020-04-03 19:58:56,673 - nonebot - ERROR - An exception occurred while running command ('大头菜',):
+2020-04-03 19:58:56,674 - nonebot - ERROR - integer out of range
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 125, in bighead
+    state = await conn.execute('''insert into datouroom (qid,price,roomnum) values ('{0}',{1},{2});'''.format(session.event.sender['user_id'], args.price, roomnum))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.NumericValueOutOfRangeError: integer out of range
+2020-04-03 19:58:56,675 - nonebot - INFO - Message 460 is handled as a command
+2020-04-03 19:59:47,488 - nonebot - INFO - Self: 3418961367, Message 461 from 750535232@[群:1037557679]: '大头菜 -p 0x20'
+2020-04-03 19:59:47,587 - nonebot - INFO - Message 461 is handled as a command
+2020-04-03 20:00:45,088 - nonebot - INFO - Self: 3418961367, Message 463 from 750535232@[群:1037557679]: '大头菜 -p 5’d10'
+2020-04-03 20:00:45,101 - nonebot - INFO - Message 463 is handled as a command
+2020-04-03 20:05:57,013 - nonebot - INFO - Self: 3418961367, Message 465 from 750535232@[群:1037557679]: '大头菜 -p \\x4B'
+2020-04-03 20:05:57,235 - nonebot - INFO - Message 465 is handled as a command
+2020-04-03 20:06:23,885 - nonebot - INFO - Self: 3418961367, Message 467 from 750535232@[群:1037557679]: ' 大头菜 -p 3-1'
+2020-04-03 20:06:23,888 - nonebot - INFO - Message 467 is handled as a command
+2020-04-03 20:06:46,235 - nonebot - INFO - Self: 3418961367, Message 469 from 750535232@[群:1037557679]: '大头菜 -p 3&amp;&amp;1'
+2020-04-03 20:06:46,239 - nonebot - INFO - Message 469 is handled as a command
+2020-04-03 20:33:13,248 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 20:33:13,335 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 20:33:13,338 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 20:33:13,339 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 20:33:13,340 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 20:33:13,346 - nonebot - INFO - Scheduler started
+2020-04-03 20:33:37,820 - nonebot - INFO - Self: 3418961367, Message 471 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] notebook -a 人人'
+2020-04-03 20:34:05,239 - nonebot - INFO - Self: 3418961367, Message 472 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] mknote -a 人惹'
+2020-04-03 20:34:05,243 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 20:34:05,244 - nonebot - ERROR - mutually exclusive arguments must be optional
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 148, in notebook
+    help="添加物品", required=True)
+  File "/root/anaconda3/lib/python3.7/argparse.py", line 1373, in add_argument
+    return self._add_action(action)
+  File "/root/anaconda3/lib/python3.7/argparse.py", line 1596, in _add_action
+    raise ValueError(msg)
+ValueError: mutually exclusive arguments must be optional
+2020-04-03 20:34:05,246 - nonebot - INFO - Message 472 is handled as a command
+2020-04-03 20:34:53,128 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 20:34:53,213 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 20:34:53,214 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 20:34:53,215 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 20:34:53,215 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 20:34:53,221 - nonebot - INFO - Scheduler started
+2020-04-03 20:35:04,230 - nonebot - INFO - Self: 3418961367, Message 473 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] mknote -a 人人'
+2020-04-03 20:35:04,235 - nonebot - INFO - Message 473 is handled as a command
+2020-04-03 20:37:46,113 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 20:37:46,285 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 20:37:46,287 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 20:37:46,289 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 20:37:46,290 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 20:37:46,301 - nonebot - INFO - Scheduler started
+2020-04-03 20:37:52,441 - nonebot - INFO - Self: 3418961367, Message 474 from 545870222@[群:1037557679]: '@。 mknote -a 人人'
+2020-04-03 20:38:07,952 - nonebot - INFO - Self: 3418961367, Message 475 from 545870222@[群:1037557679]: '[CQ:at,qq=3418961367] mknote -a 人惹'
+2020-04-03 20:41:27,022 - nonebot - INFO - Message 475 is handled as a command
+2020-04-03 20:41:43,425 - nonebot - INFO - Self: 3418961367, Message 476 from 545870222: "mknote -a 'asd'"
+2020-04-03 20:42:33,190 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 20:42:33,525 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 20:42:33,527 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 20:42:33,528 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 20:42:33,530 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 20:42:33,551 - nonebot - INFO - Scheduler started
+2020-04-03 20:42:40,340 - nonebot - INFO - Self: 3418961367, Message 477 from 545870222: 'mknote -a asd'
+2020-04-03 20:43:59,821 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 20:44:00,047 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 20:44:00,049 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 20:44:00,051 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 20:44:00,052 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 20:44:00,064 - nonebot - INFO - Scheduler started
+2020-04-03 20:44:08,132 - nonebot - INFO - Self: 3418961367, Message 478 from 545870222: 'mknote -a 123'
+2020-04-03 20:48:51,296 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 20:48:51,468 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 20:48:51,470 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 20:48:51,471 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 20:48:51,472 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 20:48:51,484 - nonebot - INFO - Scheduler started
+2020-04-03 20:48:59,836 - nonebot - INFO - Self: 3418961367, Message 479 from 545870222: 'mknote -a 123'
+2020-04-03 20:49:04,340 - nonebot - INFO - Message 479 is handled as a command
+2020-04-03 21:26:56,387 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:26:56,589 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:26:56,590 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:26:56,591 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:26:56,591 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:26:56,601 - nonebot - INFO - Scheduler started
+2020-04-03 21:27:11,189 - nonebot - INFO - Self: 3418961367, Message 480 from 545870222: 'mknote -a 123'
+2020-04-03 21:27:11,196 - nonebot - INFO - Message 480 is handled as a command
+2020-04-03 21:27:29,381 - nonebot - INFO - Self: 3418961367, Message 481 from 545870222: 'mknote -a 123'
+2020-04-03 21:27:29,385 - nonebot - INFO - Message 481 is handled as a command
+2020-04-03 21:27:40,035 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:27:40,191 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:27:40,193 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:27:40,194 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:27:40,195 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:27:40,208 - nonebot - INFO - Scheduler started
+2020-04-03 21:27:48,636 - nonebot - INFO - Self: 3418961367, Message 482 from 545870222: 'mknote -a 123'
+2020-04-03 21:28:07,669 - nonebot - INFO - Message 482 is handled as a command
+2020-04-03 21:29:16,913 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:29:16,994 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:29:16,995 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:29:16,997 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:29:16,997 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:29:17,003 - nonebot - INFO - Scheduler started
+2020-04-03 21:29:30,092 - nonebot - INFO - Self: 3418961367, Message 483 from 545870222: 'mknote -a 123'
+2020-04-03 21:29:30,099 - nonebot - INFO - Message 483 is handled as a command
+2020-04-03 21:30:06,616 - nonebot - INFO - Self: 3418961367, Message 485 from 545870222: 'mknote -l'
+2020-04-03 21:30:06,623 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:30:06,624 - nonebot - ERROR - list indices must be integers or slices, not str
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 179, in notebook
+    log += "{0}. {1}\n".format(index, values['item'])
+TypeError: list indices must be integers or slices, not str
+2020-04-03 21:30:06,625 - nonebot - INFO - Message 485 is handled as a command
+2020-04-03 21:31:02,131 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:31:02,216 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:31:02,217 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:31:02,218 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:31:02,219 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:31:02,224 - nonebot - INFO - Scheduler started
+2020-04-03 21:31:14,951 - nonebot - INFO - Self: 3418961367, Message 486 from 545870222: 'mknote -l'
+2020-04-03 21:31:14,959 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:31:14,960 - nonebot - ERROR - string indices must be integers
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 179, in notebook
+    log += "{0}. {1}\n".format(index, item['item'])
+TypeError: string indices must be integers
+2020-04-03 21:31:14,961 - nonebot - INFO - Message 486 is handled as a command
+2020-04-03 21:31:34,458 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:31:34,613 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:31:34,614 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:31:34,615 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:31:34,616 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:31:34,627 - nonebot - INFO - Scheduler started
+2020-04-03 21:31:40,528 - nonebot - INFO - Self: 3418961367, Message 487 from 545870222: 'mknote -l '
+2020-04-03 21:31:49,053 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:31:49,056 - nonebot - ERROR - 'coroutine' object is not callable
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 171, in notebook
+    values = await conn.fetch('''select * from notebook where qid={0};'''.format(session.event.sender['user_id']))
+TypeError: 'coroutine' object is not callable
+2020-04-03 21:31:49,057 - nonebot - INFO - Message 487 is handled as a command
+2020-04-03 21:32:07,680 - nonebot - INFO - Self: 3418961367, Message 488 from 545870222: 'mknote -l'
+2020-04-03 21:32:23,437 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:32:23,438 - nonebot - ERROR - 'coroutine' object is not callable
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 171, in notebook
+    values = await conn.fetch('''select * from notebook where qid={0};'''.format(session.event.sender['user_id']))
+TypeError: 'coroutine' object is not callable
+2020-04-03 21:32:23,439 - nonebot - INFO - Message 488 is handled as a command
+2020-04-03 21:32:47,609 - nonebot - INFO - Self: 3418961367, Message 489 from 545870222: 'mknote -l'
+2020-04-03 21:33:26,792 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:33:26,793 - nonebot - ERROR - cannot perform operation: another operation is in progress
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 171, in notebook
+    values = await conn.fetch('''select * from notebook where qid={0};'''.format(session.event.sender['user_id']))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 420, in fetch
+    return await self._execute(query, args, 0, timeout)
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 1401, in _execute
+    with self._stmt_exclusive_section:
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 1841, in __enter__
+    'cannot perform operation: another operation is in progress')
+asyncpg.exceptions._base.InterfaceError: cannot perform operation: another operation is in progress
+2020-04-03 21:33:26,796 - nonebot - INFO - Message 489 is handled as a command
+2020-04-03 21:33:41,973 - nonebot - INFO - Self: 3418961367, Message 490 from 545870222: 'mknote -l'
+2020-04-03 21:33:48,082 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:33:48,084 - nonebot - ERROR - cannot perform operation: another operation is in progress
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 171, in notebook
+    values = await conn.fetch('''select * from notebook where qid={0};'''.format(session.event.sender['user_id']))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 420, in fetch
+    return await self._execute(query, args, 0, timeout)
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 1401, in _execute
+    with self._stmt_exclusive_section:
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 1841, in __enter__
+    'cannot perform operation: another operation is in progress')
+asyncpg.exceptions._base.InterfaceError: cannot perform operation: another operation is in progress
+2020-04-03 21:33:48,085 - nonebot - INFO - Message 490 is handled as a command
+2020-04-03 21:34:18,798 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:34:18,877 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:34:18,878 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:34:18,879 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:34:18,879 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:34:18,885 - nonebot - INFO - Scheduler started
+2020-04-03 21:34:26,590 - nonebot - INFO - Self: 3418961367, Message 491 from 545870222: 'mknote -l'
+2020-04-03 21:34:26,599 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:34:26,599 - nonebot - ERROR - string indices must be integers
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 179, in notebook
+    log += "{0}. {1}\n".format(index, item['item'])
+TypeError: string indices must be integers
+2020-04-03 21:34:26,600 - nonebot - INFO - Message 491 is handled as a command
+2020-04-03 21:35:28,158 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:35:28,315 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:35:28,317 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:35:28,318 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:35:28,319 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:35:28,330 - nonebot - INFO - Scheduler started
+2020-04-03 21:35:34,195 - nonebot - INFO - Self: 3418961367, Message 492 from 545870222: 'mknote -l'
+2020-04-03 21:35:36,821 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:35:36,822 - nonebot - ERROR - 'coroutine' object is not callable
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 171, in notebook
+    values = await conn.fetch('''select * from notebook where qid={0};'''.format(session.event.sender['user_id']))
+TypeError: 'coroutine' object is not callable
+2020-04-03 21:35:36,823 - nonebot - INFO - Message 492 is handled as a command
+2020-04-03 21:36:18,780 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:36:18,948 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:36:18,954 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:36:18,955 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:36:18,955 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:36:18,965 - nonebot - INFO - Scheduler started
+2020-04-03 21:36:26,809 - nonebot - INFO - Self: 3418961367, Message 493 from 545870222: 'mknote -l'
+2020-04-03 21:36:26,817 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:36:26,818 - nonebot - ERROR - list index out of range
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 179, in notebook
+    log += "{0}. {1}\n".format(index, values[index]['item'])
+IndexError: list index out of range
+2020-04-03 21:36:26,819 - nonebot - INFO - Message 493 is handled as a command
+2020-04-03 21:37:54,737 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:37:54,823 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:37:54,824 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:37:54,825 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:37:54,825 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:37:54,831 - nonebot - INFO - Scheduler started
+2020-04-03 21:38:02,966 - nonebot - INFO - Self: 3418961367, Message 494 from 545870222: 'mknote -l'
+2020-04-03 21:38:02,977 - nonebot - INFO - Message 494 is handled as a command
+2020-04-03 21:38:13,256 - nonebot - INFO - Self: 3418961367, Message 496 from 545870222: 'mknote -a 123'
+2020-04-03 21:38:13,261 - nonebot - INFO - Message 496 is handled as a command
+2020-04-03 21:38:26,481 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:38:26,656 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:38:26,657 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:38:26,659 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:38:26,659 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:38:26,671 - nonebot - INFO - Scheduler started
+2020-04-03 21:38:31,228 - nonebot - INFO - Self: 3418961367, Message 498 from 545870222: 'mknote -l'
+2020-04-03 21:38:33,814 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:38:33,815 - nonebot - ERROR - 'coroutine' object is not callable
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 171, in notebook
+    values = await conn.fetch('''select * from notebook where qid={0};'''.format(session.event.sender['user_id']))
+TypeError: 'coroutine' object is not callable
+2020-04-03 21:38:33,816 - nonebot - INFO - Message 498 is handled as a command
+2020-04-03 21:43:06,525 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:43:06,693 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:43:06,698 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:43:06,699 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:43:06,699 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:43:06,709 - nonebot - INFO - Scheduler started
+2020-04-03 21:43:18,466 - nonebot - INFO - Self: 3418961367, Message 499 from 545870222: 'mknote -l'
+2020-04-03 21:43:18,475 - nonebot - INFO - Message 499 is handled as a command
+2020-04-03 21:44:07,775 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:44:07,857 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:44:07,858 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:44:07,859 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:44:07,859 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:44:07,864 - nonebot - INFO - Scheduler started
+2020-04-03 21:44:16,077 - nonebot - INFO - Self: 3418961367, Message 501 from 545870222: 'mknote -l'
+2020-04-03 21:44:16,194 - nonebot - INFO - Message 501 is handled as a command
+2020-04-03 21:45:16,156 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:45:16,250 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:45:16,251 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:45:16,251 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:45:16,252 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:45:16,258 - nonebot - INFO - Scheduler started
+2020-04-03 21:45:23,614 - nonebot - INFO - Self: 3418961367, Message 504 from 545870222: 'mknote -a asd'
+2020-04-03 21:45:23,619 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:45:23,620 - nonebot - ERROR - column "asd" does not exist
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 162, in notebook
+    state = await conn.execute('''insert into notebook (qid,item) values ({0},{1});'''.format(session.event.sender['user_id'], args.add))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.UndefinedColumnError: column "asd" does not exist
+2020-04-03 21:45:23,621 - nonebot - INFO - Message 504 is handled as a command
+2020-04-03 21:45:57,236 - nonebot - INFO - Self: 3418961367, Message 505 from 545870222: 'mknote -a 123123'
+2020-04-03 21:45:57,242 - nonebot - INFO - Message 505 is handled as a command
+2020-04-03 21:46:06,200 - nonebot - INFO - Self: 3418961367, Message 507 from 545870222: 'mknote -a asdasdasd'
+2020-04-03 21:46:06,204 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:46:06,204 - nonebot - ERROR - column "asdasdasd" does not exist
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 162, in notebook
+    state = await conn.execute('''insert into notebook (qid,item) values ({0},{1});'''.format(session.event.sender['user_id'], args.add))
+  File "/root/anaconda3/lib/python3.7/site-packages/asyncpg/connection.py", line 272, in execute
+    return await self._protocol.query(query, timeout)
+  File "asyncpg/protocol/protocol.pyx", line 316, in query
+asyncpg.exceptions.UndefinedColumnError: column "asdasdasd" does not exist
+2020-04-03 21:46:06,205 - nonebot - INFO - Message 507 is handled as a command
+2020-04-03 21:48:25,090 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:48:25,173 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:48:25,174 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:48:25,174 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:48:25,175 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:48:25,180 - nonebot - INFO - Scheduler started
+2020-04-03 21:48:30,906 - nonebot - INFO - Self: 3418961367, Message 508 from 545870222: 'mknote -a asdasda'
+2020-04-03 21:48:30,914 - nonebot - INFO - Message 508 is handled as a command
+2020-04-03 21:48:47,963 - nonebot - INFO - Self: 3418961367, Message 510 from 545870222: 'mknote -a 中华啊速度快上课了卢卡斯简单'
+2020-04-03 21:48:47,970 - nonebot - INFO - Message 510 is handled as a command
+2020-04-03 21:48:54,416 - nonebot - INFO - Self: 3418961367, Message 512 from 545870222: 'mknote -l'
+2020-04-03 21:48:54,842 - nonebot - INFO - Message 512 is handled as a command
+2020-04-03 21:49:47,186 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:49:47,267 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:49:47,268 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:49:47,269 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:49:47,270 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:49:47,275 - nonebot - INFO - Scheduler started
+2020-04-03 21:49:55,599 - nonebot - INFO - Self: 3418961367, Message 518 from 545870222: 'mknote -l'
+2020-04-03 21:49:55,711 - nonebot - INFO - Message 518 is handled as a command
+2020-04-03 21:50:26,421 - nonebot - INFO - Self: 3418961367, Message 521 from 545870222: 'mknote -c'
+2020-04-03 21:50:26,530 - nonebot - INFO - Message 521 is handled as a command
+2020-04-03 21:51:25,502 - nonebot - INFO - Self: 3418961367, Message 524 from 545870222: 'mknote -d 123'
+2020-04-03 21:51:25,610 - nonebot - INFO - Message 524 is handled as a command
+2020-04-03 21:51:37,438 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:51:37,521 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:51:37,523 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:51:37,523 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:51:37,524 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:51:37,529 - nonebot - INFO - Scheduler started
+2020-04-03 21:51:42,898 - nonebot - INFO - Self: 3418961367, Message 527 from 545870222: 'mknote -d 123'
+2020-04-03 21:51:42,905 - nonebot - INFO - Message 527 is handled as a command
+2020-04-03 21:51:45,961 - nonebot - INFO - Self: 3418961367, Message 529 from 545870222: '是'
+2020-04-03 21:51:45,963 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:51:45,963 - nonebot - ERROR - local variable 'args' referenced before assignment
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 160, in notebook
+    if args.add != None:
+UnboundLocalError: local variable 'args' referenced before assignment
+2020-04-03 21:51:45,964 - nonebot - INFO - Message 529 is handled as a command
+2020-04-03 21:55:03,254 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:55:03,335 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:55:03,336 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:55:03,337 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:55:03,337 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:55:03,343 - nonebot - INFO - Scheduler started
+2020-04-03 21:55:10,390 - nonebot - INFO - Self: 3418961367, Message 530 from 545870222: 'mknote -d 123'
+2020-04-03 21:55:10,398 - nonebot - INFO - Self: 3418961367, Message 531 from 545870222: 'mknote -d 123'
+2020-04-03 21:55:10,400 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:55:10,400 - nonebot - ERROR - 'del'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 185, in notebook
+    elif session.state['del'] == 1 or args.delt != None:
+KeyError: 'del'
+2020-04-03 21:55:10,401 - nonebot - INFO - Message 530 is handled as a command
+2020-04-03 21:55:10,707 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:55:10,708 - nonebot - ERROR - 'del'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 185, in notebook
+    elif session.state['del'] == 1 or args.delt != None:
+KeyError: 'del'
+2020-04-03 21:55:10,709 - nonebot - INFO - Message 531 is handled as a command
+2020-04-03 21:56:15,424 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:56:15,510 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:56:15,511 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:56:15,512 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:56:15,512 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:56:15,518 - nonebot - INFO - Scheduler started
+2020-04-03 21:56:20,697 - nonebot - INFO - Self: 3418961367, Message 532 from 545870222: 'mknote -d 123'
+2020-04-03 21:56:20,704 - nonebot - INFO - Message 532 is handled as a command
+2020-04-03 21:56:22,980 - nonebot - INFO - Self: 3418961367, Message 534 from 545870222: '是'
+2020-04-03 21:56:22,982 - nonebot - ERROR - An exception occurred while running command ('备忘',):
+2020-04-03 21:56:22,982 - nonebot - ERROR - local variable 'args' referenced before assignment
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 193, in notebook
+    state = await conn.execute('''delete from notebook where qid={0} and item = '{1}';'''.format(session.event.sender['user_id'], args.delt))
+UnboundLocalError: local variable 'args' referenced before assignment
+2020-04-03 21:56:22,984 - nonebot - INFO - Message 534 is handled as a command
+2020-04-03 21:57:47,294 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 21:57:47,381 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 21:57:47,382 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 21:57:47,383 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 21:57:47,384 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 21:57:47,390 - nonebot - INFO - Scheduler started
+2020-04-03 21:57:52,534 - nonebot - INFO - Self: 3418961367, Message 535 from 545870222: 'mknote -l '
+2020-04-03 21:57:52,662 - nonebot - INFO - Message 535 is handled as a command
+2020-04-03 21:58:10,116 - nonebot - INFO - Self: 3418961367, Message 538 from 545870222: 'mknote -a 123'
+2020-04-03 21:58:10,120 - nonebot - INFO - Message 538 is handled as a command
+2020-04-03 21:58:17,000 - nonebot - INFO - Self: 3418961367, Message 540 from 545870222: 'mknote -d 123'
+2020-04-03 21:58:17,005 - nonebot - INFO - Message 540 is handled as a command
+2020-04-03 21:58:19,581 - nonebot - INFO - Self: 3418961367, Message 542 from 545870222: '是'
+2020-04-03 21:58:19,585 - nonebot - INFO - Message 542 is handled as a command
+2020-04-03 21:58:26,763 - nonebot - INFO - Self: 3418961367, Message 544 from 545870222: 'mknote -l'
+2020-04-03 21:58:26,906 - nonebot - INFO - Message 544 is handled as a command
+2020-04-03 22:00:28,747 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 22:00:28,837 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 22:00:28,839 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 22:00:28,840 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 22:00:28,840 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 22:00:28,846 - nonebot - INFO - Scheduler started
+2020-04-03 22:00:40,392 - nonebot - INFO - Self: 3418961367, Message 547 from 545870222: 'mknote -h'
+2020-04-03 22:00:46,336 - nonebot - INFO - Self: 3418961367, Message 548 from 545870222: 'note -h'
+2020-04-03 22:00:46,342 - nonebot - INFO - Message 548 is handled as a command
+2020-04-03 22:01:05,264 - nonebot - INFO - Self: 3418961367, Message 550 from 545870222@[群:1037557679]: '新功能！'
+2020-04-03 22:01:09,033 - nonebot - INFO - Self: 3418961367, Message 551 from 545870222@[群:1037557679]: 'note -h'
+2020-04-03 22:01:09,126 - nonebot - INFO - Message 551 is handled as a command
+2020-04-03 22:08:25,660 - nonebot - INFO - Self: 3418961367, Message 553 from 545870222@[群:851733906]: 'note -h'
+2020-04-03 22:08:25,775 - nonebot - INFO - Message 553 is handled as a command
+2020-04-03 22:09:07,443 - nonebot - INFO - Self: 3418961367, Message 555 from 1143717266@[群:851733906]: '-l'
+2020-04-03 22:09:30,958 - nonebot - INFO - Self: 3418961367, Message 556 from 545870222@[群:851733906]: '你不太行啊'
+2020-04-03 22:09:36,698 - nonebot - INFO - Self: 3418961367, Message 557 from 545870222@[群:851733906]: 'note -l'
+2020-04-03 22:09:36,827 - nonebot - INFO - Message 557 is handled as a command
+2020-04-03 22:09:43,376 - nonebot - INFO - Self: 3418961367, Message 560 from 545870222@[群:851733906]: 'note -a hello'
+2020-04-03 22:09:43,382 - nonebot - INFO - Message 560 is handled as a command
+2020-04-03 22:09:44,143 - nonebot - INFO - Self: 3418961367, Message 562 from 1143717266@[群:851733906]: '…'
+2020-04-03 22:09:51,727 - nonebot - INFO - Self: 3418961367, Message 563 from 545870222@[群:851733906]: 'note -l'
+2020-04-03 22:09:51,888 - nonebot - INFO - Message 563 is handled as a command
+2020-04-03 22:09:57,254 - nonebot - INFO - Self: 3418961367, Message 566 from 1143717266@[群:851733906]: '[CQ:image,file=6C034595836BF2ED9514C355DBD68DC3.jpg,url=https://gchat.qpic.cn/gchatpic_new/1143717266/851733906-2825421232-6C034595836BF2ED9514C355DBD68DC3/0?term=2]'
+2020-04-03 22:09:58,822 - nonebot - INFO - Self: 3418961367, Message 567 from 545870222@[群:851733906]: 'note -d hellp'
+2020-04-03 22:09:58,826 - nonebot - INFO - Message 567 is handled as a command
+2020-04-03 22:10:02,628 - nonebot - INFO - Self: 3418961367, Message 569 from 545870222@[群:851733906]: '是'
+2020-04-03 22:10:02,631 - nonebot - INFO - Message 569 is handled as a command
+2020-04-03 22:10:21,357 - nonebot - INFO - Self: 3418961367, Message 571 from 545870222@[群:851733906]: 'note -d hello'
+2020-04-03 22:10:21,361 - nonebot - INFO - Message 571 is handled as a command
+2020-04-03 22:10:23,562 - nonebot - INFO - Self: 3418961367, Message 573 from 545870222@[群:851733906]: '是'
+2020-04-03 22:10:23,566 - nonebot - INFO - Message 573 is handled as a command
+2020-04-03 22:10:28,287 - nonebot - INFO - Self: 3418961367, Message 575 from 545870222@[群:851733906]: 'note -l'
+2020-04-03 22:10:28,529 - nonebot - INFO - Message 575 is handled as a command
+2020-04-03 22:10:36,176 - nonebot - INFO - Self: 3418961367, Message 578 from 545870222@[群:851733906]: '挺好玩的'
+2020-04-03 22:11:23,901 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 22:11:23,988 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 22:11:23,989 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 22:11:23,990 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 22:11:23,990 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 22:11:23,996 - nonebot - INFO - Scheduler started
+2020-04-03 22:11:31,623 - nonebot - INFO - Self: 3418961367, Message 579 from 545870222@[群:851733906]: 'note -d hel'
+2020-04-03 22:11:31,815 - nonebot - ERROR - An exception occurred while running command ('notebook',):
+2020-04-03 22:11:31,816 - nonebot - ERROR - invalid literal for int() with base 10: 'SELECT 0'
+Traceback (most recent call last):
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 643, in _real_run_command
+    await asyncio.wait_for(future, timeout)
+  File "/root/anaconda3/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
+    return await fut
+  File "/root/anaconda3/lib/python3.7/site-packages/nonebot-1.5.0-py3.7.egg/nonebot/command/__init__.py", line 121, in run
+    await self.func(session)
+  File "/root/VSCode/Pzzzzz/plugins/bighead/__init__.py", line 188, in notebook
+    if int(state)[6:] == 0:
+ValueError: invalid literal for int() with base 10: 'SELECT 0'
+2020-04-03 22:11:31,817 - nonebot - INFO - Message 579 is handled as a command
+2020-04-03 22:12:14,271 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 22:12:14,358 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 22:12:14,359 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 22:12:14,360 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 22:12:14,360 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 22:12:14,366 - nonebot - INFO - Scheduler started
+2020-04-03 22:12:19,026 - nonebot - INFO - Self: 3418961367, Message 580 from 545870222@[群:851733906]: 'note -d hel'
+2020-04-03 22:12:19,126 - nonebot - INFO - Message 580 is handled as a command
+2020-04-03 22:12:33,791 - nonebot - INFO - Self: 3418961367, Message 582 from 545870222@[群:851733906]: 'note —add 你好，大头菜'
+2020-04-03 22:12:33,801 - nonebot - INFO - Message 582 is handled as a command
+2020-04-03 22:12:50,294 - nonebot - INFO - Self: 3418961367, Message 584 from 545870222@[群:851733906]: 'note -a 你好 大头菜'
+2020-04-03 22:12:50,298 - nonebot - INFO - Message 584 is handled as a command
+2020-04-03 22:13:50,853 - nonebot - INFO - Self: 3418961367, Message 586 from 545870222@[群:851733906]: 'note -a sad'
+2020-04-03 22:13:50,859 - nonebot - INFO - Message 586 is handled as a command
+2020-04-03 22:14:00,024 - nonebot - INFO - Self: 3418961367, Message 588 from 545870222@[群:851733906]: 'note -a 你好，大头菜'
+2020-04-03 22:14:00,033 - nonebot - INFO - Message 588 is handled as a command
+2020-04-03 22:14:49,299 - nonebot - INFO - Self: 3418961367, Message 590 from 545870222@[群:851733906]: 'note -l'
+2020-04-03 22:14:49,528 - nonebot - INFO - Message 590 is handled as a command
+2020-04-03 22:15:00,312 - nonebot - INFO - Self: 3418961367, Message 593 from 545870222@[群:851733906]: 'note -a 1'
+2020-04-03 22:15:00,318 - nonebot - INFO - Message 593 is handled as a command
+2020-04-03 22:15:05,159 - nonebot - INFO - Self: 3418961367, Message 595 from 545870222@[群:851733906]: 'note -l'
+2020-04-03 22:15:05,427 - nonebot - INFO - Message 595 is handled as a command
+2020-04-03 22:21:02,849 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.weather"
+2020-04-03 22:21:02,935 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.bighead"
+2020-04-03 22:21:02,936 - nonebot - INFO - Succeeded to import "Pzzzzz.plugins.test"
+2020-04-03 22:21:02,937 - nonebot - INFO - Succeeded to import "nonebot.plugins.base"
+2020-04-03 22:21:02,938 - nonebot - INFO - Running on 0.0.0.0:6700
+2020-04-03 22:21:02,944 - nonebot - INFO - Scheduler started
+2020-04-03 22:21:28,798 - nonebot - INFO - Self: 3418961367, Message 599 from 545870222@[群:1037557679]: '备忘录 -l'
+2020-04-03 22:21:29,047 - nonebot - INFO - Message 599 is handled as a command
