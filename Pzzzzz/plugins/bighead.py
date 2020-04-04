@@ -15,7 +15,7 @@ from random import randint
 import random
 import bisect
 from db import db
-import CQ
+import cq
 
 random.seed(114514)
 
@@ -135,9 +135,16 @@ async def bighead(session: CommandSession):
     elif args.list == True:
         bot = nonebot.get_bot()
         values = await db.conn.fetch('''select * from datouroom''')
-        for value in values:
-            await session.send(roomPaser(value))
-        session.finish('以上')
+        if len(values) == 0:
+            session.finish('很遗憾，当前没有大头菜房间。')
+        try:
+            for value in values:
+                await bot.send_private_msg(message=roomPaser(value), user_id=session.event.user_id)
+            await bot.send_private_msg(message='以上', user_id=session.event.user_id)
+        except CQHttpError:
+            await session.send('大头菜信息发送失败，请尝试重新发送查询指令。')
+        if session.event['message_type'] == 'group':
+            await session.send(unescape(f'{cq.at(session.event.user_id)} 大头菜房间信息已私发，请查收。'))
 
     elif args.delt == True:
         value = await db.conn.execute(f'select roomnum from datouroom where qid={session.event.user_id}')
