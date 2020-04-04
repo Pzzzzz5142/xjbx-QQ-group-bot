@@ -15,17 +15,22 @@ from random import randint
 import random
 import bisect
 from db import db
+import CQ
 
 random.seed(114514)
 
 roomset = []
 
 BIGUSAGE = r"""
-大头菜挂牌上市命令！
+大头菜命令！
 
-使用方法：
+参数：
  -p, --price X
             以X的价格发布你岛上的大头菜
+ -l, --list
+            查看当前所有大头菜房间
+ -d, --delt
+            删除你自己的房间
 
 例如：
     使用 
@@ -67,6 +72,10 @@ def swFormatter(thing: str):
     return sw
 
 
+def roomPaser(value, lv: int = 0) -> str:
+    return '\t'*lv + f"QQ号：{value['qid']}\n"+'\t'*lv+f"大头菜价格：{value['price']}\n"+'\t'*lv+f"房间号：{value['roomnum']}"
+
+
 @on_startup
 async def init():
     values = await db.conn.fetch('''select roomnum from datouroom;''')
@@ -89,32 +98,50 @@ async def _():
 @on_command('大头菜', only_to_me=False, shell_like=True)
 async def bighead(session: CommandSession):
 
-    global roomset
-
     parser = ArgumentParser(session=session, usage=BIGUSAGE)
-    parser.add_argument('-p', '--price', type=int,
-                        help="大头菜的价格", required=True)
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-p', '--price', type=int, help="大头菜的价格")
+    group.add_argument('-l', '--list', action='store_true',
+                       help="列出当前有的房间", default=False)
+    group.add_argument('-d', '--delt', action='store_true',
+                       help='删除你自己的房间', default=False)
 
     args = parser.parse_args(session.argv)
-    roomnum = randint(0, 1000000)
-    while roomnum in roomset:
+    if args.price != None:
+        if args.price > 660 or args.price < 0:
+            session.finish('小老弟，你怎么回事？')
+
         roomnum = randint(0, 1000000)
-    bisect.insort(roomset, roomnum)
+        while roomnum in roomset:
+            roomnum = randint(0, 1000000)
 
-    try:
-        state = await db.conn.execute('''insert into datouroom (qid,price,roomnum) values ({0},{1},{2});'''.format(session.event.sender['user_id'], args.price, roomnum))
-    except asyncpg.exceptions.ForeignKeyViolationError as e:
-        await db.conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.sender['user_id'], swFormatter(session.event.sender['card'] if session.event['message_type'] != 'private' else '-1')))
-        state = await db.conn.execute('''insert into datouroom (qid,price,roomnum) values ({0},{1},{2});'''.format(session.event.sender['user_id'], args.price, roomnum))
-    except asyncpg.exceptions.UniqueViolationError as e:
-        state = await db.conn.execute('''update datouroom set price = {1} where qid='{0}';'''.format(session.event.sender['user_id'], args.price))
+        try:
+            state = await db.conn.execute('''insert into datouroom (qid,price,roomnum) values ({0},{1},{2});'''.format(session.event.user_id, args.price, roomnum))
+            bisect.insort(roomset, roomnum)
+        except asyncpg.exceptions.ForeignKeyViolationError as e:
+            await db.conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.user_id, swFormatter(session.event.sender['card'] if session.event['message_type'] != 'private' else '-1')))
+            bisect.insort(roomset, roomnum)
+            state = await db.conn.execute('''insert into datouroom (qid,price,roomnum) values ({0},{1},{2});'''.format(session.event.user_id, args.price, roomnum))
+        except asyncpg.exceptions.UniqueViolationError as e:
+            state = await db.conn.execute('''update datouroom set price = {1} where qid='{0}';'''.format(session.event.user_id, args.price))
 
-    values = await db.conn.fetch('''select * from datouroom where qid = {0}'''.format(session.event.sender['user_id']))
+        values = await db.conn.fetch('''select * from datouroom where qid = {0}'''.format(session.event.user_id))
 
-    logger.info('操作完成')
+        logger.info('房间创建完成')
 
-    session.finish(
-        '''已{2}如下记录：
-    QQ号：{0}
-    大头菜价格：{1}
-    房间号：{3}'''.format(values[0]['qid'], values[0]['price'], '添加' if 'UPDATE' not in state else '更新', values[0]['roomnum']))
+        session.finish(
+            '已{}如下记录：\n'.format('添加' if 'UPDATE' not in state else '更新') + roomPaser(values[0], 1))
+
+    elif args.list == True:
+        bot = nonebot.get_bot()
+        values = await db.conn.fetch('''select * from datouroom''')
+        for value in values:
+            await session.send(roomPaser(value))
+        session.finish('以上')
+
+    elif args.delt == True:
+        value = await db.conn.execute(f'select roomnum from datouroom where qid={session.event.user_id}')
+        if len(value) == 0:
+            session.finish('你貌似并没有上市的大头菜。')
+        await db.conn.execute(f'''delete from datouroom where qid={session.event.user_id};''')
+        session.finish('删除完成')

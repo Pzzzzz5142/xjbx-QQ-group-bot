@@ -57,16 +57,16 @@ async def notebook(session: CommandSession):
         if len(args.add) > 20:
             session.finish('呀，物品名称长度不能超过 20 哦～')
         try:
-            state = await db.conn.execute('''insert into notebook (qid,item) values ({0},'{1}');'''.format(session.event.sender['user_id'], args.add))
+            state = await db.conn.execute('''insert into notebook (qid,item) values ({0},'{1}');'''.format(session.event.user_id, args.add))
         except asyncpg.exceptions.ForeignKeyViolationError as e:
-            await db.conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.sender['user_id'], swFormatter(session.event.sender['card'] if session.event['message_type'] != 'private' else '-1')))
-            state = await db.conn.execute('''insert into notebook (qid,item) values ({0},'{1}');'''.format(session.event.sender['user_id'], args.add))
+            await db.conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.user_id, swFormatter(session.event.sender['card'] if session.event['message_type'] != 'private' else '-1')))
+            state = await db.conn.execute('''insert into notebook (qid,item) values ({0},'{1}');'''.format(session.event.user_id, args.add))
         except asyncpg.exceptions.UniqueViolationError as e:
             session.finish('你已经添加过该物品啦！')
         session.finish('物品：{0} 添加完毕！'.format(args.add))
 
     elif session.is_first_run and args.list == True:
-        values = await db.conn.fetch('''select * from notebook where qid={0} order by item;'''.format(session.event.sender['user_id']))
+        values = await db.conn.fetch('''select * from notebook where qid={0} order by item;'''.format(session.event.user_id))
         if len(values) == 0:
             session.finish('并没有找到任何记录，蛮遗憾的。')
         log = "\n"
@@ -80,13 +80,13 @@ async def notebook(session: CommandSession):
 
     elif 'del' in session.state or (session.is_first_run and args.delt != None):
         if session.is_first_run:
-            state = await db.conn.execute('''select * from notebook where qid={0} and item = '{1}';'''.format(session.event.sender['user_id'], args.delt))
+            state = await db.conn.execute('''select * from notebook where qid={0} and item = '{1}';'''.format(session.event.user_id, args.delt))
             if int(state[6:]) == 0:
                 session.finish('貌似，并没有找到该记录？你输入的记录为 {0}'.format(args.delt))
             session.state['del'] = args.delt
             session.pause('确定要删除吗？（请输入「是」或「否」）')
         if stripped_arg == '是':
-            state = await db.conn.execute('''delete from notebook where qid={0} and item = '{1}';'''.format(session.event.sender['user_id'], session.state['del']))
+            state = await db.conn.execute('''delete from notebook where qid={0} and item = '{1}';'''.format(session.event.user_id, session.state['del']))
             session.finish('确认删除惹！')
         else:
             session.finish('删除撤销！')
@@ -96,7 +96,7 @@ async def notebook(session: CommandSession):
             session.state['cls'] = 1
             session.pause('确定要清空所有记录吗？（请输入「是」或「否」）')
         if stripped_arg == '是':
-            state = await db.conn.execute('''delete from notebook where qid={0};'''.format(session.event.sender['user_id']))
+            state = await db.conn.execute('''delete from notebook where qid={0};'''.format(session.event.user_id))
             session.finish('完 全 清 空 ！')
         else:
             session.finish('删除撤销！')
