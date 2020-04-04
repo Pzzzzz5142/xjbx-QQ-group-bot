@@ -39,6 +39,9 @@ BIGUSAGE = r"""
     2）如果你输错了，直接重新输入命令来更新大头菜价格！
 """.strip()
 
+__plugin_name__ = '大头菜挂牌上市'
+__plugin_usage__ = BIGUSAGE
+
 
 def isdigit(c: str) -> bool:
     try:
@@ -64,7 +67,14 @@ def swFormatter(thing: str):
     return sw
 
 
-@nonebot.scheduler.scheduled_job('cron', hour='12,0', day_of_week='0-6', minute='*')
+@on_startup
+async def init():
+    values = await db.conn.fetch('''select roomnum from datouroom;''')
+    for item in values:
+        roomset.append(item['roomnum'])
+
+
+@nonebot.scheduler.scheduled_job('cron', hour='12,0', day_of_week='0-6', minute='0')
 async def _():
     bot = nonebot.get_bot()
     now = datetime.now(pytz.timezone('Asia/Shanghai'))

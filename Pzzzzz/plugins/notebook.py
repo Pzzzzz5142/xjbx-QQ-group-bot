@@ -12,7 +12,6 @@ import random
 import bisect
 from db import db
 
-
 NOTEUSAGE = r"""
 备忘录命令！
 
@@ -31,6 +30,9 @@ NOTEUSAGE = r"""
         note -a 茄子
     来记录物品 茄子 。
 """.strip()
+
+__plugin_name__ = '备忘录'
+__plugin_usage__ = NOTEUSAGE
 
 
 @on_command('notebook', aliases={'note', '备忘', '备忘录'}, only_to_me=False, shell_like=True)
