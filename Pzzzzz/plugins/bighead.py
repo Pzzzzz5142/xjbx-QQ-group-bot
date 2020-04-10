@@ -79,7 +79,7 @@ async def bighead(session: CommandSession):
 
     args = parser.parse_args(session.argv)
     if args.price != None:
-        if args.price > 660 or args.price < 0:
+        if args.price > 810 or args.price < 0:
             session.finish('小老弟，你怎么回事？')
 
         try:
