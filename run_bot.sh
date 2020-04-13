@@ -1,1 +1,0 @@
-/root/anaconda3/bin/python /root/VSCode/bot.py
