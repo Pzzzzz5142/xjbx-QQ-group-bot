@@ -3,6 +3,5 @@
 张贴gre.py
 config.yml
 /.vscode/*
-/__pycache__/*
 /log/*
 __pycache__/
