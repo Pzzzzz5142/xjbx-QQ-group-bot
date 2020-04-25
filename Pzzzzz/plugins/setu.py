@@ -14,3 +14,9 @@ import random
 import bisect
 from db import db
 from utils import * 
+
+url = r"https://saucenao.com/search.php"
+
+@on_command('setu', aliases={}, only_to_me=False, shell_like=True)
+async def setu(session: CommandSession):
+    pass
