@@ -19,22 +19,19 @@ headers = {"content-type": "application/json"}
 @on_command("hhsh", aliases={}, only_to_me=False, shell_like=True)
 async def setu(session: CommandSession):
     for i in session.argv:
-        res = query(i)
+        res = await query(i)
         for j in res:
             await session.send(j)
 
 
-def query(someShit):
+async def query(someShit):
     data = json.dumps({"text": someShit})
 
-    sessiom = requests.Session()
-    res = sessiom.post(url, headers=headers, data=str(data))
-    sessiom.close()
-
-    if res.status_code != 200:
-        return ["错误" + res.status_code]
-
-    ShitJson = res.json()
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers, data=str(data)) as resp:
+            if resp.status != 200:
+                return ["错误：" + str(resp.status)]
+            ShitJson = await resp.json()
 
     ans = []
     for RealShit in ShitJson:
@@ -46,11 +43,11 @@ def query(someShit):
             for i in RealShit["inputting"]:
                 re += i + "\n"
         re = re[:-1]
-        if re=="":
+        if re == "":
             ans.append(f"没有查到 {RealShit['name']} 的相关结果")
         else:
             ans.append(
-            f"""{RealShit['name']} 可能是：
+                f"""{RealShit['name']} 可能是：
 {re}"""
             )
 

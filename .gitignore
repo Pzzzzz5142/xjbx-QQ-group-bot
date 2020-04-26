@@ -5,3 +5,4 @@ config.yml
 /.vscode/*
 /log/*
 __pycache__/
+ce.py

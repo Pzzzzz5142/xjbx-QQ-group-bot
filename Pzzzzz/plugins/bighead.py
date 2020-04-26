@@ -54,18 +54,6 @@ def roomPaser(value, lv: int = 0) -> str:
     return '\t'*lv + f"QQ号：{value['qid']}\n"+'\t'*lv+f"大头菜价格：{value['price']}"
 
 
-@nonebot.scheduler.scheduled_job('cron', hour='12,22', day_of_week='0-6', minute='0')
-async def _():
-    bot = nonebot.get_bot()
-    now = datetime.now(pytz.timezone('Asia/Shanghai'))
-    try:
-        async with db.pool.acquire() as conn:
-            await conn.execute('''delete from datou''')
-            await bot.send_group_msg(group_id=1093759055,
-                                    message=f'现在{now.hour}点整啦！大头菜价格刷新了！')
-    except CQHttpError:
-        pass
-
 
 @on_command('大头菜', only_to_me=False, shell_like=True)
 async def bighead(session: CommandSession):
