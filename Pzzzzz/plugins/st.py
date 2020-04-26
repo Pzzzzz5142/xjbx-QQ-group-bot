@@ -61,10 +61,13 @@ async def sauce(purl: str) -> str:
     if len(ShitJson["results"]) == 0:
         return "啥也没搜到"
 
-    murl = list(ShitJson["results"][0]["data"]["ext_urls"][0])
-    for i in range(4):
-        murl.insert(randint(0, len(murl)), "🐎")
-    murl = "".join(murl)
+    try:
+        murl = list(ShitJson["results"][0]["data"]["ext_urls"][0])
+        for i in range(5):
+            murl.insert(randint(0, len(murl)), "🐎")
+        murl = "".join(murl)
+    except:
+        murl = ""
 
     return (
         cq.image(ShitJson["results"][0]["header"]["thumbnail"])
@@ -74,12 +77,21 @@ async def sauce(purl: str) -> str:
             else ""
         )
         + (
+            f"\nsource：{ShitJson['results'][0]['data']['source']}"
+            if "source" in ShitJson["results"][0]["data"]
+            else ""
+        )
+        + (
+            f"\n日文名：{ShitJson['results'][0]['data']['jp_name']}"
+            if "jp_name" in ShitJson["results"][0]["data"]
+            else ""
+        )
+        + (
             f"\npixiv id: {ShitJson['results'][0]['data']['pixiv_id']}\n画师: {ShitJson['results'][0]['data']['member_name']}\n画师id: {ShitJson['results'][0]['data']['member_id']}"
             if "pixiv_id" in ShitJson["results"][0]["data"]
             else ""
         )
-        + "\n来源（请复制到浏览器中打开，不要直接打开）：\n"
-        + murl
+        + (f"\n来源（请复制到浏览器中打开，不要直接打开）：\n{murl}" if murl != "" else "")
         + "\n相似度："
         + str(ShitJson["results"][0]["header"]["similarity"])
         + "%"
