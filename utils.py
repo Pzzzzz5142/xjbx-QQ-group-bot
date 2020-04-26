@@ -1,3 +1,7 @@
+from nonebot import on_command, CommandSession
+
+doc={'mrfz':'明日方舟','bcr':'公主链接 B服'}
+
 def isdigit(c: str) -> bool:
     try:
         c = int(c)
@@ -20,3 +24,4 @@ def swFormatter(thing: str):
         sw = '-1'
 
     return sw
+

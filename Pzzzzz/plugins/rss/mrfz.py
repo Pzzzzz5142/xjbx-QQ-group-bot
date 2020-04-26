@@ -26,20 +26,31 @@ from utils import *
 async def mrfz():
     bot = nonebot.get_bot()
 
-    thing = fp.parse(r"http://172.18.0.1:1200/arknights/news")
+    res, dt = await getmrfz()
 
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'mrfz';""")
         if len(values) == 0:
-            await conn.execute(
-                f"insert into rss values ('mrfz','{thing['entries'][0]['published']}')"
-            )
-        elif thing["entries"][0]["published"] != values[0]["dt"]:
-            await conn.execute(
-                f"update rss set dt = '{thing['entries'][0]['published']}' where id = 'mrfz'"
-            )
-        else:
-            return
+            await conn.execute(f"insert into rss values ('mrfz','{dt}')")
+        elif dt != values[0]["dt"]:
+            await conn.execute(f"update rss set dt = '{dt}' where id = 'mrfz'")
+            try:
+                await bot.send_group_msg(
+                    group_id=145029700,
+                    message="「明日方舟」有新公告啦！输入 rss mrfz 即可查看！已订阅用户请检查私信。",
+                )
+            except CQHttpError:
+                pass
+
+        values = await conn.fetch(f"""select qid, dt from subs where rss = 'mrfz'; """)
+        for item in values:
+            if item["dt"] != dt:
+                await sendmrfz(item["qid"], bot, res, dt)
+
+
+async def getmrfz():
+    thing = fp.parse(r"http://172.18.0.1:1200/arknights/news")
+
     sp = BeautifulSoup(thing["entries"][0].summary, "lxml")
 
     pp = sp.find_all("p")
@@ -55,9 +66,27 @@ async def mrfz():
             res += ch.string if ch.string != None else ""
             ch = ch.next_sibling
         res += "\n"
-    pass
 
-    try:
-        await bot.send_group_msg(group_id=145029700, message=res)
-    except CQHttpError:
-        pass
+    return res, thing["entries"][0]["published"]
+
+
+async def sendmrfz(qid, bot, res=None, dt=None):
+    if res == None or dt == None:
+        res, dt = await getmrfz()
+
+    flg = 1
+
+    async with db.pool.acquire() as conn:
+        try:
+            await bot.send_private_msg(user_id=qid, message=res)
+            await conn.execute(
+                f"""update subs set dt = '{dt}' where qid = {qid} and rss = 'mrfz';"""
+            )
+        except CQHttpError:
+            flg = 0
+            await bot.send_group_msg(
+                group_id=145029700,
+                message=unescape(cq.at(qid) + "貌似公告并没有发送成功，请尝试与我创建临时会话。"),
+            )
+
+    return flg

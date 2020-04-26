@@ -19,19 +19,8 @@ import cq
 from utils import *
 import feedparser as fp
 import re
-from .bcr import bcr
-from .mrfz import mrfz
-
-
-@nonebot.scheduler.scheduled_job("cron", hour="22", minute="0")
-async def _():
-    bot = nonebot.get_bot()
-    now = datetime.now(pytz.timezone("Asia/Shanghai"))
-    try:
-        async with db.pool.acquire() as conn:
-            await bot.send_group_msg(group_id=145029700, message=f"呐，今天手游玩了吗？")
-    except CQHttpError:
-        pass
+from .bcr import bcr, sendbcr
+from .mrfz import mrfz, sendmrfz
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -41,7 +30,7 @@ async def _():
     try:
         async with db.pool.acquire() as conn:
             await bot.send_group_msg(
-                group_id=145029700, message=f"Ciallo～(∠・ω< )⌒★，该起床肝手游了。"
+                group_id=145029700, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
             )
     except CQHttpError:
         pass
@@ -49,9 +38,61 @@ async def _():
 
 @nonebot.scheduler.scheduled_job("interval", minutes=20)
 # @on_command("ce", only_to_me=False, shell_like=True)
-async def rss():
+async def __():
     await bcr()
     await mrfz()
+
+
+@on_command("rss", only_to_me=False)
+async def rss(session: CommandSession):
+
+    if session.state["ls"] == []:
+        session.pause(
+            "请输入你想「{0}」的公告！\n输入 mrfz 代表 「明日方舟」\n输入 bcr 代表 「公主链接 B服」\n如果有多个想{0}的公告可以在一行中输入多个并以空格分开！".format(
+                "查看" if session.state["subs"] == 0 else "订阅"
+            )
+        )
+
+    if session.state["subs"] == 1:
+        async with db.pool.acquire() as conn:
+            for _, item in session.state["ls"]:
+                try:
+                    await conn.execute(
+                        """insert into subs values ({},'{}','{}')""".format(
+                            session.event.user_id, -1, item
+                        )
+                    )
+                    await session.send(f"「{item}」的公告已添加订阅了！有新公告发布时，会私信你哦！")
+                except:
+                    await session.send(f"你已经添加过「{doc[item]}」的公告订阅啦！")
+
+    else:
+        async with db.pool.acquire() as conn:
+            bot = nonebot.get_bot()
+            for item, nm in session.state["ls"]:
+                resp = await item(session.event.user_id, bot)
+                if resp:
+                    await session.send(
+                        unescape(
+                            cq.at(session.event.user_id) + f"「{doc[nm]}」的公告已私信，请查收。"
+                        )
+                    )
+
+
+@rss.args_parser
+async def ___(session: CommandSession):
+    arg = session.current_arg_text.strip()
+    args = arg.split(" ")
+
+    if session.is_first_run:
+        session.state["ls"] = []
+        session.state["subs"] = 1 if (len(args) > 0 and args[0] == "-d") else 0
+
+    if "mrfz" in args:
+        session.state["ls"].append((sendmrfz, "mrfz"))
+
+    if "bcr" in args:
+        session.state["ls"].append((sendbcr, "bcr"))
 
 
 @on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
