@@ -10,6 +10,7 @@ import cq
 import requests
 import os.path as path
 import json
+import aiohttp
 
 url = r"https://lab.magiconch.com/api/nbnhhsh/guess"
 
