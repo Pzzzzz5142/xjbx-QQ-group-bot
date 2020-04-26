@@ -40,7 +40,7 @@ async def mrfz():
             )
         else:
             return
-    sp = BeautifulSoup(thing["entries"][0].summary,"lxml")
+    sp = BeautifulSoup(thing["entries"][0].summary, "lxml")
 
     pp = sp.find_all("p")
 

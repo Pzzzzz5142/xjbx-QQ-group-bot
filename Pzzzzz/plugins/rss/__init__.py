@@ -1,4 +1,4 @@
-from nonebot import on_command, CommandSession, on_startup
+from nonebot import on_command, CommandSession, on_startup, permission as perm
 from nonebot.message import unescape
 import asyncio
 import asyncpg
@@ -40,17 +40,20 @@ async def _():
     now = datetime.now(pytz.timezone("Asia/Shanghai"))
     try:
         async with db.pool.acquire() as conn:
-            await bot.send_group_msg(group_id=145029700, message=f"Ciallo～(∠・ω< )⌒★，该起床肝手游了。")
+            await bot.send_group_msg(
+                group_id=145029700, message=f"Ciallo～(∠・ω< )⌒★，该起床肝手游了。"
+            )
     except CQHttpError:
         pass
 
 
-@nonebot.scheduler.scheduled_job('interval', minutes=20)
-#@on_command("ce", only_to_me=False, shell_like=True)
+@nonebot.scheduler.scheduled_job("interval", minutes=20)
+# @on_command("ce", only_to_me=False, shell_like=True)
 async def rss():
     await bcr()
     await mrfz()
 
-@on_command("ce", only_to_me=False, shell_like=True)
+
+@on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
 async def __(x):
     pass
