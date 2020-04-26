@@ -45,10 +45,10 @@ async def query(someShit):
                 re += i + "\n"
         re = re[:-1]
         if re == "":
-            ans.append(f"没有查到 {RealShit['name']} 的相关结果")
+            ans.append(f"呐呐呐，没有查到 {RealShit['name']} 的相关结果")
         else:
             ans.append(
-                f"""{RealShit['name']} 可能是：
+                f"""呐，{RealShit['name']} 可能是：
 {re}"""
             )
 

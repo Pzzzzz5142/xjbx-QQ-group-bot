@@ -20,6 +20,7 @@ from utils import *
 import feedparser as fp
 import re
 
+
 async def bcr():
     bot = nonebot.get_bot()
     now = datetime.now(pytz.timezone("Asia/Shanghai"))
@@ -29,23 +30,36 @@ async def bcr():
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'bcr';""")
         if len(values) == 0:
-            await conn.execute(f"insert into rss values (,{thing.updated})")
-        elif thing.updated != values[0]["dt"]:
-            await conn.execute(f"update rss set dt = '{thing.updated}' where id = 'bcr'")
+            await conn.execute(
+                f"insert into rss values ('bcr',{thing['entries'][0]['published']})"
+            )
+        elif thing["entries"][0]["published"] != values[0]["dt"]:
+            await conn.execute(
+                f"update rss set dt = '{thing['entries'][0]['published']}' where id = 'bcr'"
+            )
         else:
             return
 
-    if '封禁公告' in thing["entries"][0].summary:
+    if ("封禁公告" in thing["entries"][0].summary) or (
+        "小讲堂" in thing["entries"][0].summary
+    ):
         return
 
-    pics = re.findall(r"https:.*?\.png", thing["entries"][0].summary,)
+    pics = re.findall(
+        r"https://.*?\.(?:jpg|jpeg|png|gif|bmp|tiff|ai|cdr|eps)\"",
+        thing["entries"][0].summary,
+        re.S,
+    )
 
     fdres = re.match(r".*?<br>", thing["entries"][0].summary, re.S)
 
     text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
 
+    if text[-1] != "\n":
+        text += "\n"
+
     for i in pics:
-        text += cq.image(i)
+        text += cq.image(i[:-1])
 
     try:
         await bot.send_group_msg(group_id=145029700, message=unescape(text))
