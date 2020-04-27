@@ -85,22 +85,32 @@ async def rss(session: CommandSession):
 async def ___(session: CommandSession):
     arg = session.current_arg_text.strip()
     args = arg.split(" ")
+    args = [i for i in args if i != ""]
 
     if session.is_first_run:
         session.state["ls"] = []
-        session.state["subs"] = 1 if (len(args) > 0 and args[0] == "-d") else 0
+        session.state["subs"] = 1 if (len(args) > 0 and args[0] == "-s") else 0
 
     if "mrfz" in args:
         session.state["ls"].append((sendmrfz, "mrfz"))
+        args.remove("mrfz")
 
     if "bcr" in args:
         session.state["ls"].append((sendbcr, "bcr"))
+        args.remove("bcr")
 
     if "gcores" in args:
         session.state["ls"].append((sendgcores, "gcores"))
+        args.remove("gcores")
 
+    if len(args) > 0:
+        await session.send(
+            unescape(
+                "没有添加「{}」的订阅源！请联系".format(" ".join(args)) + cq.at(545870222) + "添加订阅！"
+            )
+        )
     if len(session.state["ls"]) == 0 and not session.is_first_run:
-        session.finish(unescape("没有添加「」的订阅源！请联系" + cq.at(545870222) + "添加订阅！"))
+        session.finish("本次资讯查看为空哦！")
 
 
 @on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
