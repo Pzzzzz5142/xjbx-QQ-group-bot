@@ -40,21 +40,22 @@ async def st(session: CommandSession):
             await session.send("拿到url了！正在发送图片！")
             await session.send(unescape(res))
             await session.send("图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★")
-        try:
-            bot = nonebot.get_bot()
-            await bot.send_private_msg(
-                user_id=session.event.user_id, message="拿到url了！正在发送图片！",
-            )
-            await bot.send_private_msg(
-                user_id=session.event.user_id, message=res,
-            )
-            await bot.send_private_msg(
-                user_id=session.event.user_id,
-                message="图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★",
-            )
-        except CQHttpError:
-            session.finish("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
-        session.finish("未找到消息中的图片，搜索结束！")
+        else:
+            try:
+                bot = nonebot.get_bot()
+                await bot.send_private_msg(
+                    user_id=session.event.user_id, message="拿到url了！正在发送图片！",
+                )
+                await bot.send_private_msg(
+                    user_id=session.event.user_id, message=res,
+                )
+                await bot.send_private_msg(
+                    user_id=session.event.user_id,
+                    message="图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★",
+                )
+            except CQHttpError:
+                session.finish("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
+            session.finish("未找到消息中的图片，搜索结束！")
 
 
 @st.args_parser
