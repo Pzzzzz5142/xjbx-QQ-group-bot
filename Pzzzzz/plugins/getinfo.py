@@ -19,13 +19,13 @@ from io import BytesIO
 async def generalhelp(session: CommandSession):
     # 获取设置了名称的插件列表
     plugins = list(filter(lambda p: p.name, nonebot.get_loaded_plugins()))
-    lk=requests.get(r"https://img1.saucenao.com/res/pixiv/2424/manga/24242321_p0.jpg?auth=IeSb5Vey0TOT6RZujHW1RQ&exp=1586768691")
+    lk=requests.get(r"https://i.pixiv.cat/img-original/img/2015/08/09/00/14/34/51860312_p0.jpg")
     ls=base64.b64encode(BytesIO(lk.content).read())
     lk.close()
     # print(ls)
 
     await session.send(unescape(cq.image("base64://"+str(ls,encoding='utf-8'))))
-    await session.send(unescape(cq.image(r"https://img1.saucenao.com/res/pixiv/2424/manga/24242321_p0.jpg?auth=IeSb5Vey0TOT6RZujHW1RQ&exp=1586768691")))
+    await session.send(unescape(cq.image(r"https://i.pixiv.cat/img-original/img/2015/08/09/00/14/34/51860312_p0.jpg")))
 
     arg = session.current_arg_text.strip().lower()
     if not arg:

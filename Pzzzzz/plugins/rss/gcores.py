@@ -34,15 +34,16 @@ async def gcores():
         values = await conn.fetch(f"""select dt from rss where id = 'gcores';""")
         if len(values) == 0:
             await conn.execute(f"insert into rss values ('gcores','{dt})'")
-        elif thing["entries"][0]["published"] != values[0]["dt"]:
+        elif dt != values[0]["dt"]:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'gcores'")
 
         values = await conn.fetch(
             f"""select qid, dt from subs where rss = 'gcores'; """
         )
+
         for item in values:
             if item["dt"] != dt:
-                await sendbcr(item["qid"], bot, res, dt)
+                await sendgcores(item["qid"], bot, res, dt)
 
 
 async def getgcores():

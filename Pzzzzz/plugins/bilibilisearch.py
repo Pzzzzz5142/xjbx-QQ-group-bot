@@ -13,6 +13,7 @@ import json
 import aiohttp
 from bs4 import BeautifulSoup
 import re
+from utils import headers
 
 url = r"https://search.bilibili.com/all?keyword="
 

@@ -31,7 +31,7 @@ async def bcr():
         values = await conn.fetch(f"""select dt from rss where id = 'bcr';""")
         if len(values) == 0:
             await conn.execute(f"insert into rss values ('bcr',{dt})")
-        elif thing["entries"][0]["published"] != values[0]["dt"]:
+        elif dt != values[0]["dt"]:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'bcr'")
             try:
                 await bot.send_group_msg(
