@@ -39,6 +39,7 @@ async def st(session: CommandSession):
     session.finish(unescape(res))
 
 
+
 @st.args_parser
 async def _(session: CommandSession):
     if session.is_first_run:
@@ -46,30 +47,30 @@ async def _(session: CommandSession):
 
     if session.current_arg_text == "r16":
         session.finish(unescape(cq.image("http://116.62.5.101, cache=0")))
-'''
-    if session.current_arg_text == "r18":
-        async with aiohttp.ClientSession() as sess:
-            async with sess.get(api, headers=headers, params=parm) as resp:
-                if resp.status != 200:
-                    session.finish("网络错误：" + str(resp.status))
-                ShitJson = await resp.json()
+    '''
+        if session.current_arg_text == "r18":
+            async with aiohttp.ClientSession() as sess:
+                async with sess.get(api, headers=headers, params=parm) as resp:
+                    if resp.status != 200:
+                        session.finish("网络错误：" + str(resp.status))
+                    ShitJson = await resp.json()
 
-        if ShitJson["quota"] == 0:
-            session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")
-        session.state["url"] = ShitJson["data"][0]["url"]
-        session.state["r18"] = 1
-        await session.send(ShitJson["data"][0]["url"])
-        return
-        try:
-            bot = nonebot.get_bot()
-            await bot.send_private_msg(
-                user_id=session.event.user_id,
-                message=cq.image(ShitJson["data"][0]["url"]),
-            )
-        except CQHttpError:
-            session.finish("很遗憾，由于网络错误，您享受不了这份setu，咕噜灵波～(∠・ω< )⌒★")
-        session.finish()
-'''
+            if ShitJson["quota"] == 0:
+                session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")
+            session.state["url"] = ShitJson["data"][0]["url"]
+            session.state["r18"] = 1
+            await session.send(ShitJson["data"][0]["url"])
+            return
+            try:
+                bot = nonebot.get_bot()
+                await bot.send_private_msg(
+                    user_id=session.event.user_id,
+                    message=cq.image(ShitJson["data"][0]["url"]),
+                )
+            except CQHttpError:
+                session.finish("很遗憾，由于网络错误，您享受不了这份setu，咕噜灵波～(∠・ω< )⌒★")
+            session.finish()
+    '''
 
     if len(session.current_arg_images) == 0:
         session.finish("未找到消息中的图片，搜索结束！")
