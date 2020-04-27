@@ -21,7 +21,7 @@ headers = {
 }
 
 
-@on_command("bilibili", aliases={"!b", "哔哩哔哩"}, only_to_me=False)
+@on_command("bilibili", aliases={"bili", "哔哩哔哩"}, only_to_me=False)
 async def bilibili(session: CommandSession):
 
     keyword = session.get("kw", prompt="请输入你想搜索的内容！")
@@ -53,12 +53,26 @@ async def bilibili(session: CommandSession):
 
     for i in range(lmt):
         res = ""
-        lk = "https:" + title[i].attrs["href"]
+        if "https" not in title[i].attrs["href"]:
+            lk = "https:" + title[i].attrs["href"]
+        else:
+            lk = title[i].attrs["href"]
+        if "?from=search" in lk:
+            lk = lk[: -len("?from=search")]
+
+        res = ""
         if "bangumi" in title[i].attrs["href"]:
             num = re.findall(r"media/md[0-9]*", lk)[0]
             num = num[len(r"media/md") :]
             res = "\n该番剧的编号为：" + num
-        await session.send("标题：{}\n链接：{}".format(title[i].attrs["title"], lk) + res)
+        if "space" in lk:
+            tp = "UP主"
+            res += "\n该up主的 uid 为：" + re.findall("[0-9]+", lk)[0]
+        elif "biligame" in lk:
+            tp = "游戏"
+        else:
+            tp = "视频标题"
+        await session.send("{}：{}\n链接：{}".format(tp, title[i].attrs["title"], lk) + res)
 
     if lmt > 2:
         session.finish("共返回 {} 条结果。".format(lmt))
