@@ -62,7 +62,7 @@ async def _(session: CommandSession):
     if session.current_arg_text == "r16":
         session.finish(unescape(cq.image("http://116.62.5.101, cache=0")))
 
-    if session.current_arg_text == "r18":
+    if session.current_arg_text == "i":
         #await session.send("正在搜索图片！")
         async with aiohttp.ClientSession() as sess:
             async with sess.get(api, headers=headers, params=parm) as resp:
