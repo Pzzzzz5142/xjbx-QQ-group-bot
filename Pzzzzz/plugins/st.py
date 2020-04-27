@@ -41,10 +41,16 @@ async def st(session: CommandSession):
         try:
             bot = nonebot.get_bot()
             await bot.send_private_msg(
-                user_id=session.event.user_id, message=cq.image(res),
+                user_id=session.event.user_id, message="拿到url了！正在发送图片！",
+            )
+            await bot.send_private_msg(
+                user_id=session.event.user_id, message=res,
+            )
+            await bot.send_private_msg(
+                user_id=session.event.user_id, message="图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★",
             )
         except CQHttpError:
-            session.finish("很遗憾，由于网络错误，您享受不了这份setu，咕噜灵波～(∠・ω< )⌒★")
+            session.finish("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
         session.finish('未找到消息中的图片，搜索结束！')
 
 
