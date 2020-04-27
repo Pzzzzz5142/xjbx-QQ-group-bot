@@ -37,7 +37,9 @@ async def st(session: CommandSession):
     else:
         res = cq.image(purl)
         if session.event.detail_type == "private":
+            await session.send("拿到url了！正在发送图片！")
             await session.send(unescape(res))
+            await session.send("图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★")
         try:
             bot = nonebot.get_bot()
             await bot.send_private_msg(
@@ -47,11 +49,12 @@ async def st(session: CommandSession):
                 user_id=session.event.user_id, message=res,
             )
             await bot.send_private_msg(
-                user_id=session.event.user_id, message="图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★",
+                user_id=session.event.user_id,
+                message="图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★",
             )
         except CQHttpError:
             session.finish("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
-        session.finish('未找到消息中的图片，搜索结束！')
+        session.finish("未找到消息中的图片，搜索结束！")
 
 
 @st.args_parser
@@ -63,7 +66,7 @@ async def _(session: CommandSession):
         session.finish(unescape(cq.image("http://116.62.5.101, cache=0")))
 
     if session.current_arg_text == "i":
-        #await session.send("正在搜索图片！")
+        # await session.send("正在搜索图片！")
         async with aiohttp.ClientSession() as sess:
             async with sess.get(api, headers=headers, params=parm) as resp:
                 if resp.status != 200:
@@ -74,7 +77,7 @@ async def _(session: CommandSession):
             session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")
         session.state["url"] = ShitJson["data"][0]["url"]
         session.state["r18"] = 1
-        #await session.send("届到了届到了！！！！")
+        # await session.send("届到了届到了！！！！")
         return
 
     if len(session.current_arg_images) == 0:
