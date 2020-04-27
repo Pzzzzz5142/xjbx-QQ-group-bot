@@ -21,6 +21,7 @@ import feedparser as fp
 import re
 from .bcr import bcr, sendbcr
 from .mrfz import mrfz, sendmrfz
+from .gcores import gcores, sendgcores
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -41,6 +42,7 @@ async def _():
 async def __():
     await bcr()
     await mrfz()
+    await gcores()
 
 
 @on_command("rss", only_to_me=False)
@@ -48,7 +50,7 @@ async def rss(session: CommandSession):
 
     if session.state["ls"] == []:
         session.pause(
-            "请输入你想「{0}」的公告！\n输入 mrfz 代表 「明日方舟」\n输入 bcr 代表 「公主链接 B服」\n如果有多个想{0}的公告可以在一行中输入多个并以空格分开！".format(
+            "请输入你想「{0}」的资讯！\n输入 mrfz 代表 「明日方舟」\n输入 bcr 代表 「公主链接 B服」\n输入 gcores 代表 「机核网」\n如果有多个想{0}的资讯源可以在一行中输入多个并以空格分开！".format(
                 "查看" if session.state["subs"] == 0 else "订阅"
             )
         )
@@ -62,19 +64,19 @@ async def rss(session: CommandSession):
                             session.event.user_id, -1, item
                         )
                     )
-                    await session.send(f"「{item}」的公告已添加订阅了！有新公告发布时，会私信你哦！")
+                    await session.send(f"「{item}」的资讯已添加订阅了！有新资讯发布时，会私信你哦！")
                 except:
-                    await session.send(f"你已经添加过「{doc[item]}」的公告订阅啦！")
+                    await session.send(f"你已经添加过「{doc[item]}」的资讯订阅啦！")
 
     else:
         async with db.pool.acquire() as conn:
             bot = nonebot.get_bot()
             for item, nm in session.state["ls"]:
                 resp = await item(session.event.user_id, bot)
-                if resp:
+                if resp and session.event.detail_type != "private":
                     await session.send(
                         unescape(
-                            cq.at(session.event.user_id) + f"「{doc[nm]}」的公告已私信，请查收。"
+                            cq.at(session.event.user_id) + f"「{doc[nm]}」的资讯已私信，请查收。"
                         )
                     )
 
@@ -93,6 +95,12 @@ async def ___(session: CommandSession):
 
     if "bcr" in args:
         session.state["ls"].append((sendbcr, "bcr"))
+
+    if "gcores" in args:
+        session.state["ls"].append((sendgcores, "gcores"))
+
+    if len(session.state["ls"]) == 0 and not session.is_first_run:
+        session.finish(unescape("没有添加「」的订阅源！请联系" + cq.at(545870222) + "添加订阅！"))
 
 
 @on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)

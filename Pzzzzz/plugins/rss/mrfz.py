@@ -48,6 +48,17 @@ async def mrfz():
                 await sendmrfz(item["qid"], bot, res, dt)
 
 
+def dfs(thing):
+    if isinstance(thing, str):
+        return thing
+    if thing.name == "br":
+        return "<br/>"
+    res = ""
+    for item in thing.contents:
+        res += dfs(item)
+    return res
+
+
 async def getmrfz():
     thing = fp.parse(r"http://172.18.0.1:1200/arknights/news")
 
@@ -55,17 +66,11 @@ async def getmrfz():
 
     pp = sp.find_all("p")
 
-    flg = 1
-    res = ""
+    res = "标题：" + thing["entries"][0]["title"] + "\n\n"
     for i in pp:
-        if flg:
-            flg = 0
-            continue
-        ch = i.next
-        while ch != None:
-            res += ch.string if ch.string != None else ""
-            ch = ch.next_sibling
-        res += "\n"
+        ans = dfs(i)
+        if ans != "":
+            res += (ans if ans != "<br/>" else "") + "\n"
 
     return res, thing["entries"][0]["published"]
 

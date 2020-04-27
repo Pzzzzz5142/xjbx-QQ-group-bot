@@ -21,3 +21,6 @@ import bisect
 from db import db
 import cq
 from utils import *
+
+async def getup():
+    pass

@@ -16,10 +16,6 @@ import re
 
 url = r"https://search.bilibili.com/all?keyword="
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
-}
-
 
 @on_command("bilibili", aliases={"bili", "哔哩哔哩"}, only_to_me=False)
 async def bilibili(session: CommandSession):
@@ -57,14 +53,14 @@ async def bilibili(session: CommandSession):
             lk = "https:" + title[i].attrs["href"]
         else:
             lk = title[i].attrs["href"]
-        if "?from=search" in lk:
-            lk = lk[: -len("?from=search")]
-
         res = ""
         if "bangumi" in title[i].attrs["href"]:
+            lk = re.findall(r"^https.*?md[0-9]*", lk)[0]
             num = re.findall(r"media/md[0-9]*", lk)[0]
             num = num[len(r"media/md") :]
             res = "\n该番剧的编号为：" + num
+        if "?from=search" in lk:
+            lk = lk[: -len("?from=search")]
         if "space" in lk:
             tp = "UP主"
             res += "\n该up主的 uid 为：" + re.findall("[0-9]+", lk)[0]
@@ -88,7 +84,7 @@ async def ___(session: CommandSession):
             session.state["lmt"] = int(args[1])
         except:
             session.finish("参数传递错误！")
-        arg = "".join(args[2:])
+        arg = " ".join(args[2:])
 
     if session.is_first_run and arg == "":
         session.pause("请输入你想搜索的内容")
