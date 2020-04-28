@@ -90,6 +90,8 @@ async def ___(session: CommandSession):
     if session.is_first_run:
         session.state["ls"] = []
         session.state["subs"] = 1 if (len(args) > 0 and args[0] == "-s") else 0
+        if "-s" in args:
+            args.remove("-s")
 
     if "mrfz" in args:
         session.state["ls"].append((sendmrfz, "mrfz"))
@@ -109,6 +111,7 @@ async def ___(session: CommandSession):
                 "没有添加「{}」的订阅源！请联系".format(" ".join(args)) + cq.at(545870222) + "添加订阅！"
             )
         )
+        session.is_first_run = False
     if len(session.state["ls"]) == 0 and not session.is_first_run:
         session.finish("本次资讯查看为空哦！")
 
