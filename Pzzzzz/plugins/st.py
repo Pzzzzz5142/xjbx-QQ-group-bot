@@ -54,7 +54,7 @@ async def st(session: CommandSession):
                     message="图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★",
                 )
             except CQHttpError:
-                session.finish("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
+                await session.send("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
             session.finish("未找到消息中的图片，搜索结束！")
 
 
