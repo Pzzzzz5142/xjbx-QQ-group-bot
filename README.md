@@ -1,4 +1,4 @@
-# xjbx-forest-QQ-group-bot
+# xjbx-QQ-group-bot
 一个基于NoneBot的xjbx的Q群机器人，完全属于xjb写的范畴。功能很杂乱，包括[nbnhhsh](https://github.com/itorr/nbnhhsh?files=1)、图片搜索、rss订阅等各种乱七八糟的功能。基本上就是我网上看到的和一拍脑袋想出来的功能大杂烩。
 
 # 安装
