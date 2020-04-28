@@ -54,17 +54,6 @@ def roomPaser(value, lv: int = 0) -> str:
     return '\t'*lv + f"QQ号：{value['qid']}\n"+'\t'*lv+f"大头菜价格：{value['price']}"
 
 
-@nonebot.scheduler.scheduled_job('cron', hour='12,22', day_of_week='0-6', minute='0')
-async def _():
-    bot = nonebot.get_bot()
-    now = datetime.now(pytz.timezone('Asia/Shanghai'))
-    try:
-        await db.conn.execute('''delete from datou''')
-        await bot.send_group_msg(group_id=1093759055,
-                                 message=f'现在{now.hour}点整啦！大头菜价格刷新了！')
-    except CQHttpError:
-        pass
-
 
 @on_command('大头菜', only_to_me=False, shell_like=True)
 async def bighead(session: CommandSession):
@@ -79,18 +68,18 @@ async def bighead(session: CommandSession):
 
     args = parser.parse_args(session.argv)
     if args.price != None:
-        if args.price > 660 or args.price < 0:
+        if args.price > 810 or args.price < 0:
             session.finish('小老弟，你怎么回事？')
+        async with db.pool.acquire() as conn:
+            try:
+                state = await conn.execute('''insert into datou (qid,price) values ({0},{1});'''.format(session.event.user_id, args.price))
+            except asyncpg.exceptions.ForeignKeyViolationError as e:
+                await conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.user_id, swFormatter(session.event.sender['card'] if session.event['message_type'] != 'private' else '-1')))
+                state = await conn.execute('''insert into datou (qid,price) values ({0},{1});'''.format(session.event.user_id, args.price))
+            except asyncpg.exceptions.UniqueViolationError as e:
+                state = await conn.execute('''update datou set price = {1} where qid='{0}';'''.format(session.event.user_id, args.price))
 
-        try:
-            state = await db.conn.execute('''insert into datou (qid,price) values ({0},{1});'''.format(session.event.user_id, args.price))
-        except asyncpg.exceptions.ForeignKeyViolationError as e:
-            await db.conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.user_id, swFormatter(session.event.sender['card'] if session.event['message_type'] != 'private' else '-1')))
-            state = await db.conn.execute('''insert into datou (qid,price) values ({0},{1});'''.format(session.event.user_id, args.price))
-        except asyncpg.exceptions.UniqueViolationError as e:
-            state = await db.conn.execute('''update datou set price = {1} where qid='{0}';'''.format(session.event.user_id, args.price))
-
-        values = await db.conn.fetch('''select * from datou where qid = {0}'''.format(session.event.user_id))
+            values = await conn.fetch('''select * from datou where qid = {0}'''.format(session.event.user_id))
 
         logger.info('大头菜上市完成')
 
@@ -99,7 +88,8 @@ async def bighead(session: CommandSession):
 
     elif args.list == True:
         bot = nonebot.get_bot()
-        values = await db.conn.fetch('''select * from datou order by price DESC''')
+        async with db.pool.acquire() as conn:
+            values = await conn.fetch('''select * from datou order by price DESC''')
         if len(values) == 0:
             session.finish('很遗憾，当前没有大头菜报价。')
         for i in range(min(maxbig_head, len(values))):
@@ -118,8 +108,9 @@ async def bighead(session: CommandSession):
             # await session.send(unescape(f'{cq.at(session.event.user_id)} 剩余大头菜报价已私发，请查收。'))
 
     elif args.delt == True:
-        value = await db.conn.execute(f'select * from datou where qid={session.event.user_id}')
-        if len(value) == 0:
-            session.finish('你貌似并没有上市的大头菜。')
-        await db.conn.execute(f'''delete from datou where qid={session.event.user_id};''')
+        async with db.pool.acquire() as conn:
+            value = await conn.execute(f'select * from datou where qid={session.event.user_id}')
+            if len(value) == 0:
+                session.finish('你貌似并没有上市的大头菜。')
+            await conn.execute(f'''delete from datou where qid={session.event.user_id};''')
         session.finish('删除完成')
