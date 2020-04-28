@@ -66,7 +66,12 @@ async def sendrss(
             except CQHttpError:
                 pass
 
-        await bot.send_private_msg(user_id=qid, message=f"已发送 {cnt} 条动态")
+        try:
+            await bot.send_private_msg(user_id=qid, message="=" * 20)
+        except CQHttpError:
+            pass
+
+        await bot.send_private_msg(user_id=qid, message=f"已发送 {cnt} 条「{source}」的资讯！咕噜灵波～(∠・ω< )⌒★")
         if success_dt != "":
             await conn.execute(
                 f"""update subs set dt = '{success_dt}' where qid = {qid} and rss = '{source}';"""

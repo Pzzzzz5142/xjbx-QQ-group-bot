@@ -31,7 +31,7 @@ async def bcr():
         if len(values) == 0:
             raise Exception
 
-        ress = await getbcr(-1)
+        ress = await getbcr()
 
         _, dt = ress[0]
         if dt != values[0]["dt"]:

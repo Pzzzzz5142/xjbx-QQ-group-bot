@@ -73,15 +73,15 @@ async def rss(session: CommandSession):
         async with db.pool.acquire() as conn:
             bot = nonebot.get_bot()
             for item, nm in session.state["ls"]:
-                if nm != "bcr":
+                if nm != "bcr" and nm != "gcores":
                     resp = await item(session.event.user_id, bot)
                 else:
                     resp = await sendrss(
                         session.event.user_id,
                         bot,
-                        "bcr",
+                        nm,
                         None,
-                        getbcr,
+                        item,
                         (1, 1),
                         session=session,
                     )
@@ -110,11 +110,11 @@ async def ___(session: CommandSession):
         args.remove("mrfz")
 
     if "bcr" in args:
-        session.state["ls"].append((sendbcr, "bcr"))
+        session.state["ls"].append((getbcr, "bcr"))
         args.remove("bcr")
 
     if "gcores" in args:
-        session.state["ls"].append((sendgcores, "gcores"))
+        session.state["ls"].append((getgcores, "gcores"))
         args.remove("gcores")
 
     if len(args) > 0:
