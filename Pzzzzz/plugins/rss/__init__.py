@@ -90,6 +90,7 @@ async def ___(session: CommandSession):
     if session.is_first_run:
         session.state["ls"] = []
         session.state["subs"] = 1 if (len(args) > 0 and args[0] == "-s") else 0
+        args.remove("-s")
 
     if "mrfz" in args:
         session.state["ls"].append((sendmrfz, "mrfz"))
