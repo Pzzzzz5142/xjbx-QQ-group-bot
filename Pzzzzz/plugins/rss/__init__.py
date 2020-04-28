@@ -16,12 +16,13 @@ import random
 import bisect
 from db import db
 import cq
-from utils import *
+from utils import doc
 import feedparser as fp
 import re
-from .bcr import bcr, sendbcr
-from .mrfz import mrfz, sendmrfz
-from .gcores import gcores, sendgcores
+from .utils import sendrss
+from .bcr import bcr, sendbcr, getbcr
+from .mrfz import mrfz, sendmrfz, getmrfz
+from .gcores import gcores, sendgcores, getgcores
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -31,7 +32,7 @@ async def _():
     try:
         async with db.pool.acquire() as conn:
             await bot.send_group_msg(
-                group_id=145029700, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
+                group_id=1037557679, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
             )
     except CQHttpError:
         pass
@@ -64,7 +65,7 @@ async def rss(session: CommandSession):
                             session.event.user_id, -1, item
                         )
                     )
-                    await session.send(f"「{item}」的资讯已添加订阅了！有新资讯发布时，会私信你哦！")
+                    await session.send(f"「{doc[item]}」的资讯已添加订阅了！有新资讯发布时，会私信你哦！")
                 except:
                     await session.send(f"你已经添加过「{doc[item]}」的资讯订阅啦！")
 
@@ -72,7 +73,18 @@ async def rss(session: CommandSession):
         async with db.pool.acquire() as conn:
             bot = nonebot.get_bot()
             for item, nm in session.state["ls"]:
-                resp = await item(session.event.user_id, bot)
+                if nm != "bcr":
+                    resp = await item(session.event.user_id, bot)
+                else:
+                    resp = await sendrss(
+                        session.event.user_id,
+                        bot,
+                        "bcr",
+                        None,
+                        getbcr,
+                        (1, 1),
+                        session=session,
+                    )
                 if resp and session.event.detail_type != "private":
                     await session.send(
                         unescape(
@@ -118,4 +130,6 @@ async def ___(session: CommandSession):
 
 @on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
 async def __(x):
-    pass
+    await bcr()
+    await mrfz()
+    await gcores()

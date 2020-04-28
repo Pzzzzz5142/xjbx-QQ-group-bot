@@ -17,6 +17,7 @@ import bisect
 from db import db
 import cq
 from utils import *
+from .utils import sendrss
 import feedparser as fp
 import re
 
@@ -25,59 +26,71 @@ async def bcr():
     bot = nonebot.get_bot()
     now = datetime.now(pytz.timezone("Asia/Shanghai"))
 
-    res, dt = await getbcr()
-
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'bcr';""")
         if len(values) == 0:
-            await conn.execute(f"insert into rss values ('bcr',{dt})")
-        elif dt != values[0]["dt"]:
+            raise Exception
+
+        ress = await getbcr(-1)
+
+        _, dt = ress[0]
+        if dt != values[0]["dt"]:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'bcr'")
             try:
                 await bot.send_group_msg(
-                    group_id=145029700,
+                    group_id=1037557679,
                     message="「公主链接 B服」有新公告啦！输入 rss bcr 即可查看！已订阅用户请检查私信。",
                 )
             except CQHttpError:
                 pass
 
         values = await conn.fetch(f"""select qid, dt from subs where rss = 'bcr'; """)
+
         for item in values:
             if item["dt"] != dt:
-                await sendbcr(item["qid"], bot, res, dt)
+                await sendrss(item["qid"], bot, "bcr", ress)
 
 
-async def getbcr():
+async def getbcr(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/bilibili/user/dynamic/353840826")
 
-    cnt = 0
+    ress = [(["暂时没有有用的新公告哦！"], thing["entries"][0]["published"])]
 
-    while (
-        ("封禁公告" in thing["entries"][cnt].summary)
-        or ("小讲堂" in thing["entries"][cnt].summary)
-    ) and (cnt < len(thing["entries"])):
+    cnt = 0
+    is_viewed = False
+
+    for item in thing["entries"]:
+
+        if max_num != -1 and cnt >= max_num:
+            break
+
+        if ("封禁公告" in item.summary) or ("小讲堂" in item.summary):
+            continue
+
+        fdres = re.match(r".*?<br>", item.summary, re.S)
+
+        text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
+
+        while len(text) > 1 and text[-1] == "\n":
+            text = text[:-1]
+
+        pics = re.findall(
+            r"https://(?:(?!https://).)*?\.(?:jpg|jpeg|png|gif|bmp|tiff|ai|cdr|eps)\"",
+            item.summary,
+            re.S,
+        )
+        text = [text]
+
+        for i in pics:
+            text.append(cq.image(i[:-1]))
+        ress.append((text, item["published"]))
+
         cnt += 1
 
-    if cnt == len(thing["entries"]):
-        return "暂时没有有用的新公告哦！", thing["entries"][0]["published"]
+    if len(ress) >= 1:
+        ress = ress[1:]
 
-    fdres = re.match(r".*?<br>", thing["entries"][cnt].summary, re.S)
-
-    text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
-
-    if text[-1] != "\n":
-        text += "\n"
-
-    pics = re.findall(
-        r"https://.*?\.(?:jpg|jpeg|png|gif|bmp|tiff|ai|cdr|eps)\"",
-        thing["entries"][cnt].summary,
-        re.S,
-    )
-
-    for i in pics:
-        text += cq.image(i[:-1])
-
-    return text, thing["entries"][0]["published"]
+    return ress
 
 
 async def sendbcr(qid, bot, res=None, dt=None):
@@ -95,7 +108,7 @@ async def sendbcr(qid, bot, res=None, dt=None):
         except CQHttpError:
             flg = 0
             await bot.send_group_msg(
-                group_id=145029700,
+                group_id=1037557679,
                 message=unescape(cq.at(qid) + "貌似公告并没有发送成功，请尝试与我创建临时会话。"),
             )
 

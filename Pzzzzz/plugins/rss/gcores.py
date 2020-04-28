@@ -87,7 +87,7 @@ async def sendgcores(qid, bot, res=None, dt=None):
         except CQHttpError:
             flg = 0
             await bot.send_group_msg(
-                group_id=145029700,
+                group_id=1037557679,
                 message=unescape(cq.at(qid) + "貌似该资讯并没有发送成功，请尝试与我创建临时会话。"),
             )
 

@@ -36,7 +36,7 @@ async def mrfz():
             await conn.execute(f"update rss set dt = '{dt}' where id = 'mrfz'")
             try:
                 await bot.send_group_msg(
-                    group_id=145029700,
+                    group_id=1037557679,
                     message="「明日方舟」有新公告啦！输入 rss mrfz 即可查看！已订阅用户请检查私信。",
                 )
             except CQHttpError:
@@ -90,7 +90,7 @@ async def sendmrfz(qid, bot, res=None, dt=None):
         except CQHttpError:
             flg = 0
             await bot.send_group_msg(
-                group_id=145029700,
+                group_id=1037557679,
                 message=unescape(cq.at(qid) + "貌似公告并没有发送成功，请尝试与我创建临时会话。"),
             )
 
