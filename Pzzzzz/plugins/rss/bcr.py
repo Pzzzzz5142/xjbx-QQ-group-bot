@@ -38,8 +38,8 @@ async def bcr():
             await conn.execute(f"update rss set dt = '{dt}' where id = 'bcr'")
             try:
                 await bot.send_group_msg(
-                    group_id=1037557679,
-                    message="「公主链接 B服」有新公告啦！输入 rss bcr 即可查看！已订阅用户请检查私信。",
+                    group_id=145029700,
+                    message=f"「{doc['bcr']}」有新公告啦！输入 rss bcr 即可查看！已订阅用户请检查私信。",
                 )
             except CQHttpError:
                 pass
@@ -108,7 +108,7 @@ async def sendbcr(qid, bot, res=None, dt=None):
         except CQHttpError:
             flg = 0
             await bot.send_group_msg(
-                group_id=1037557679,
+                group_id=145029700,
                 message=unescape(cq.at(qid) + "貌似公告并没有发送成功，请尝试与我创建临时会话。"),
             )
 

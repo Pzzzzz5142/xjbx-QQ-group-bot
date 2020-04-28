@@ -32,7 +32,7 @@ async def _():
     try:
         async with db.pool.acquire() as conn:
             await bot.send_group_msg(
-                group_id=1037557679, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
+                group_id=145029700, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
             )
     except CQHttpError:
         pass
