@@ -1,7 +1,7 @@
 from nonebot import on_command, CommandSession
 from random import randint
 
-doc = {"mrfz": "明日方舟", "bcr": "公主连接 B服", "gcores": "机核网", "loli": "弟弟君"}
+doc = {"mrfz": "明日方舟", "bcr": "公主连接 B服", "gcores": "机核网", "loli": "忧郁的loli"}
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
