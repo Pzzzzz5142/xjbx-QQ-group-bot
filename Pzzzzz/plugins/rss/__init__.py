@@ -23,6 +23,7 @@ from .utils import sendrss
 from .bcr import bcr, getbcr
 from .mrfz import mrfz, getmrfz
 from .gcores import gcores, getgcores
+from .loli import loli,getloli
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -108,13 +109,16 @@ async def ___(session: CommandSession):
         session.state["ls"].append((getgcores, "gcores"))
         args.remove("gcores")
 
+    if "loli" in args:
+        session.state["ls"].append((getloli, "loli"))
+        args.remove("loli")
+
     if len(args) > 0:
         await session.send(
             unescape(
                 "没有添加「{}」的订阅源！请联系".format(" ".join(args)) + cq.at(545870222) + "添加订阅！"
             )
         )
-        session.is_first_run = False
     if len(session.state["ls"]) == 0 and not session.is_first_run:
         session.finish("本次资讯查看为空哦！")
 
@@ -124,3 +128,4 @@ async def __(x):
     await bcr()
     await mrfz()
     await gcores()
+    await loli()

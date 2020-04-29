@@ -13,38 +13,31 @@ import feedparser as fp
 import re
 
 
-async def bcr():
+async def loli():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
-        values = await conn.fetch(f"""select dt from rss where id = 'bcr';""")
+        values = await conn.fetch(f"""select dt from rss where id = 'loli';""")
         if len(values) == 0:
             raise Exception
 
-        ress = await getbcr()
+        ress = await getloli()
 
         _, dt = ress[0]
         if dt != values[0]["dt"]:
-            await conn.execute(f"update rss set dt = '{dt}' where id = 'bcr'")
-            try:
-                await bot.send_group_msg(
-                    group_id=145029700,
-                    message=f"「{doc['bcr']}」有新公告啦！输入 rss bcr 即可查看！已订阅用户请检查私信。",
-                )
-            except CQHttpError:
-                pass
+            await conn.execute(f"update rss set dt = '{dt}' where id = 'loli'")
 
-        values = await conn.fetch(f"""select qid, dt from subs where rss = 'bcr'; """)
+        values = await conn.fetch(f"""select qid, dt from subs where rss = 'loli'; """)
 
         for item in values:
             if item["dt"] != dt:
-                await sendrss(item["qid"], bot, "bcr", ress)
+                await sendrss(item["qid"], bot, "loli", ress)
 
 
-async def getbcr(max_num: int = -1):
-    thing = fp.parse(r"http://172.18.0.1:1200/bilibili/user/dynamic/353840826")
+async def getloli(max_num: int = -1):
+    thing = fp.parse(r"http://172.18.0.1:1200/hhgal")
 
-    ress = [(["暂时没有有用的新公告哦！"], thing["entries"][0]["published"])]
+    ress = [(["暂时没有新游戏哦！"], thing["entries"][0]["published"])]
 
     cnt = 0
 
@@ -53,25 +46,10 @@ async def getbcr(max_num: int = -1):
         if max_num != -1 and cnt >= max_num:
             break
 
-        if ("封禁公告" in item.summary) or ("小讲堂" in item.summary):
-            continue
+        text = item.title + "\n" + hourse(item["link"])
 
-        fdres = re.match(r".*?<br>", item.summary, re.S)
-
-        text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
-
-        while len(text) > 1 and text[-1] == "\n":
-            text = text[:-1]
-
-        pics = re.findall(
-            r"https://(?:(?!https://).)*?\.(?:jpg|jpeg|png|gif|bmp|tiff|ai|cdr|eps)\"",
-            item.summary,
-            re.S,
-        )
         text = [text]
 
-        for i in pics:
-            text.append(cq.image(i[:-1]))
         ress.append((text, item["published"]))
 
         cnt += 1

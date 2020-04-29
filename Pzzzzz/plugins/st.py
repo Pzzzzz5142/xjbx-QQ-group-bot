@@ -100,13 +100,7 @@ async def sauce(purl: str) -> str:
     if len(ShitJson["results"]) == 0:
         return "啥也没搜到"
 
-    try:
-        murl = list(ShitJson["results"][0]["data"]["ext_urls"][0])
-        for i in range(5):
-            murl.insert(randint(0, len(murl)), "🐎")
-        murl = "".join(murl)
-    except:
-        murl = ""
+    murl=hourse(ShitJson["results"][0]["data"]["ext_urls"][0])
 
     return (
         cq.image(ShitJson["results"][0]["header"]["thumbnail"])
