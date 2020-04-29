@@ -17,6 +17,8 @@ from utils import headers
 
 url = r"https://search.bilibili.com/all?keyword="
 
+__plugin_name__ = "bili search"
+
 
 @on_command("bilibili", aliases={"bili", "哔哩哔哩"}, only_to_me=False)
 async def bilibili(session: CommandSession):

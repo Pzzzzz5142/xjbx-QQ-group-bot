@@ -47,8 +47,8 @@ BIGUSAGE = r"""
 
 maxbig_head = 0
 
-__plugin_name__ = '大头菜挂牌上市'
-__plugin_usage__ = BIGUSAGE
+#__plugin_name__ = '大头菜挂牌上市'
+#__plugin_usage__ = BIGUSAGE
 
 def roomPaser(value, lv: int = 0) -> str:
     return '\t'*lv + f"QQ号：{value['qid']}\n"+'\t'*lv+f"大头菜价格：{value['price']}"

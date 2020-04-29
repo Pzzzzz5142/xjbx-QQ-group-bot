@@ -18,6 +18,8 @@ import re
 from utils import *
 import cq
 
+__plugin_name__ = "以图搜图"
+
 url = r"https://saucenao.com/search.php"
 
 api = r"https://api.lolicon.app/setu/"
@@ -100,7 +102,7 @@ async def sauce(purl: str) -> str:
     if len(ShitJson["results"]) == 0:
         return "啥也没搜到"
 
-    murl=hourse(ShitJson["results"][0]["data"]["ext_urls"][0])
+    murl = hourse(ShitJson["results"][0]["data"]["ext_urls"][0])
 
     return (
         cq.image(ShitJson["results"][0]["header"]["thumbnail"])

@@ -12,6 +12,8 @@ import os.path as path
 import json
 import aiohttp
 
+__plugin_name__ = "nbnhhsh（能不能好好说话）"
+
 url = r"https://lab.magiconch.com/api/nbnhhsh/guess"
 
 headers = {"content-type": "application/json"}

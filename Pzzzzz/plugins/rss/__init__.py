@@ -25,6 +25,8 @@ from .mrfz import mrfz, getmrfz
 from .gcores import gcores, getgcores
 from .loli import loli, getloli
 
+__plugin_name__ = 'rss 订阅'
+
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
 async def _():
