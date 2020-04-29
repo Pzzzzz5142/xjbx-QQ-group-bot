@@ -11,6 +11,8 @@ from utils import *
 from .utils import sendrss
 import feedparser as fp
 import re
+from bs4 import BeautifulSoup
+import aiohttp
 
 
 async def loli():
@@ -46,9 +48,22 @@ async def getloli(max_num: int = -1):
         if max_num != -1 and cnt >= max_num:
             break
 
-        text = item.title + "\n" + hourse(item["link"])
+        async with aiohttp.ClientSession() as sess:
+            async with sess.get(item["link"], headers=headers) as resp:
+                if resp.status != 200:
+                    ShitHtml = "Html页面获取失败！错误码：" + str(resp.status)
+                else:
+                    ShitHtml = await resp.text()
 
-        text = [text]
+        if ShitHtml[0] != "H":
+            sp = BeautifulSoup(ShitHtml, "lxml")
+            pic = sp.find_all("img", attrs={"title": "点击放大"})[0].attrs["src"]
+        else:
+            pic = ""
+
+        pic = (cq.image(pic) + "\n") if pic != "" else pic
+
+        text = [item.title + "\n" + pic + "链接：" + hourse(item["link"])]
 
         ress.append((text, item["published"]))
 

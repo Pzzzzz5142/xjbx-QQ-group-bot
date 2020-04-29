@@ -85,7 +85,7 @@ async def getgcores(max_num: int = -1):
             title
             + "\n"
             + (
-                cq.image("base64://" + ShitBase64)
+                (cq.image("base64://" + ShitBase64) + "\n")
                 if ShitBase64[0] != "图"
                 else ShitBase64
             )

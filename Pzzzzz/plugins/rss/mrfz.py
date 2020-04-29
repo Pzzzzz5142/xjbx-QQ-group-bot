@@ -25,7 +25,7 @@ from utils import *
 
 
 async def mrfz():
-    bot = nonebot.get_bot() 
+    bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'mrfz';""")
@@ -85,6 +85,9 @@ async def getmrfz(max_num: int = -1):
             ans = dfs(i)
             if ans != "":
                 res += "\n" + (ans if ans != "<br/>" else "")
+
+        if "封禁" in res:
+            continue        
 
         ress.append(([res], item["published"]))
 

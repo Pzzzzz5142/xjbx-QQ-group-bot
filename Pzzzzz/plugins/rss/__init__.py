@@ -45,6 +45,7 @@ async def __():
     await bcr()
     await mrfz()
     await gcores()
+    await loli()
 
 
 @on_command("rss", only_to_me=False)
@@ -85,9 +86,7 @@ async def rss(session: CommandSession):
         async with db.pool.acquire() as conn:
             bot = nonebot.get_bot()
             for item, nm in session.state["ls"]:
-                resp = await sendrss(
-                    session.event.user_id, bot, nm, None, item, (1, 1)
-                )
+                resp = await sendrss(session.event.user_id, bot, nm, None, item, (1, 1))
                 if resp and session.event.detail_type != "private":
                     await session.send(
                         unescape(
@@ -140,7 +139,7 @@ async def ___(session: CommandSession):
                 "没有添加「{}」的订阅源！请联系".format(" ".join(args)) + cq.at(545870222) + "添加订阅！"
             )
         )
-    if len(session.state["ls"]) == 0 and not session.is_first_run:
+    if len(session.state["ls"]) == 0 and (not session.is_first_run or arg != ""):
         session.finish("本次资讯查看为空哦！")
 
 
