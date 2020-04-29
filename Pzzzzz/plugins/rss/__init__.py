@@ -86,7 +86,7 @@ async def rss(session: CommandSession):
             bot = nonebot.get_bot()
             for item, nm in session.state["ls"]:
                 resp = await sendrss(
-                    session.event.user_id, bot, nm, None, item, (1, 1), session=session,
+                    session.event.user_id, bot, nm, None, item, (1, 1)
                 )
                 if resp and session.event.detail_type != "private":
                     await session.send(
