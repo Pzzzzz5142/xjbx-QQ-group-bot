@@ -19,11 +19,11 @@ import cq
 from utils import doc
 import feedparser as fp
 import re
-from .utils import sendrss
+from .utils import sendrss, getrss
 from .bcr import bcr, getbcr
 from .mrfz import mrfz, getmrfz
 from .gcores import gcores, getgcores
-from .loli import loli,getloli
+from .loli import loli, getloli
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -70,6 +70,13 @@ async def rss(session: CommandSession):
                 except:
                     await session.send(f"你已经添加过「{doc[item]}」的资讯订阅啦！")
 
+    elif "route" in session.state:
+        bot = nonebot.get_bot()
+        for rt in session.state["ls"]:
+            resp = await sendrss(
+                session.event.user_id, bot, "自定义路由", None, getrss, (1, 1), route=rt,
+            )
+
     else:
         async with db.pool.acquire() as conn:
             bot = nonebot.get_bot()
@@ -94,6 +101,14 @@ async def ___(session: CommandSession):
     if session.is_first_run:
         session.state["ls"] = []
         session.state["subs"] = 1 if (len(args) > 0 and args[0] == "-s") else 0
+        if "-r" in args:
+            args.remove("-r")
+            if "-s" in args:
+                session.finish("-s 和 -r 参数不能共存哦！")
+            else:
+                session.state["route"] = "ok"
+            session.state["ls"] = [x for x in args]
+            return
         if "-s" in args:
             args.remove("-s")
 
