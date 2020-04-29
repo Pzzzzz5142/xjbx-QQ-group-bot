@@ -14,6 +14,7 @@ from db import db
 import cq
 import feedparser as fp
 import re
+from utils import doc
 
 # num 第一个表示最获取的消息数，第二个表示在此基础上查看的消息数
 # -1表示最大，-2表示到已读为止。
@@ -71,7 +72,9 @@ async def sendrss(
         except CQHttpError:
             pass
 
-        await bot.send_private_msg(user_id=qid, message=f"已发送 {cnt} 条「{source}」的资讯！咕噜灵波～(∠・ω< )⌒★")
+        await bot.send_private_msg(
+            user_id=qid, message=f"已发送 {cnt} 条「{doc[source]}」的资讯！咕噜灵波～(∠・ω< )⌒★"
+        )
         if success_dt != "":
             await conn.execute(
                 f"""update subs set dt = '{success_dt}' where qid = {qid} and rss = '{source}';"""
