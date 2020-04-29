@@ -5,9 +5,6 @@ import nonebot
 import pytz
 from aiocqhttp.exceptions import Error as CQHttpError
 from nonebot.log import logger
-from random import randint
-import random
-import bisect
 from db import db
 import cq
 from utils import *
