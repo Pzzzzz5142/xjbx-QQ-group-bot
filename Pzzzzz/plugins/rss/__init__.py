@@ -20,9 +20,9 @@ from utils import doc
 import feedparser as fp
 import re
 from .utils import sendrss
-from .bcr import bcr, sendbcr, getbcr
-from .mrfz import mrfz, sendmrfz, getmrfz
-from .gcores import gcores, sendgcores, getgcores
+from .bcr import bcr, getbcr
+from .mrfz import mrfz, getmrfz
+from .gcores import gcores, getgcores
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -73,18 +73,9 @@ async def rss(session: CommandSession):
         async with db.pool.acquire() as conn:
             bot = nonebot.get_bot()
             for item, nm in session.state["ls"]:
-                if nm != "bcr" and nm != "gcores":
-                    resp = await item(session.event.user_id, bot)
-                else:
-                    resp = await sendrss(
-                        session.event.user_id,
-                        bot,
-                        nm,
-                        None,
-                        item,
-                        (1, 1),
-                        session=session,
-                    )
+                resp = await sendrss(
+                    session.event.user_id, bot, nm, None, item, (1, 1), session=session,
+                )
                 if resp and session.event.detail_type != "private":
                     await session.send(
                         unescape(
@@ -106,7 +97,7 @@ async def ___(session: CommandSession):
             args.remove("-s")
 
     if "mrfz" in args:
-        session.state["ls"].append((sendmrfz, "mrfz"))
+        session.state["ls"].append((getmrfz, "mrfz"))
         args.remove("mrfz")
 
     if "bcr" in args:

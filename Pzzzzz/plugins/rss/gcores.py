@@ -100,25 +100,3 @@ async def getgcores(max_num: int = -1):
         ress = ress[1:]
 
     return ress
-
-
-async def sendgcores(qid, bot, res=None, dt=None):
-    if res == None or dt == None:
-        res, dt = await getgcores()
-
-    flg = 1
-
-    async with db.pool.acquire() as conn:
-        try:
-            await bot.send_private_msg(user_id=qid, message=res)
-            await conn.execute(
-                f"""update subs set dt = '{dt}' where qid = {qid} and rss = 'gcores';"""
-            )
-        except CQHttpError:
-            flg = 0
-            await bot.send_group_msg(
-                group_id=145029700,
-                message=unescape(cq.at(qid) + "貌似该资讯并没有发送成功，请尝试与我创建临时会话。"),
-            )
-
-    return flg

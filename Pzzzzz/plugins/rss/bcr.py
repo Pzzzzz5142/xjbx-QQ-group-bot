@@ -24,7 +24,6 @@ import re
 
 async def bcr():
     bot = nonebot.get_bot()
-    now = datetime.now(pytz.timezone("Asia/Shanghai"))
 
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'bcr';""")
@@ -57,7 +56,6 @@ async def getbcr(max_num: int = -1):
     ress = [(["暂时没有有用的新公告哦！"], thing["entries"][0]["published"])]
 
     cnt = 0
-    is_viewed = False
 
     for item in thing["entries"]:
 
@@ -87,29 +85,7 @@ async def getbcr(max_num: int = -1):
 
         cnt += 1
 
-    if len(ress) >= 1:
+    if len(ress) > 1:
         ress = ress[1:]
 
     return ress
-
-
-async def sendbcr(qid, bot, res=None, dt=None):
-    if res == None or dt == None:
-        res, dt = await getbcr()
-
-    flg = 1
-
-    async with db.pool.acquire() as conn:
-        try:
-            await bot.send_private_msg(user_id=qid, message=res)
-            await conn.execute(
-                f"""update subs set dt = '{dt}' where qid = {qid} and rss = 'bcr';"""
-            )
-        except CQHttpError:
-            flg = 0
-            await bot.send_group_msg(
-                group_id=145029700,
-                message=unescape(cq.at(qid) + "貌似公告并没有发送成功，请尝试与我创建临时会话。"),
-            )
-
-    return flg

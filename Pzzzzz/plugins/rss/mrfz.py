@@ -20,19 +20,23 @@ import random
 import bisect
 from db import db
 import cq
+from .utils import sendrss
 from utils import *
 
 
 async def mrfz():
-    bot = nonebot.get_bot()
-
-    res, dt = await getmrfz()
+    bot = nonebot.get_bot() 
 
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'mrfz';""")
         if len(values) == 0:
-            await conn.execute(f"insert into rss values ('mrfz','{dt}')")
-        elif dt != values[0]["dt"]:
+            raise Exception
+
+        ress = await getmrfz()
+
+        _, dt = ress[0]
+
+        if dt != values[0]["dt"]:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'mrfz'")
             try:
                 await bot.send_group_msg(
@@ -43,9 +47,10 @@ async def mrfz():
                 pass
 
         values = await conn.fetch(f"""select qid, dt from subs where rss = 'mrfz'; """)
+
         for item in values:
             if item["dt"] != dt:
-                await sendmrfz(item["qid"], bot, res, dt)
+                await sendrss(item["qid"], bot, "mrfz", ress)
 
 
 def dfs(thing):
@@ -59,39 +64,31 @@ def dfs(thing):
     return res
 
 
-async def getmrfz():
+async def getmrfz(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/arknights/news")
 
-    sp = BeautifulSoup(thing["entries"][0].summary, "lxml")
+    ress = [(["暂时没有有用的新公告哦！"], thing["entries"][0]["published"])]
 
-    pp = sp.find_all("p")
+    cnt = 0
 
-    res = "标题：" + thing["entries"][0]["title"] + "\n\n"
-    for i in pp:
-        ans = dfs(i)
-        if ans != "":
-            res += (ans if ans != "<br/>" else "") + "\n"
+    for item in thing["entries"]:
 
-    return res, thing["entries"][0]["published"]
+        if max_num != -1 and cnt >= max_num:
+            break
 
+        sp = BeautifulSoup(item.summary, "lxml")
 
-async def sendmrfz(qid, bot, res=None, dt=None):
-    if res == None or dt == None:
-        res, dt = await getmrfz()
+        pp = sp.find_all("p")
 
-    flg = 1
+        res = "标题：" + item["title"] + "\n"
+        for i in pp:
+            ans = dfs(i)
+            if ans != "":
+                res += "\n" + (ans if ans != "<br/>" else "")
 
-    async with db.pool.acquire() as conn:
-        try:
-            await bot.send_private_msg(user_id=qid, message=res)
-            await conn.execute(
-                f"""update subs set dt = '{dt}' where qid = {qid} and rss = 'mrfz';"""
-            )
-        except CQHttpError:
-            flg = 0
-            await bot.send_group_msg(
-                group_id=145029700,
-                message=unescape(cq.at(qid) + "貌似公告并没有发送成功，请尝试与我创建临时会话。"),
-            )
+        ress.append(([res], item["published"]))
 
-    return flg
+    if len(ress) > 1:
+        ress = ress[1:]
+
+    return ress
