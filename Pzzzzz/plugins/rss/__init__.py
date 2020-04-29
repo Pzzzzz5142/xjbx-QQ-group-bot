@@ -76,6 +76,10 @@ async def rss(session: CommandSession):
             resp = await sendrss(
                 session.event.user_id, bot, "自定义路由", None, getrss, (1, 1), route=rt,
             )
+            if resp and session.event.detail_type != "private":
+                await session.send(
+                    unescape(cq.at(session.event.user_id) + f"「{rt}」的资讯已私信，请查收。")
+                )
 
     else:
         async with db.pool.acquire() as conn:
