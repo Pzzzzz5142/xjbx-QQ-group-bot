@@ -112,6 +112,8 @@ async def ___(session: CommandSession):
             else:
                 session.state["route"] = "ok"
             session.state["ls"] = [x for x in args]
+            if len(session.state["ls"]) == 0:
+                session.finish("查询路由地址不能为空哦！")
             return
         if "-s" in args:
             args.remove("-s")
