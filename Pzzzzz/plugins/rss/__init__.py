@@ -24,8 +24,9 @@ from .bcr import bcr, getbcr
 from .mrfz import mrfz, getmrfz
 from .gcores import gcores, getgcores
 from .loli import loli, getloli
+from .pork_price import pprice, getpprice
 
-__plugin_name__ = 'rss 订阅'
+__plugin_name__ = "rss 订阅"
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -48,6 +49,7 @@ async def __():
     await mrfz()
     await gcores()
     await loli()
+    await pprice()
 
 
 @on_command("rss", only_to_me=False)
@@ -135,6 +137,10 @@ async def ___(session: CommandSession):
         session.state["ls"].append((getloli, "loli"))
         args.remove("loli")
 
+    if "pprice" in args:
+        session.state["ls"].append((getpprice, "pprice"))
+        args.remove("pprice")
+
     if len(args) > 0:
         await session.send(
             unescape(
@@ -151,3 +157,4 @@ async def __(x):
     await mrfz()
     await gcores()
     await loli()
+    await pprice()
