@@ -56,7 +56,11 @@ async def getbcr(max_num: int = -1):
         if max_num != -1 and cnt >= max_num:
             break
 
-        if ("封禁公告" in item.summary) or ("小讲堂" in item.summary):
+        if (
+            ("封禁公告" in item.summary)
+            or ("小讲堂" in item.summary)
+            or ("中奖" in item.summary)
+        ):
             continue
 
         fdres = re.match(r".*?<br>", item.summary, re.S)

@@ -59,7 +59,7 @@ async def sendrss(
             try:
                 is_r = is_read
                 cnt += 1
-                await bot.send_private_msg(user_id=qid, message="=" * 20)
+                await bot.send_private_msg(user_id=qid, message="=" * 19)
                 for text in res:
                     see = text
                     await bot.send_private_msg(
@@ -71,7 +71,7 @@ async def sendrss(
                 pass
 
         try:
-            await bot.send_private_msg(user_id=qid, message="=" * 20)
+            await bot.send_private_msg(user_id=qid, message="=" * 19)
         except CQHttpError:
             pass
 

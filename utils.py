@@ -8,6 +8,7 @@ doc = {
     "loli": "忧郁的loli",
     "nature": "Nature",
     "pprice": "每日生猪价格",
+    "bh3": "崩坏3",
 }
 
 headers = {
