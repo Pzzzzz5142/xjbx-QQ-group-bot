@@ -50,6 +50,13 @@ async def create_schema():
                 primary key (qid,rss)
             )"""
             )
+            await conn.execute(
+                """create table notebook(
+                qid bigint,
+                item varchar(200),
+                ind int,
+                primary key (qid,item));"""
+            )
             await conn.execute("""create index on subs(rss)""")
     except:
         logger.error("操作失败，可能是数据库配置不正确！")

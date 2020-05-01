@@ -24,10 +24,10 @@ NOTEUSAGE = r"""
  -a, --add X
             向备忘录中添加X
  -l, --list 
-            查看备忘录中的物品
+            查看备忘录中的记录
             
  -d, --del X
-            删除备忘录中的物品
+            删除备忘录中的记录
             开头为「*」则被解释为序号
             如 note -d *1 则会删除第「1」条记录
  -c, --cls
@@ -36,7 +36,7 @@ NOTEUSAGE = r"""
 例如：
     使用
         note -a 茄子
-    来记录物品 茄子 。
+    来记录记录 茄子 。
 """.strip()
 
 #__plugin_name__ = '备忘录'
@@ -49,10 +49,10 @@ async def notebook(session: CommandSession):
     if session.is_first_run:
         parser = ArgumentParser(session=session, usage=NOTEUSAGE)
         group = parser.add_mutually_exclusive_group()
-        group.add_argument('-a', '--add', type=str, help="添加物品")
-        group.add_argument('-l', '--list', action='store_true', help="查看物品")
-        group.add_argument('-d', '--delt', type=str, help="删除物品")
-        group.add_argument('-c', '--cls', action='store_true', help="清空物品")
+        group.add_argument('-a', '--add', type=str, help="添加记录")
+        group.add_argument('-l', '--list', action='store_true', help="查看记录")
+        group.add_argument('-d', '--delt', type=str, help="删除记录")
+        group.add_argument('-c', '--cls', action='store_true', help="清空记录")
 
         args = parser.parse_args(session.argv)
     else:
@@ -63,7 +63,7 @@ async def notebook(session: CommandSession):
 
     if session.is_first_run and args.add != None:
         if len(args.add) > 20:
-            session.finish('呀，物品名称长度不能超过 20 哦～')
+            session.finish('呀，记录的长度不能超过 20 哦～')
         if args.add[0]=='*':
             session.finish('哦，当前并不支持以「*」开头的记录哦～')
         async with db.pool.acquire() as conn:
@@ -81,9 +81,9 @@ async def notebook(session: CommandSession):
                 await conn.execute('''insert into quser (qid,swid) values ({0},{1});'''.format(session.event.user_id, swFormatter(session.event.sender['card'] if session.event['message_type'] != 'private' else '-1')))
                 state = await conn.execute('''insert into notebook (qid,item,ind) values ({0},'{1}',{2});'''.format(session.event.user_id, args.add, ind))
             except asyncpg.exceptions.UniqueViolationError as e:
-                session.finish('你已经添加过该物品啦！')
+                session.finish('你已经添加过该记录啦！')
             await conn.execute(f'''update quser set noteind = {ind + 1} where qid={session.event.user_id}''')
-            session.finish('物品：{0} 添加完毕！'.format(args.add))
+            session.finish('记录：{0} 添加完毕！'.format(args.add))
 
     elif session.is_first_run and args.list == True:
         async with db.pool.acquire() as conn:
@@ -108,7 +108,7 @@ async def notebook(session: CommandSession):
                         args.delt=int(args.delt[1:])-1
                         flg=1
                     except:
-                        session.finish('「*」开头的记录表示物品序列号哦。')
+                        session.finish('「*」开头的记录表示记录序列号哦。')
                     values = await conn.fetch('''select * from notebook where qid={0} and ind = '{1}';'''.format(session.event.user_id, args.delt))
                 else:
                     values = await conn.fetch('''select * from notebook where qid={0} and item = '{1}';'''.format(session.event.user_id, args.delt))
@@ -132,7 +132,7 @@ async def notebook(session: CommandSession):
             session.pause('确定要清空所有记录吗？（请输入「是」或「否」）')
         if stripped_arg == '是':
             async with db.pool.acquire() as conn:
-                state = await db.conn.execute('''delete from notebook where qid={0};
+                state = await conn.execute('''delete from notebook where qid={0};
                 update quser set noteind = 0 where qid = {0};'''.format(session.event.user_id))
                 session.finish('完 全 清 空 ！')
         else:
