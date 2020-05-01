@@ -1,5 +1,8 @@
 from nonebot import on_command, CommandSession
 from random import randint
+from nonebot.log import logger
+import logging
+import os.path as path
 
 doc = {
     "mrfz": "明日方舟",
@@ -14,6 +17,26 @@ doc = {
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
 }
+
+config = {}
+
+
+def init():
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "config.yml")) as fl:
+            config = yaml.load(fl)
+    except:
+        pass
+    file_handler = logging.FileHandler(
+        path.join(path.dirname(__file__), "log", "mybot.log")
+    )
+    file_handler.setLevel(level=logging.INFO)
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    logger.info("初始化完毕！准备开始启动服务！")
 
 
 def isdigit(c: str) -> bool:

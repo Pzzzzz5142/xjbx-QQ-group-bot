@@ -80,8 +80,6 @@ async def getbh3(max_num: int = -1):
 
         sp = BeautifulSoup(item.summary, "lxml")
 
-        comment = sp.findAll(text=lambda text: isinstance(text, Comment))
-
         pp = sp.find_all("p")
 
         res = "标题：" + item["title"] + "\n"

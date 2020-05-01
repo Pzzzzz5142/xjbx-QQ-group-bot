@@ -3,6 +3,7 @@ import asyncpg
 import os
 import yaml
 from nonebot import on_startup
+from utils import config
 
 
 class A(object):
@@ -18,7 +19,7 @@ class A(object):
                 host=kwarg["host"],
             )
         except:
-            raise Exception("数据库配置出错惹，请检查数据库配置文件 config.yml！")
+            raise Exception("数据库配置出错惹，请检查机器人配置文件 config.yml！")
 
 
 db = A()

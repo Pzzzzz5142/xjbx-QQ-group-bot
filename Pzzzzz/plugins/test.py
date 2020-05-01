@@ -8,7 +8,7 @@ from nonebot.log import logger
 import cq
 
 
-@on_command("test", shell_like=True, only_to_me=False)
+@on_command("test", shell_like=True, only_to_me=False, permission=perm.SUPERUSER)
 async def test(session: CommandSession):
     bot = nonebot.get_bot()
     parser = ArgumentParser(session=session)

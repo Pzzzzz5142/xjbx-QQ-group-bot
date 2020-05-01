@@ -6,3 +6,4 @@ config.yml
 /log/*
 __pycache__/
 ce.py
+mybot.log
