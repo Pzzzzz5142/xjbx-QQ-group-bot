@@ -34,7 +34,7 @@ async def pprice():
             await conn.execute(f"update rss set dt = '{dt}' where id = 'pprice'")
             try:
                 await bot.send_group_msg(
-                    group_id=bot.config.QGROUP, message=res,
+                    group_id=bot.config.QGROUP, message=res[0],
                 )
             except CQHttpError:
                 pass
