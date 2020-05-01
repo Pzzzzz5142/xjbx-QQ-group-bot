@@ -3,7 +3,6 @@ import asyncpg
 import os
 import yaml
 from nonebot import on_startup
-from utils import config
 
 
 class A(object):
