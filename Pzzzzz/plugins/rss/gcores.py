@@ -32,13 +32,16 @@ async def gcores():
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'gcores';""")
         if len(values) == 0:
-            raise Exception
+            await conn.execute("""insert into rss values ('gcores','-1')""")
+            db_dt = "-1"
+        else:
+            db_dt = values[0]["dt"]
 
         ress = await getgcores()
 
         _, dt = ress[0]
 
-        if dt != values[0]["dt"]:
+        if dt != db_dt:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'gcores'")
 
         values = await conn.fetch(

@@ -2,7 +2,7 @@ import asyncio
 import asyncpg
 import os
 import yaml
-from nonebot import on_startup
+from nonebot import on_startup, get_bot
 
 
 class A(object):
@@ -10,13 +10,9 @@ class A(object):
     pool = None
 
     async def setBind(self, kwarg):
+        bot = get_bot()
         try:
-            self.pool = await asyncpg.create_pool(
-                user=kwarg["user"],
-                password=kwarg["password"],
-                database=kwarg["database"],
-                host=kwarg["host"],
-            )
+            self.pool = await asyncpg.create_pool(dsn=bot.config.DATABASE)
         except:
             raise Exception("数据库配置出错惹，请检查机器人配置文件 config.yml！")
 

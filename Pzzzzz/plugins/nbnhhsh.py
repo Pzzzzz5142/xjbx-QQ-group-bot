@@ -5,7 +5,6 @@ import nonebot
 from aiocqhttp.exceptions import Error as CQHttpError
 from nonebot.argparse import ArgumentParser
 from nonebot.log import logger
-from db import db
 import cq
 import requests
 import os.path as path

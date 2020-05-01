@@ -22,16 +22,19 @@ async def bcr():
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'bcr';""")
         if len(values) == 0:
-            raise Exception
+            await conn.execute("""insert into rss values ('bcr','-1')""")
+            db_dt = "-1"
+        else:
+            db_dt = values[0]["dt"]
 
         ress = await getbcr()
 
         _, dt = ress[0]
-        if dt != values[0]["dt"]:
+        if dt != db_dt:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'bcr'")
             try:
                 await bot.send_group_msg(
-                    group_id=145029700,
+                    group_id=bot.config.QGROUP,
                     message=f"「{doc['bcr']}」有新公告啦！输入 rss bcr 即可查看！已订阅用户请检查私信。",
                 )
             except CQHttpError:

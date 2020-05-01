@@ -30,17 +30,20 @@ async def mrfz():
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'mrfz';""")
         if len(values) == 0:
-            raise Exception
+            await conn.execute("""insert into rss values ('mrfz','-1')""")
+            db_dt = "-1"
+        else:
+            db_dt = values[0]["dt"]
 
         ress = await getmrfz()
 
         _, dt = ress[0]
 
-        if dt != values[0]["dt"]:
+        if dt != db_dt:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'mrfz'")
             try:
                 await bot.send_group_msg(
-                    group_id=145029700,
+                    group_id=bot.config.QGROUP,
                     message=f"「{doc['mrfz']}」有新公告啦！输入 rss mrfz 即可查看！已订阅用户请检查私信。",
                 )
             except CQHttpError:
@@ -87,7 +90,7 @@ async def getmrfz(max_num: int = -1):
                 res += "\n" + (ans if ans != "<br/>" else "")
 
         if "封禁" in res:
-            continue        
+            continue
 
         ress.append(([res], item["published"]))
 

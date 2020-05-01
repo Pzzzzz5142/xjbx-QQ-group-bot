@@ -21,12 +21,15 @@ async def loli():
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'loli';""")
         if len(values) == 0:
-            raise Exception
+            await conn.execute("""insert into rss values ('loli','-1')""")
+            db_dt = "-1"
+        else:
+            db_dt = values[0]["dt"]
 
         ress = await getloli()
 
         _, dt = ress[0]
-        if dt != values[0]["dt"]:
+        if dt != db_dt:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'loli'")
 
         values = await conn.fetch(f"""select qid, dt from subs where rss = 'loli'; """)

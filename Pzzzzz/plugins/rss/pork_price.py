@@ -22,16 +22,19 @@ async def pprice():
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'pprice';""")
         if len(values) == 0:
-            raise Exception
+            await conn.execute("""insert into rss values ('pprice','-1')""")
+            db_dt = "-1"
+        else:
+            db_dt = values[0]["dt"]
 
         ress = await getpprice()
 
         res, dt = ress[0]
-        if dt != values[0]["dt"]:
+        if dt != db_dt:
             await conn.execute(f"update rss set dt = '{dt}' where id = 'pprice'")
             try:
                 await bot.send_group_msg(
-                    group_id=145029700, message=res,
+                    group_id=bot.config.QGROUP, message=res,
                 )
             except CQHttpError:
                 pass

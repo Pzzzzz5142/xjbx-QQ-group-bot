@@ -13,7 +13,6 @@ from nonebot.log import logger
 from random import randint
 import random
 import bisect
-from db import db
 import re
 from utils import *
 import cq

@@ -35,10 +35,9 @@ async def _():
     bot = nonebot.get_bot()
     now = datetime.now(pytz.timezone("Asia/Shanghai"))
     try:
-        async with db.pool.acquire() as conn:
-            await bot.send_group_msg(
-                group_id=145029700, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
-            )
+        await bot.send_group_msg(
+            group_id=bot.config.QGROUP, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
+        )
     except CQHttpError:
         pass
 
@@ -69,12 +68,20 @@ async def rss(session: CommandSession):
                 try:
                     await conn.execute(
                         """insert into subs values ({},'{}','{}')""".format(
-                            session.event.user_id, -1, item
+                            session.event.user_id, "No Information", item
                         )
                     )
                     await session.send(f"「{doc[item]}」的资讯已添加订阅了！有新资讯发布时，会私信你哦！")
-                except:
+                except asyncpg.exceptions.ForeignKeyViolationError:
+                    await session.send(f"貌似系统并没有支持该订阅源的订阅！")
+                    logger.error("no", exc_info=True)
+                except asyncpg.exceptions.UniqueViolationError:
                     await session.send(f"你已经添加过「{doc[item]}」的资讯订阅啦！")
+                except:
+                    await session.send(
+                        f"发生未知错误！错误详细信息已记录了在log中！\n定位 message id 为：{session.event.message_id}"
+                    )
+                    logger.error("some rss issue", exc_info=True)
 
     elif "route" in session.state:
         bot = nonebot.get_bot()
@@ -88,16 +95,13 @@ async def rss(session: CommandSession):
                 )
 
     else:
-        async with db.pool.acquire() as conn:
-            bot = nonebot.get_bot()
-            for item, nm in session.state["ls"]:
-                resp = await sendrss(session.event.user_id, bot, nm, None, item, (1, 1))
-                if resp and session.event.detail_type != "private":
-                    await session.send(
-                        unescape(
-                            cq.at(session.event.user_id) + f"「{doc[nm]}」的资讯已私信，请查收。"
-                        )
-                    )
+        bot = nonebot.get_bot()
+        for item, nm in session.state["ls"]:
+            resp = await sendrss(session.event.user_id, bot, nm, None, item, (1, 1))
+            if resp and session.event.detail_type != "private":
+                await session.send(
+                    unescape(cq.at(session.event.user_id) + f"「{doc[nm]}」的资讯已私信，请查收。")
+                )
 
 
 @rss.args_parser

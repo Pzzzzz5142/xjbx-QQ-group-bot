@@ -1,4 +1,4 @@
-from nonebot import on_command, CommandSession, on_startup, permission
+from nonebot import on_command, CommandSession, on_startup, permission as perm
 from nonebot.message import unescape
 from datetime import datetime
 import nonebot
@@ -18,26 +18,30 @@ async def test(session: CommandSession):
 
     if args.end:
         try:
-            await bot.set_group_ban(group_id=145029700, user_id=3313437849, duration=0)
+            await bot.set_group_ban(
+                group_id=bot.config.QGROUP, user_id=3313437849, duration=0
+            )
             await session.send(unescape("解除禁言" + cq.at(3313437849) + "成功"))
         except CQHttpError:
             await session.send(unescape("解除禁言" + cq.at(3313437849) + "失败"))
 
         try:
-            await bot.set_group_ban(group_id=145029700, user_id=2682823919, duration=0)
+            await bot.set_group_ban(
+                group_id=bot.config.QGROUP, user_id=2682823919, duration=0
+            )
             await session.send(unescape("解除禁言" + cq.at(2682823919) + "成功"))
         except CQHttpError:
             await session.send(unescape("解除禁言" + cq.at(2682823919) + "失败"))
 
     else:
         try:
-            await bot.set_group_ban(group_id=145029700, user_id=3313437849)
+            await bot.set_group_ban(group_id=bot.config.QGROUP, user_id=3313437849)
             await session.send(unescape("禁言" + cq.at(3313437849) + "成功"))
         except CQHttpError:
             await session.send(unescape("禁言" + cq.at(3313437849) + "失败"))
 
         try:
-            await bot.set_group_ban(group_id=145029700, user_id=2682823919)
+            await bot.set_group_ban(group_id=bot.config.QGROUP, user_id=2682823919)
             await session.send(unescape("禁言" + cq.at(2682823919) + "成功"))
         except CQHttpError:
             await session.send(unescape("禁言" + cq.at(2682823919) + "失败"))
