@@ -3,7 +3,7 @@ import sys
 import nonebot
 import db
 import config
-import config_d
+import config_debug
 import argparse
 from utils import init
 
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     args = paser.parse_args(sys.argv[1:])
 
     if args.debug == True:
-        nonebot.init(config_d)
+        nonebot.init(config_debug)
     else:
         nonebot.init(config)
 

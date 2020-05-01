@@ -7,3 +7,5 @@ config.yml
 __pycache__/
 ce.py
 mybot.log
+config.py
+config_debug.py
