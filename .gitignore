@@ -9,3 +9,5 @@ ce.py
 mybot.log
 /config.py
 config_debug.py
+/debug.sh
+/run_bot.sh
