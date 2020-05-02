@@ -44,7 +44,16 @@ async def loli():
 async def getloli(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/hhgal")
 
-    ress = [(["暂时没有新游戏哦！"], thing["entries"][0]["published"])]
+    ress = [
+        (
+            ["暂时没有新游戏哦！"],
+            (
+                thing["entries"][0]["title"]
+                if len(thing["entries"]) > 0
+                else "Grab Rss Error!"
+            ),
+        )
+    ]
 
     cnt = 0
 

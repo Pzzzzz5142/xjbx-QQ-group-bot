@@ -55,7 +55,6 @@ async def sendrss(
             if num[1] != -1 and cnt >= num[1]:
                 break
             see = ""
-            print("=" * 19 + "\nin\n")
             try:
                 is_r = is_read
                 cnt += 1

@@ -72,7 +72,16 @@ def dfs(thing):
 async def getbh3(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/mihoyo/bh3/latest")
 
-    ress = [(["暂时没有有用的新公告哦！"], thing["entries"][0]["published"])]
+    ress = [
+        (
+            ["暂时没有有用的新公告哦！"],
+            (
+                thing["entries"][0]["title"]
+                if len(thing["entries"]) > 0
+                else "Grab Rss Error!"
+            ),
+        )
+    ]
 
     cnt = 0
 

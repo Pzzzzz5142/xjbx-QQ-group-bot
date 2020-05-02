@@ -61,7 +61,11 @@ async def getgcores(max_num: int = -1):
     ress = [
         (
             ["暂时没有新资讯哦！"],
-            thing["entries"][0].title[: min(80, len(thing["entries"][0].title))],
+            (
+                thing["entries"][0]["title"]
+                if len(thing["entries"]) > 0
+                else "Grab Rss Error!"
+            ),
         )
     ]
 

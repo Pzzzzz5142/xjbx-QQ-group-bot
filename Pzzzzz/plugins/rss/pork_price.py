@@ -15,14 +15,18 @@ from .utils import sendrss
 import feedparser as fp
 import re
 
+__rss_name__ = "pprice"
+
 
 async def pprice():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
-        values = await conn.fetch(f"""select dt from rss where id = 'pprice';""")
+        values = await conn.fetch(
+            f"""select dt from rss where id = '{__rss_name__}';"""
+        )
         if len(values) == 0:
-            await conn.execute("""insert into rss values ('pprice','-1')""")
+            await conn.execute(f"""insert into rss values ('{__rss_name__}','-1')""")
             db_dt = "-1"
         else:
             db_dt = values[0]["dt"]
@@ -30,8 +34,13 @@ async def pprice():
         ress = await getpprice()
 
         res, dt = ress[0]
+        if dt == "Grab Rss Error!":
+            logger.error(f"Grab Rss「{__rss_name__}」 Error!")
+            return
         if dt != db_dt:
-            await conn.execute(f"update rss set dt = '{dt}' where id = 'pprice'")
+            await conn.execute(
+                f"update rss set dt = '{dt}' where id = '{__rss_name__}'"
+            )
             try:
                 await bot.send_group_msg(
                     group_id=bot.config.QGROUP, message=res[0],
@@ -40,18 +49,27 @@ async def pprice():
                 pass
 
         values = await conn.fetch(
-            f"""select qid, dt from subs where rss = 'pprice'; """
+            f"""select qid, dt from subs where rss = '{__rss_name__}'; """
         )
 
         for item in values:
             if item["dt"] != dt:
-                await sendrss(item["qid"], bot, "pprice", ress)
+                await sendrss(item["qid"], bot, __rss_name__, ress)
 
 
 async def getpprice(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/pork-price")
 
-    ress = [(["暂时没有猪肉价格哦！"], thing["entries"][0]["id"])]
+    ress = [
+        (
+            ["暂时没有猪肉价格哦！"],
+            (
+                thing["entries"][0]["title"]
+                if len(thing["entries"]) > 0
+                else "Grab Rss Error!"
+            ),
+        )
+    ]
 
     cnt = 0
 

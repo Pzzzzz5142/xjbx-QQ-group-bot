@@ -31,8 +31,8 @@ async def jrrp(session: CommandSession):
             if values["dt"] != today:
                 ans = randint(0, 100)
                 await conn.execute(
-                    """update jrrp set rand = {} where qid={};""".format(
-                        ans, session.event.user_id
+                    """update jrrp set rand = {},dt='{}'  where qid={};""".format(
+                        ans, today, session.event.user_id
                     )
                 )
             else:
