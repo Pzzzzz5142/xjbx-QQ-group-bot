@@ -54,8 +54,8 @@ async def sendrss(
                 is_read = True
             if num[1] != -1 and cnt >= num[1]:
                 break
-
             see = ""
+            print("=" * 19 + "\nin\n")
             try:
                 is_r = is_read
                 cnt += 1
@@ -68,7 +68,7 @@ async def sendrss(
                     is_r = False
                 success_dt = dt
             except CQHttpError:
-                pass
+                logger.error("Not ok here. Not ok message" + see)
 
         try:
             await bot.send_private_msg(user_id=qid, message="=" * 19)

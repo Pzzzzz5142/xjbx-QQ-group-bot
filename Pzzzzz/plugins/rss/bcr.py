@@ -14,6 +14,7 @@ from utils import *
 from .utils import sendrss
 import feedparser as fp
 import re
+import aiohttp
 
 
 async def bcr():
@@ -80,8 +81,12 @@ async def getbcr(max_num: int = -1):
         )
         text = [text]
 
-        for i in pics:
-            text.append(cq.image(i[:-1]))
+        async with aiohttp.ClientSession() as sess:
+            for i in pics:
+                i = i[:-1]
+                pic = await sendpic(sess, i)
+                if pic != None:
+                    text.append(pic)
         ress.append((text, item["published"]))
 
         cnt += 1
