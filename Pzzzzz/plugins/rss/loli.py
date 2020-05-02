@@ -13,6 +13,8 @@ import feedparser as fp
 import re
 from bs4 import BeautifulSoup
 import aiohttp
+import base64
+import os.path as path
 
 
 async def loli():
@@ -51,20 +53,9 @@ async def getloli(max_num: int = -1):
         if max_num != -1 and cnt >= max_num:
             break
 
-        async with aiohttp.ClientSession() as sess:
-            async with sess.get(item["link"], headers=headers) as resp:
-                if resp.status != 200:
-                    ShitHtml = "Html页面获取失败！错误码：" + str(resp.status)
-                else:
-                    ShitHtml = await resp.text()
+        ShitHtml, pic = await anti_anti_bot(item["link"])
 
-        if ShitHtml[0] != "H":
-            sp = BeautifulSoup(ShitHtml, "lxml")
-            pic = sp.find_all("img", attrs={"title": "点击放大"})[0].attrs["src"]
-        else:
-            pic = ""
-
-        pic = (cq.image(pic) + "\n") if pic != "" else pic
+        pic = (pic + "\n") if pic != None else ""
 
         text = [item.title + "\n" + pic + "链接：" + hourse(item["link"])]
 
@@ -76,3 +67,41 @@ async def getloli(max_num: int = -1):
         ress = ress[1:]
 
     return ress
+
+
+async def anti_anti_bot(url) -> str:
+    def stringToHex(s) -> str:
+        ans = ""
+        for i in s:
+            ans += format(ord(i), "x")
+        return ans
+
+    cookies = {}
+    urlData = stringToHex(url)
+    screenData = stringToHex("1280,720")
+    cookies["srcurl"] = urlData
+    text = ""
+    async with aiohttp.ClientSession(cookies=cookies) as session:
+        async with session.get(url) as resp:
+            if resp.status != 200:
+                return "Html页面获取失败！错误码：" + str(resp.status)
+            text = await resp.text()
+        if "YunSuoAutoJump" in text:
+            async with session.get(url + "?security_verify_data=" + screenData) as resp:
+                if resp.status != 200:
+                    return "Html页面获取失败！错误码：" + str(resp.status)
+                await resp.text()
+
+            async with session.get(url) as resp:
+                if resp.status != 200:
+                    return "Html页面获取失败！错误码：" + str(resp.status)
+                resp = await session.get(url)
+                text = await resp.text()
+
+            if text[0] != "H":
+                sp = BeautifulSoup(text, "lxml")
+                pic = sp.find_all("img", attrs={"title": "点击放大"})[0].attrs["src"]
+            else:
+                pic = ""
+            pic = await sendpic(session, pic)
+    return text, pic

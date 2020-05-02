@@ -10,6 +10,7 @@ API_ROOT = "http://127.0.0.1:5700"
 
 # 加入的QQ群
 QGROUP = None
+
 # 链接数据库的url链接 参考格式 postgres://user:pass@host:port/database?option=value
 # 各字段含义：
 # user 数据库用户名
@@ -18,3 +19,7 @@ QGROUP = None
 # port 数据库运行的端口
 # database 要连接的数据库名
 DATABASE = ""
+
+# coolq 存图的位置
+IMGPATH = ""
+

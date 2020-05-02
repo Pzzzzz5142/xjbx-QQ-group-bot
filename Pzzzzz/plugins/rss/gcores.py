@@ -72,28 +72,17 @@ async def getgcores(max_num: int = -1):
         sp = BeautifulSoup(item.summary, "lxml")
 
         pic = sp.find_all("img", attrs={"class": "newsPage_cover"})[0].attrs["src"]
+        fd = re.search(r"\?", pic)
+        if fd != None:
+            pic = pic[: fd.span()[0]]
 
         async with aiohttp.ClientSession() as sess:
-            async with sess.get(pic, headers=headers) as resp:
-                if resp.status != 200:
-                    ShitBase64 = "图片加载失败！错误码：" + str(resp.status)
-                else:
-                    ShitBase64 = str(
-                        base64.b64encode(await resp.read()), encoding="utf-8"
-                    )
+            pic = await sendpic(sess, pic)
 
         title = item.title
 
         text = (
-            title
-            + "\n"
-            + (
-                (cq.image("base64://" + ShitBase64) + "\n")
-                if ShitBase64[0] != "图"
-                else ShitBase64
-            )
-            + "传送门："
-            + item["link"]
+            title + "\n" + ((pic + "\n") if pic != None else "") + "传送门：" + item["link"]
         )
 
         ress.append(([text], title[: min(80, len(title))]))

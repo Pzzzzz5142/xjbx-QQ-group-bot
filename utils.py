@@ -3,6 +3,9 @@ from random import randint
 from nonebot.log import logger
 import logging
 import os.path as path
+from aiohttp import ClientSession
+import nonebot
+import cq
 
 doc = {
     "mrfz": "明日方舟",
@@ -17,6 +20,7 @@ doc = {
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
 }
+
 
 def init():
     file_handler = logging.FileHandler(
@@ -66,3 +70,21 @@ def hourse(url: str) -> str:
         url = "（打🐎失败，请复制到浏览器中打开，不要直接打开！）" + a
 
     return url
+
+
+async def sendpic(session: ClientSession, url: str):
+    async with session.get(url) as resp:
+        if resp.status != 200:
+            pic = None
+        else:
+            _, pic = path.split(url)
+            bot = nonebot.get_bot()
+            if not path.exists(bot.config.IMGPATH + pic):
+                with open(bot.config.IMGPATH + pic, "wb") as fl:
+                    while True:
+                        ck = await resp.content.read(8196)
+                        if not ck:
+                            break
+                        fl.write(ck)
+            pic = cq.image(pic)
+    return pic
