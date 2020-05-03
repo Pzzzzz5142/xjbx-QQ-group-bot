@@ -74,14 +74,16 @@ async def getgcores(max_num: int = -1):
         if max_num != -1 and cnt >= max_num:
             break
         sp = BeautifulSoup(item.summary, "lxml")
+        try:
+            pic = sp.find_all("img", attrs={"class": "newsPage_cover"})[0].attrs["src"]
+            fd = re.search(r"\?", pic)
+            if fd != None:
+                pic = pic[: fd.span()[0]]
 
-        pic = sp.find_all("img", attrs={"class": "newsPage_cover"})[0].attrs["src"]
-        fd = re.search(r"\?", pic)
-        if fd != None:
-            pic = pic[: fd.span()[0]]
-
-        async with aiohttp.ClientSession() as sess:
-            pic = await sendpic(sess, pic)
+            async with aiohttp.ClientSession() as sess:
+                pic = await sendpic(sess, pic)
+        except:
+            pic = None
 
         title = item.title
 

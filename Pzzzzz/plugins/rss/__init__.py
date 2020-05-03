@@ -1,4 +1,5 @@
 from nonebot import on_command, CommandSession, on_startup, permission as perm
+from nonebot.command import call_command
 from nonebot.message import unescape
 import asyncio
 import asyncpg
@@ -157,7 +158,22 @@ async def ___(session: CommandSession):
             )
         )
     if len(session.state["ls"]) == 0 and (not session.is_first_run or arg != ""):
-        session.finish("本次资讯查看为空哦！")
+        session.finish("本次资讯{}为空哦！".format("查看" if session.state["subs"] else "订阅"))
+
+
+@on_command("订阅", only_to_me=False, shell_like=True)
+async def subs(session: CommandSession):
+    args = session.current_arg_text.strip(" ")
+
+    flg = await call_command(
+        session.bot,
+        session.event,
+        "rss",
+        current_arg="-s " + args,
+        disable_interaction=True,
+    )
+    if flg == False:
+        session.finish("订阅失败")
 
 
 @on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)

@@ -44,7 +44,7 @@ async def mrfz():
             try:
                 await bot.send_group_msg(
                     group_id=bot.config.QGROUP,
-                    message=f"「{doc['mrfz']}」有新公告啦！输入 rss mrfz 即可查看！已订阅用户请检查私信。",
+                    message=f"「{doc['mrfz']}」有新公告啦！\n输入 rss mrfz 即可查看！\n输入 订阅 mrfz 即可订阅！（注意订阅后的空格哦！）\n已订阅用户请检查私信。",
                 )
             except CQHttpError:
                 pass
