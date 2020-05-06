@@ -10,8 +10,13 @@ import random
 import bisect
 from db import db
 import cq
+from nonebot import on_command, CommandSession
 from utils import *
-from .utils import sendrss
 import feedparser as fp
 import re
 import aiohttp
+
+
+@on_command("出刀")
+async def cd(session: CommandSession):
+    pass

@@ -42,8 +42,11 @@ async def query(someShit):
             for i in RealShit["trans"]:
                 re += i + "\n"
         except:
-            for i in RealShit["inputting"]:
-                re += i + "\n"
+            try:
+                for i in RealShit["inputting"]:
+                    re += i + "\n"
+            except:
+                pass
         re = re[:-1]
         if re == "":
             ans.append(f"呐呐呐，没有查到 {RealShit['name']} 的相关结果")
