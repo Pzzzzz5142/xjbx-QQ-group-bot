@@ -67,17 +67,20 @@ async def sendrss(
                     is_r = False
                 success_dt = dt
             except CQHttpError:
-                logger.error("Not ok here. Not ok message" + see)
+                logger.error(f"Not ok here. Not ok message 「{see}」")
+                logger.error(f"Processing QQ 「{qid}」, Rss 「{source}」")
 
         try:
             await bot.send_private_msg(user_id=qid, message="=" * 19)
         except CQHttpError:
             pass
-
-        await bot.send_private_msg(
-            user_id=qid,
-            message=f"已发送 {cnt} 条「{doc[source] if source !='自定义路由' else route}」的资讯！咕噜灵波～(∠・ω< )⌒★",
-        )
+        try:
+            await bot.send_private_msg(
+                user_id=qid,
+                message=f"已发送 {cnt} 条「{doc[source] if source !='自定义路由' else route}」的资讯！咕噜灵波～(∠・ω< )⌒★",
+            )
+        except CQHttpError:
+            logger.error(f"Send Ending Error! Processing QQ 「{qid}」")
         if success_dt != "" and source != "自定义路由":
             await conn.execute(
                 f"""update subs set dt = '{success_dt}' where qid = {qid} and rss = '{source}';"""

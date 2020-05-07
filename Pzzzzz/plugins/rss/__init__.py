@@ -158,7 +158,9 @@ async def ___(session: CommandSession):
             )
         )
     if len(session.state["ls"]) == 0 and (not session.is_first_run or arg != ""):
-        session.finish("本次资讯{}为空哦！".format("查看" if session.state["subs"] else "订阅"))
+        session.finish(
+            "本次资讯{}为空哦！".format("查看" if session.state["subs"] == 0 else "订阅")
+        )
 
 
 @on_command("订阅", only_to_me=False, shell_like=True)
@@ -176,7 +178,7 @@ async def subs(session: CommandSession):
         session.finish("订阅失败")
 
 
-@on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
+@on_command("up", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
 async def __(x):
     await bcr()
     await mrfz()

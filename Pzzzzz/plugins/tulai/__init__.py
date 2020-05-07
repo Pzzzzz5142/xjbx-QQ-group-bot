@@ -11,6 +11,16 @@ import datetime
 from random import randint
 
 
-@on_command("图来", only_to_me=False)
+@on_command("活动预测", aliases={"activity", "act"}, only_to_me=False)
 async def tulai(session: CommandSession):
     await session.send(unescape(cq.image("activity.jpg")))
+
+
+@on_command("h3", aliases={"H3"}, only_to_me=False)
+async def tulai(session: CommandSession):
+    await session.send(unescape(cq.image("H3.jpg")))
+
+
+@on_command("孤儿", aliases={"装备"}, only_to_me=False)
+async def tulai(session: CommandSession):
+    await session.send(unescape(cq.image("gl.jpg")))
