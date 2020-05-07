@@ -178,7 +178,7 @@ async def subs(session: CommandSession):
         session.finish("订阅失败")
 
 
-@on_command("ce", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
+@on_command("up", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
 async def __(x):
     await bcr()
     await mrfz()
