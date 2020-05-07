@@ -24,3 +24,8 @@ async def tulai(session: CommandSession):
 @on_command("孤儿", aliases={"装备"}, only_to_me=False)
 async def tulai(session: CommandSession):
     await session.send(unescape(cq.image("gl.jpg")))
+
+
+@on_command("ghz", aliases={"公会战"}, only_to_me=False)
+async def tulai(session: CommandSession):
+    await session.send(unescape(cq.image("ghz.jpg")))

@@ -27,7 +27,8 @@ async def _(s):
     bot = nonebot.get_bot()
     try:
         await bot.send_group_msg(
-            group_id=bot.config.QGROUP, message=unescape("Ciallo～(∠・ω< )⌒★，今天你出刀了吗？"),
+            group_id=bot.config.QGROUP,
+            message=unescape(unescape(cq.at("all")) + " Ciallo～(∠・ω< )⌒★，今天你出刀了吗？"),
         )
     except CQHttpError:
         pass
