@@ -49,7 +49,7 @@ async def __():
     await bcr()
     await mrfz()
     await gcores()
-    await loli()
+    # await loli()
     await pprice()
 
 
