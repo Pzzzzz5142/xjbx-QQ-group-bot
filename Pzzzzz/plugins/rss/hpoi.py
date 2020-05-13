@@ -102,8 +102,9 @@ async def gethpoi(max_num: int = -1):
             content = content.strip()
             x = transtime(content, "%a %b %d %H:%M:%S %Z %Y 创建")
             if isinstance(x, str):
-                x = transtime(content[:16], "%Y-%M-%D %H:%M:%S")
-            tm = x if tm == None or tm < x else tm
+                x = transtime(content[:16], "%Y-%m-%d %H:%M")
+            if not isinstance(x, str):
+                tm = x if tm == None or tm < x else tm
 
         ress.append((text, tm))
 

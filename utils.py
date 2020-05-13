@@ -7,6 +7,7 @@ from aiohttp import ClientSession
 import nonebot
 import cq
 import re
+import datetime
 
 doc = {
     "mrfz": "明日方舟",
@@ -98,6 +99,6 @@ async def sendpic(session: ClientSession, url: str):
 def transtime(tm: str, fmt: str = "%a, %d %b %Y %H:%M:%S %Z"):
     try:
         tm = datetime.datetime.strptime(tm, fmt)
-    except:
+    except ValueError:
         pass
     return tm
