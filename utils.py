@@ -6,6 +6,8 @@ import os.path as path
 from aiohttp import ClientSession
 import nonebot
 import cq
+import re
+import datetime
 
 doc = {
     "mrfz": "明日方舟",
@@ -15,6 +17,7 @@ doc = {
     "nature": "Nature",
     "pprice": "每日生猪价格",
     "bh3": "崩坏3",
+    "hpoi": "Hpoi 手办wiki",
 }
 
 headers = {
@@ -73,6 +76,9 @@ def hourse(url: str) -> str:
 
 
 async def sendpic(session: ClientSession, url: str):
+    fd = re.search(r"\?", url)
+    if fd != None:
+        url = url[: fd.span()[0]]
     async with session.get(url) as resp:
         if resp.status != 200:
             pic = None
@@ -88,3 +94,11 @@ async def sendpic(session: ClientSession, url: str):
                         fl.write(ck)
             pic = cq.image(pic)
     return pic
+
+
+def transtime(tm: str, fmt: str = "%a, %d %b %Y %H:%M:%S %Z"):
+    try:
+        tm = datetime.datetime.strptime(tm, fmt)
+    except ValueError:
+        pass
+    return tm

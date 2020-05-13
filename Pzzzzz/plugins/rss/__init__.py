@@ -27,6 +27,7 @@ from .gcores import gcores, getgcores
 from .loli import loli, getloli
 from .pork_price import pprice, getpprice
 from .bh3 import bh3, getbh3
+from .hpoi import hpoi, gethpoi
 
 __plugin_name__ = "rss 订阅"
 
@@ -151,6 +152,10 @@ async def ___(session: CommandSession):
         session.state["ls"].append((getbh3, "bh3"))
         args.remove("bh3")
 
+    if "hpoi" in args:
+        session.state["ls"].append((gethpoi, "hpoi"))
+        args.remove("hpoi")
+
     if len(args) > 0:
         await session.send(
             unescape(
@@ -183,6 +188,6 @@ async def __(x):
     await bcr()
     await mrfz()
     await gcores()
-    await loli()
+    await hpoi()
     await pprice()
     await bh3()
