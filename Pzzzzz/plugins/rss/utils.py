@@ -49,6 +49,7 @@ async def sendrss(
             ress = ress[: min(len(ress), num[1])]
 
         success_dt = ""
+        fail = 0
         for res, dt in reversed(ress):
             if is_read == False and dt == qdt:
                 is_read = True
@@ -67,8 +68,25 @@ async def sendrss(
                     is_r = False
                 success_dt = dt
             except CQHttpError:
+                fail += 1
                 logger.error(f"Not ok here. Not ok message 「{see}」")
                 logger.error(f"Processing QQ 「{qid}」, Rss 「{source}」")
+                logger.error("Informing the user!")
+                try:
+                    await bot.send_private_msg(
+                        user_id=qid,
+                        message=f"该资讯发送不完整！丢失信息为：「{see}」，请联系管理员。",
+                        auto_escape=True,
+                    )
+                except:
+                    try:
+                        await bot.send_private_msg(
+                            user_id=qid,
+                            message=f"该资讯发送不完整！丢失信息无法发送，请联系管理员。",
+                            auto_escape=True,
+                        )
+                    except:
+                        logger.error("Informing failed!")
 
         try:
             await bot.send_private_msg(user_id=qid, message="=" * 19)
@@ -77,7 +95,7 @@ async def sendrss(
         try:
             await bot.send_private_msg(
                 user_id=qid,
-                message=f"已发送 {cnt} 条「{doc[source] if source !='自定义路由' else route}」的资讯！咕噜灵波～(∠・ω< )⌒★",
+                message=f"已发送 {cnt} 条「{doc[source] if source !='自定义路由' else route}」的资讯！{f'其中失败 {fail} 条！' if fail !=0 else ''}咕噜灵波～(∠・ω< )⌒★",
             )
         except CQHttpError:
             logger.error(f"Send Ending Error! Processing QQ 「{qid}」")
