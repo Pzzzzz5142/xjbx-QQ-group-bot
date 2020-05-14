@@ -52,6 +52,7 @@ async def __():
     await gcores()
     # await loli()
     await pprice()
+    await bh3()
 
 
 @on_command("rss", only_to_me=False)
