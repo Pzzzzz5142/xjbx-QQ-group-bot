@@ -16,7 +16,7 @@ import random
 import bisect
 from db import db
 import cq
-from utils import *
+from utils import sendpic
 import feedparser as fp
 import re
 from .utils import sendrss
@@ -27,7 +27,6 @@ import base64
 
 async def gcores():
     bot = nonebot.get_bot()
-    now = datetime.now(pytz.timezone("Asia/Shanghai"))
 
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = 'gcores';""")
