@@ -22,6 +22,7 @@ async def cd(session: CommandSession):
     pass
 
 
+"""
 @nonebot.scheduler.scheduled_job("cron", hour="22", minute="0")
 async def _():
     bot = nonebot.get_bot()
@@ -32,3 +33,5 @@ async def _():
         )
     except CQHttpError:
         pass
+"""
+
