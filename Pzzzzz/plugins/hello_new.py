@@ -5,7 +5,7 @@ import cq
 
 @on_notice("group_increase")
 async def hello(session: NoticeSession):
-    await session.send(unescape(cq.at(session.event.user_id) + " 欢迎新人入群！"))
+    await session.send(unescape(cq.at(session.event.user_id) + " 欢迎新人入群👏！"))
 
 
 @on_request("friend")
