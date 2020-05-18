@@ -77,7 +77,7 @@ async def getpprice(max_num: int = -1):
 
         if max_num != -1 and cnt >= max_num:
             break
-        ress.append(([item["title"]], item["id"]))
+        ress.append(([item["title"]], item["title"]))
 
         cnt += 1
 
