@@ -336,7 +336,7 @@ async def _(session: CommandSession):
         parser.add_argument("--url", "-u", type=str, help="想查询的 Yahoo 链接")
         parser.add_argument("--query", "-q", type=str, help="查询指定股票信息")
         parser.add_argument(
-            "--signin", "-i", action="store_true", default=False, help="注册"
+            "--signup", "-i", action="store_true", default=False, help="注册"
         )
         parser.add_argument(
             "--list", "-l", action="store_true", default=False, help="查看持股"
