@@ -33,6 +33,32 @@
 
 由于我很懒，所以高级用法自己看看源码吧（QwQ），但是基本用法已经够用了。
 
+# To-Do
+
++ stock
+
+    说明：股票交易功能。接入真实的股票数据，来进行群内云炒股。
+    
+    完成度：基础功能已完成。
+    
+    To-do：
+        + 优化群内体验，解决刷屏问题。
+    
+        + 人性化指令
+   
++ 抽卡
+
+    说明：抽卡功能。卡池由Onedrive在线文档维护。
+    
+    完成度：（只建立了Onedrive文档
+    
+    To-do：
+        + 明日方舟多卡池抽卡，有保底机制。
+        
+        + 接入股票功能， 使用股票资金抽卡
+        
+        + Onedrive文档自动抓取群友维护的卡池信息。
+
 # 鸣谢
 
 + [[开源] 二次元搜图QQ机器人](https://github.com/Tsuk1ko/CQ-picfinder-robot) 一开始就想把这个插件的功能加到我的机器人里面，无奈博主是用我不会的语言写的，既然抄不了就只能自己手撸一个了。当然他的源码也很有启发性，API也很好用！
@@ -40,3 +66,4 @@
 + [Rsshub](https://github.com/DIYgod/RSSHub) 整个`rss`都依赖于它了，我怎么能不感谢呢？
 + [SauceNAO](https://saucenao.com) `st`功能有很大一部分都是依赖于它的，同样表示感谢！
 + [哔哩哔哩](https://www.bilibili.com)
++ [nonebot](https://github.com/nonebot/nonebot)
