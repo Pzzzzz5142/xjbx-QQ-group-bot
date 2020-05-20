@@ -75,7 +75,7 @@ async def stock(session: CommandSession):
                 await conn.execute(
                     f"insert into acc (qid) values ({session.event.user_id})"
                 )
-                await session.send("注册成功！当前注册资本为 10000000000 美元。")
+                await session.send("注册成功！当前注册资本为 1000000 美元。")
             except:
                 session.finish("你已经注册过了！")
 
@@ -162,7 +162,7 @@ async def stock(session: CommandSession):
                                     )
                             else:
                                 nums = int(money / price)
-                                tot += money - price * nums
+                                tot += price * nums
                                 if nums == 0:
                                     fail.append((item, f"当前余额不足以购买一支「{item}」股票"))
                                 else:
@@ -365,7 +365,7 @@ async def _(session: CommandSession):
 
         session.state["s"] = argv.url if argv.url != None else argv.show
         session.state["q"] = argv.query
-        session.state["i"] = argv.signin
+        session.state["i"] = argv.signup
         session.state["h"] = argv.list
         try:
             session.state["add"] = argv.symbol
