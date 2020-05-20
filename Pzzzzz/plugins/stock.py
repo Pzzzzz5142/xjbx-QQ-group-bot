@@ -92,7 +92,7 @@ async def stock(session: CommandSession):
                         else:
                             ShitJson = await resp.json()
                             price = (
-                                int(ShitJson["regularMarketPrice"]["fmt"])
+                                float(ShitJson["regularMarketPrice"]["fmt"])
                                 * item["nums"]
                             )
                             tot += price
@@ -104,6 +104,198 @@ async def stock(session: CommandSession):
             for msg in res:
                 await session.send(msg)
             await session.send(f'共计：{tot} USD。其中 「{", ".join(fail)}」 股票价格获取失败。')
+
+    if session.state["add"] != None:
+        if session.is_first_run:
+            ls = session.state["add"]
+            fail = []
+            success = []
+            tot = 0
+            async with db.pool.acquire() as conn:
+                values = await conn.fetch(
+                    f"select money from acc where qid={session.event.user_id}"
+                )
+                if len(values) == 0:
+                    session.finish("您尚未注册！")
+                money = values[0]["money"]
+            await session.send("test")
+            async with aiohttp.ClientSession() as sess:
+                if len(ls) > 1 and session.state["nums"] == "allin":
+                    session.finish("多种股票不支持 allin 操作！")
+                for item in ls:
+                    async with sess.get(qurl + item, params=qdatas) as resp:
+                        app = ""
+                        if resp.status != 200:
+                            fail.append((item, "无法获取最新股票价格"))
+                        else:
+                            ShitJson = await resp.json()
+                            ShitJson = ShitJson["quoteSummary"]["result"][0]["price"]
+                            price = float(ShitJson["regularMarketPrice"]["fmt"])
+                            if isinstance(session.state["nums"], int):
+                                if money < session.state["nums"] * price:
+                                    fail.append(item, "余额不足")
+                                else:
+                                    success.append(item, session.state["nums"])
+                                    money -= session.state["nums"] * price
+                                    tot += session.state["nums"] * price
+                                    success.append(
+                                        (
+                                            item,
+                                            price,
+                                            session.state["nums"],
+                                            price * session.state["nums"],
+                                        )
+                                    )
+                            else:
+                                nums = money // price
+                                tot += money - price * nums
+                                money -= price * nums
+                                if nums == 0:
+                                    fail.append(item, f"当前余额不足以购买一支「{item}」股票")
+                                else:
+                                    success.append((item, price, nums, price * nums))
+            session.state["trade"] = (success, fail)
+            await session.send("以下是本次交易信息：")
+            if len(success) > 0:
+                await session.send("可以完成的操作：")
+                for i in success:
+                    await session.send(
+                        "股票代码：{}\n股票单价：{}\n购买支数：{}\n合计金额：{}".format(
+                            i[0], i[1], i[2], i[3]
+                        )
+                    )
+            if len(fail) > 0:
+                await session.send("无法完成的操作：")
+                for i in fail:
+                    await session.send("股票代码：{}\n原因：{}".format(i[0], i[1]))
+            await session.send(f"交易前余额：「{money+tot}」USD。交易后余额：「{money}」USD。")
+        confirm = session.get("confirm", prompt="请确认这笔交易！输入「确认」进行确认，输入其他任意值取消这笔交易。")
+        if confirm == "确认":
+            success, fail = session.state["trade"]
+            async with db.pool.acquire() as conn:
+                money = await conn.fetch(
+                    f"select money from acc where qid={session.event.user_id}"
+                )
+                money = money[0]["money"]
+                for item in success:
+                    async with conn.transaction():
+                        values = await conn.fetch(
+                            "select * from holds where qid={} and stk='{}'".format(
+                                session.event.user_id, item[0]
+                            )
+                        )
+                        if len(values) == 0:
+                            await conn.execute(
+                                "insert into holds values({},'{}',{})".format(
+                                    session.event.user_id, item[0], item[2]
+                                )
+                            )
+                        else:
+                            await conn.execute(
+                                "update holds set nums = nums + {2} where qid = {0} and stk = '{1}'".format(
+                                    session.event.user_id, item[0], item[2]
+                                )
+                            )
+                        await conn.execute(
+                            f"update acc set money = money - {item[3]} where qid={session.event.user_id};"
+                        )
+            await session.send("交易完成！")
+            
+    if session.state["add"] != None:
+        if session.is_first_run:
+            ls = session.state["add"]
+            fail = []
+            success = []
+            tot = 0
+            async with db.pool.acquire() as conn:
+                values = await conn.fetch(
+                    f"select money from acc where qid={session.event.user_id}"
+                )
+                if len(values) == 0:
+                    session.finish("您尚未注册！")
+                money = values[0]["money"]
+            await session.send("test")
+            async with aiohttp.ClientSession() as sess:
+                if len(ls) > 1 and session.state["nums"] == "allin":
+                    session.finish("多种股票不支持 allin 操作！")
+                for item in ls:
+                    async with sess.get(qurl + item, params=qdatas) as resp:
+                        app = ""
+                        if resp.status != 200:
+                            fail.append((item, "无法获取最新股票价格"))
+                        else:
+                            ShitJson = await resp.json()
+                            ShitJson = ShitJson["quoteSummary"]["result"][0]["price"]
+                            price = float(ShitJson["regularMarketPrice"]["fmt"])
+                            if isinstance(session.state["nums"], int):
+                                if money < session.state["nums"] * price:
+                                    fail.append(item, "余额不足")
+                                else:
+                                    success.append(item, session.state["nums"])
+                                    money -= session.state["nums"] * price
+                                    tot += session.state["nums"] * price
+                                    success.append(
+                                        (
+                                            item,
+                                            price,
+                                            session.state["nums"],
+                                            price * session.state["nums"],
+                                        )
+                                    )
+                            else:
+                                nums = money // price
+                                tot += money - price * nums
+                                money -= price * nums
+                                if nums == 0:
+                                    fail.append(item, f"当前余额不足以购买一支「{item}」股票")
+                                else:
+                                    success.append((item, price, nums, price * nums))
+            session.state["trade"] = (success, fail)
+            await session.send("以下是本次交易信息：")
+            if len(success) > 0:
+                await session.send("可以完成的操作：")
+                for i in success:
+                    await session.send(
+                        "股票代码：{}\n股票单价：{}\n购买支数：{}\n合计金额：{}".format(
+                            i[0], i[1], i[2], i[3]
+                        )
+                    )
+            if len(fail) > 0:
+                await session.send("无法完成的操作：")
+                for i in fail:
+                    await session.send("股票代码：{}\n原因：{}".format(i[0], i[1]))
+            await session.send(f"交易前余额：「{money+tot}」USD。交易后余额：「{money}」USD。")
+        confirm = session.get("confirm", prompt="请确认这笔交易！输入「确认」进行确认，输入其他任意值取消这笔交易。")
+        if confirm == "确认":
+            success, fail = session.state["trade"]
+            async with db.pool.acquire() as conn:
+                money = await conn.fetch(
+                    f"select money from acc where qid={session.event.user_id}"
+                )
+                money = money[0]["money"]
+                for item in success:
+                    async with conn.transaction():
+                        values = await conn.fetch(
+                            "select * from holds where qid={} and stk='{}'".format(
+                                session.event.user_id, item[0]
+                            )
+                        )
+                        if len(values) == 0:
+                            await conn.execute(
+                                "insert into holds values({},'{}',{})".format(
+                                    session.event.user_id, item[0], item[2]
+                                )
+                            )
+                        else:
+                            await conn.execute(
+                                "update holds set nums = nums + {2} where qid = {0} and stk = '{1}'".format(
+                                    session.event.user_id, item[0], item[2]
+                                )
+                            )
+                        await conn.execute(
+                            f"update acc set money = money - {item[3]} where qid={session.event.user_id};"
+                        )
+            await session.send("交易完成！")
 
 
 @stock.args_parser
@@ -128,9 +320,33 @@ async def _(session: CommandSession):
         parser.add_argument(
             "--holds", "-H", action="store_true", default=False, help="查看持股"
         )
+        sub = parser.add_subparsers()
+
+        add = sub.add_parser("buy", help="买进股票")
+
+        subadd = add.add_mutually_exclusive_group()
+        subadd.add_argument("--nums", "-n", type=int, help="购入数量")
+        subadd.add_argument(
+            "--allin", "-a", action="store_true", default=False, help="allin"
+        )
+        add.add_argument("symbol", help="买进的股票编号。", nargs="+")
+
+        sell = sub.add_parser("sell", help="抛售股票")
+
+        subsell = sell.add_mutually_exclusive_group()
+        subsell.add_argument("--nums", "-n", type=int, help="抛售数量")
+        subsell.add_argument(
+            "--allin", "-a", action="store_true", default=False, help="allin"
+        )
+        sell.add_argument("symbol", help="抛售的股票编号。", nargs="+")
+
         argv = parser.parse_args(arg.split(" "))
 
         session.state["s"] = argv.url if argv.url != None else argv.show
         session.state["q"] = argv.query
         session.state["i"] = argv.signin
         session.state["h"] = argv.holds
+        session.state["add"] = argv.symbol
+        session.state["nums"] = "allin" if argv.allin else argv.holds
+    else:
+        session.state["confirm"] = session.current_arg.strip()
