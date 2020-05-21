@@ -418,11 +418,11 @@ async def _(session: CommandSession):
         session.state["i"] = argv.signup
         session.state["h"] = argv.list
         try:
-            session.state["add"] = argv.symbol.lower()
+            session.state["add"] = [i.lower() for i in argv.symbol]
         except:
             pass
         try:
-            session.state["sell"] = argv.ssymbol.lower()
+            session.state["sell"] = [i.lower() for i in argv.ssymbol]
         except:
             pass
         try:
