@@ -126,10 +126,16 @@ async def stock(session: CommandSession):
             for msg in res:
                 await session.send(msg, ensure_private=True)
             await session.send(
-                f"共计：{tot+money} USD。现金额度为：{money} USD。"
+                f"共持股：{len(values)} 支\n共计：{tot+money} USD。现金额度为：{money} USD。"
                 + (f"其中 「{', '.join(fail)}」 股票价格获取失败。" if len(fail) > 0 else ""),
                 ensure_private=True,
             )
+            if session.event.detail_type != "private":
+                await session.send(
+                    cq.at(session.event.user_id)
+                    + f" 共持股：{len(values)} 支\n共计：{tot+money} USD。现金额度为：{money} USD。"
+                    + (f"其中 「{', '.join(fail)}」 股票价格获取失败。" if len(fail) > 0 else ""),
+                )
 
     if "add" in session.state:
         if session.event.detail_type == "private":
@@ -412,11 +418,11 @@ async def _(session: CommandSession):
         session.state["i"] = argv.signup
         session.state["h"] = argv.list
         try:
-            session.state["add"] = argv.symbol
+            session.state["add"] = argv.symbol.lower()
         except:
             pass
         try:
-            session.state["sell"] = argv.ssymbol
+            session.state["sell"] = argv.ssymbol.lower()
         except:
             pass
         try:
@@ -430,7 +436,7 @@ async def _(session: CommandSession):
 @on_command("买进", only_to_me=False)
 async def buy(session: CommandSession):
     if session.is_first_run:
-        session.state["buy"] = session.current_arg_text.strip()
+        session.state["buy"] = session.current_arg_text.strip().lower()
         if session.state["buy"] == "":
             session.finish("买进不能为空哦！")
         session.pause("请问你要买几支呢？")
@@ -450,7 +456,7 @@ async def buy(session: CommandSession):
 @on_command("卖出", aliases={"抛售"}, only_to_me=False)
 async def buy(session: CommandSession):
     if session.is_first_run:
-        session.state["sell"] = session.current_arg_text.strip()
+        session.state["sell"] = session.current_arg_text.strip().lower()
         if session.state["sell"] == "":
             session.finish("出售不能为空哦！")
         session.pause("请问你要卖几支呢？")
