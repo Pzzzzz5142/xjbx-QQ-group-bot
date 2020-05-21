@@ -4,6 +4,7 @@ import yfinance as yf
 import aiohttp
 import pandas as pd
 from db import db
+from nonebot.command import call_command
 
 qurl = "https://query2.finance.yahoo.com/v10/finance/quoteSummary/"
 qdatas = {"modules": "price"}
@@ -258,7 +259,6 @@ async def stock(session: CommandSession):
                                     if nums < session.state["nums"]:
                                         fail.append(item, "出售支数大于拥有支数")
                                     else:
-                                        success.append(item, session.state["nums"])
                                         tot += session.state["nums"] * price
                                         success.append(
                                             (
@@ -381,3 +381,43 @@ async def _(session: CommandSession):
             pass
     else:
         session.state["confirm"] = session.current_arg.strip()
+
+
+@on_command("买进", only_to_me=False)
+async def buy(session: CommandSession):
+    if session.is_first_run:
+        session.state["buy"] = session.current_arg_text.strip()
+        if session.state["buy"] == "":
+            session.finish("买进不能为空哦！")
+        session.pause("请问你要买几支呢？")
+
+    try:
+        nums = int(session.current_arg_text)
+        arg = f"buy -n {nums} "
+    except:
+        if session.current_arg_text in ("allin", "all", "全部"):
+            arg = "buy -a "
+        else:
+            session.pause("请输入阿拉伯数字！")
+
+    session.switch("stk " + arg + session.state["buy"])
+
+
+@on_command("卖出", aliases={"抛售"}, only_to_me=False)
+async def buy(session: CommandSession):
+    if session.is_first_run:
+        session.state["sell"] = session.current_arg_text.strip()
+        if session.state["sell"] == "":
+            session.finish("出售不能为空哦！")
+        session.pause("请问你要卖几支呢？")
+
+    try:
+        nums = int(session.current_arg_text)
+        arg = f"sell -n {nums} "
+    except:
+        if session.current_arg_text in ("allin", "all", "全部"):
+            arg = "sell -a "
+        else:
+            session.pause("请输入阿拉伯数字！")
+
+    session.switch("stk " + arg + session.state["sell"])
