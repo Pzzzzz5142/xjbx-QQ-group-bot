@@ -398,7 +398,7 @@ async def buy(session: CommandSession):
         if session.current_arg_text in ("allin", "all", "全部"):
             arg = "buy -a "
         else:
-            session.pause("请输入阿拉伯数字！")
+            session.finish("请输入阿拉伯数字！")
 
     session.switch("stk " + arg + session.state["buy"])
 
@@ -418,6 +418,6 @@ async def buy(session: CommandSession):
         if session.current_arg_text in ("allin", "all", "全部"):
             arg = "sell -a "
         else:
-            session.pause("请输入阿拉伯数字！")
+            session.finish("请输入阿拉伯数字！")
 
     session.switch("stk " + arg + session.state["sell"])
