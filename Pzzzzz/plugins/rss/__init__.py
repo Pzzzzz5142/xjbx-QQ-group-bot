@@ -107,12 +107,12 @@ async def rss(session: CommandSession):
             if len(fail) > 0:
                 await session.send(
                     cq.at(session.event.user_id)
-                    + f"这{'个' if len(fail)==1 else '些'}源「{' '.join(fail)}」不在你的订阅列表里面哦～"
+                    + f"这{'个' if len(fail)==1 else '些'}源「{'、'.join(fail)}」不在你的订阅列表里面哦～"
                 )
             if len(success) > 0:
                 await session.send(
                     cq.at(session.event.user_id)
-                    + f" 取消订阅「{' '.join(success)}」成功！可喜可贺，可喜可贺！"
+                    + f" 取消订阅「{'、'.join(success)}」成功！可喜可贺，可喜可贺！"
                 )
     elif session.state["list"]:
         async with db.pool.acquire() as conn:
