@@ -5,10 +5,7 @@ import asyncio
 import asyncpg
 from datetime import datetime
 import nonebot
-import pytz
 from aiocqhttp.exceptions import Error as CQHttpError
-import yaml
-import os
 from nonebot.argparse import ArgumentParser
 import sys
 from nonebot.log import logger
@@ -35,7 +32,6 @@ __plugin_name__ = "rss 订阅"
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
 async def _():
     bot = nonebot.get_bot()
-    now = datetime.now(pytz.timezone("Asia/Shanghai"))
     try:
         await bot.send_group_msg(
             group_id=bot.config.QGROUP, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
@@ -108,21 +104,24 @@ async def rss(session: CommandSession):
 
 
 @rss.args_parser
-async def ___(session: CommandSession):
+async def _(session: CommandSession):
     arg = session.current_arg_text.strip()
     args = arg.split(" ")
     args = [i for i in args if i != ""]
 
     if session.is_first_run:
+        parser=ArgumentParser(session=session)
+        subparser=parser.add_mutually_exclusive_group()
+        subparser.add_argument('-s','--subs',help='订阅指定的 rss 源')
+        subparser.add_argument('-r','--route',help='获取指定 rss 源的资讯')
+        subparser.add_argument('-d','--delete',help='删除 rss 订阅')
+        parser.add_argument('ls',help='要处理的 rss 列表',nargs='+')
+        argv=parser.parse_args(args)
         session.state["ls"] = []
-        session.state["subs"] = 1 if (len(args) > 0 and args[0] == "-s") else 0
-        if "-r" in args:
-            args.remove("-r")
-            if "-s" in args:
-                session.finish("-s 和 -r 参数不能共存哦！")
-            else:
-                session.state["route"] = "ok"
-            session.state["ls"] = [x for x in args]
+        session.state["subs"] = 1 if (len(argv.ls) > 0 and argv.subs) else 0
+        if argv.route != None:
+            session.state["route"] = "ok"
+            session.state["ls"] = [x for x in argv.ls]
             if len(session.state["ls"]) == 0:
                 session.finish("查询路由地址不能为空哦！")
             return
@@ -185,7 +184,7 @@ async def subs(session: CommandSession):
 
 
 @on_command("up", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
-async def __(x):
+async def up(x):
     await bcr()
     await mrfz()
     await gcores()
