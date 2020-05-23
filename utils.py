@@ -18,6 +18,7 @@ doc = {
     "pprice": "每日生猪价格",
     "bh3": "崩坏3",
     "hpoi": "Hpoi 手办wiki",
+    "xl": "b站总运营 乐爷Official",
 }
 
 headers = {

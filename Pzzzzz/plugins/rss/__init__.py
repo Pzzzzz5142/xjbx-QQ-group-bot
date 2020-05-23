@@ -25,6 +25,7 @@ from .loli import loli, getloli
 from .pork_price import pprice, getpprice
 from .bh3 import bh3, getbh3
 from .hpoi import hpoi, gethpoi
+from .xlOfficial import xl, getxl
 
 __plugin_name__ = "rss 订阅"
 
@@ -199,6 +200,9 @@ async def _(session: CommandSession):
     if "hpoi" in ls:
         session.state["ls"].append((gethpoi, "hpoi"))
         ls.remove("hpoi")
+    if "xl" in ls:
+        session.state["ls"].append((getxl, "xl"))
+        ls.remove("xl")
 
     if len(ls) > 0:
         await session.send(
