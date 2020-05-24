@@ -78,7 +78,10 @@ async def getxl(max_num: int = -1):
 
         fdres = re.match(r".*?<br>", item.summary, re.S)
 
-        text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
+        if fdres==None:
+            text=item.summary
+        else:
+            text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
 
         while len(text) > 1 and text[-1] == "\n":
             text = text[:-1]

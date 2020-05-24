@@ -49,7 +49,7 @@ async def __():
     await gcores()
     # await loli()
     await pprice()
-    await getxl()
+    await xl()
     await bh3()
 
 
@@ -255,3 +255,4 @@ async def up(x):
     await hpoi()
     await pprice()
     await bh3()
+    await xl()
