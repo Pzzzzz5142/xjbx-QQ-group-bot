@@ -237,16 +237,21 @@ async def stock(session: CommandSession):
             event = {
                 "user_id": session.event.user_id,
                 "message": session.event.message,
+                "raw_message": session.event.raw_message,
                 "post_type": "message",
                 "message_type": "private",
+                "sub_type": "friend",
             }
             await session.send(cq.at(session.event.user_id) + " 转进私聊中。。。")
-            await call_command(
+            flg = await call_command(
                 session.bot,
                 aiocqhttp.Event(event),
                 "stock",
                 current_arg=session.current_arg,
             )
+            if not flg:
+                await session.send("转进失败，请尝试直接复制以下信息并发送以完成操作。", ensure_private=True)
+                await session.send("stk " + session.current_arg, ensure_private=True)
 
     if "sell" in session.state:
         if session.event.detail_type == "private":
@@ -278,7 +283,10 @@ async def stock(session: CommandSession):
                                     item, session.event.user_id
                                 )
                             )
-                            nums = values[0]["nums"] if len(values) > 0 else 0
+                            if len(values) == 0:
+                                fail.append((item, "您未购买该股票"))
+                                continue
+                            nums = values[0]["nums"]
                             async with sess.get(qurl + item, params=qdatas) as resp:
                                 app = ""
                                 if resp.status != 200:
@@ -359,14 +367,19 @@ async def stock(session: CommandSession):
                 "message": session.event.message,
                 "post_type": "message",
                 "message_type": "private",
+                "raw_message": session.event.raw_message,
+                "sub_type": "friend",
             }
             await session.send(cq.at(session.event.user_id) + " 转进私聊中。。。")
-            await call_command(
+            flg = await call_command(
                 session.bot,
                 aiocqhttp.Event(event),
                 "stock",
                 current_arg=session.current_arg,
             )
+            if not flg:
+                await session.send("转进失败，请尝试直接复制以下信息并发送以完成操作。", ensure_private=True)
+                await session.send("stk " + session.current_arg, ensure_private=True)
 
 
 @stock.args_parser
