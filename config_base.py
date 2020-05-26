@@ -23,5 +23,9 @@ DATABASE = ""
 # coolq 存图的位置
 IMGPATH = ""
 
-#小牛翻译 API key
-NIUAPI=''
+# 小牛翻译 API key
+NIUAPI = ""
+
+# 代码运行 API key
+RUNCODEAPI = ""
+

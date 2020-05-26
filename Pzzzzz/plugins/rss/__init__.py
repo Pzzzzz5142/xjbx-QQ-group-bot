@@ -44,13 +44,17 @@ async def _():
 @nonebot.scheduler.scheduled_job("interval", minutes=20)
 # @on_command("ce", only_to_me=False, shell_like=True)
 async def __():
-    await bcr()
-    await mrfz()
-    await gcores()
-    # await loli()
-    await pprice()
-    await xl()
-    await bh3()
+    try:
+        await bcr()
+        await mrfz()
+        await gcores()
+        # await loli()
+        await pprice()
+        await xl()
+        await bh3()
+    except:
+        bot = nonebot.get_bot()
+        await bot.send_private_msg(user_id=545870222, message="rss 更新出现异常")
 
 
 @on_command("rss", only_to_me=False)
