@@ -17,7 +17,7 @@ import base64
 import os.path as path
 
 
-async def loli():
+async def _loli():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -41,7 +41,7 @@ async def loli():
                 await sendrss(item["qid"], bot, "loli", ress)
 
 
-async def getloli(max_num: int = -1):
+async def loli(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/hhgal")
 
     ress = [

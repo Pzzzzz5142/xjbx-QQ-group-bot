@@ -16,10 +16,45 @@ import feedparser as fp
 import re
 from utils import doc, hourse
 
+
+async def handlerss(
+    bot, source, getfun, is_broadcast: bool = True, is_fullText: bool = False
+):
+    async with db.pool.acquire() as conn:
+        values = await conn.fetch(f"""select dt from rss where id = '{source}';""")
+        if len(values) == 0:
+            await conn.execute(f"""insert into rss values ('{source}','-1')""")
+            db_dt = "-1"
+        else:
+            db_dt = values[0]["dt"]
+
+        ress = await getfun()
+
+        res, dt = ress[0]
+        if dt != db_dt:
+            await conn.execute(f"update rss set dt = '{dt}' where id = '{source}'")
+            if is_broadcast:
+                try:
+                    await bot.send_group_msg(
+                        group_id=bot.config.QGROUP,
+                        message=res[0]
+                        if is_fullText
+                        else f"「{doc[source]}」有新公告啦！\n输入 rss {source} 即可查看！\n输入 订阅 {source} 即可订阅！（注意订阅后的空格哦！）\n已订阅用户请检查私信。",
+                    )
+                except CQHttpError:
+                    pass
+
+        values = await conn.fetch(
+            f"""select qid, dt from subs where rss = '{source}'; """
+        )
+
+        for item in values:
+            if item["dt"] != dt:
+                await sendrss(item["qid"], bot, source, ress)
+
+
 # num 第一个表示最获取的消息数，第二个表示在此基础上查看的消息数
 # -1表示最大，-2表示到已读为止。
-
-
 async def sendrss(
     qid: int, bot, source: str, ress=None, getfun=None, num=(-2, 3), route=None
 ):

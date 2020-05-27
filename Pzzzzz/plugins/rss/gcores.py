@@ -25,7 +25,7 @@ from bs4 import BeautifulSoup
 import base64
 
 
-async def gcores():
+async def _gcores():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -52,7 +52,7 @@ async def gcores():
                 await sendrss(item["qid"], bot, "gcores", ress)
 
 
-async def getgcores(max_num: int = -1):
+async def gcores(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/gcores/category/news")
 
     cnt = 0

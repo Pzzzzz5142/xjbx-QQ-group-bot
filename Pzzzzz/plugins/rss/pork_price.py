@@ -18,7 +18,7 @@ import re
 __rss_name__ = "pprice"
 
 
-async def pprice():
+async def _pprice():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -57,7 +57,7 @@ async def pprice():
                 await sendrss(item["qid"], bot, __rss_name__, ress)
 
 
-async def getpprice(max_num: int = -1):
+async def pprice(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/pork-price")
 
     ress = [

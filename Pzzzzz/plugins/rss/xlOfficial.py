@@ -17,7 +17,7 @@ import re
 import aiohttp
 
 
-async def xl():
+async def _xl():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -48,7 +48,7 @@ async def xl():
                 await sendrss(item["qid"], bot, "xl", ress)
 
 
-async def getxl(max_num: int = -1):
+async def xl(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/bilibili/user/dynamic/49458759")
 
     ress = [

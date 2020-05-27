@@ -17,17 +17,22 @@ import cq
 from utils import doc
 import feedparser as fp
 import re
-from .utils import sendrss, getrss
-from .bcr import bcr, getbcr
-from .mrfz import mrfz, getmrfz
-from .gcores import gcores, getgcores
-from .loli import loli, getloli
-from .pork_price import pprice, getpprice
-from .bh3 import bh3, getbh3
-from .hpoi import hpoi, gethpoi
-from .xlOfficial import xl, getxl
+from .utils import sendrss, getrss, handlerss
+from .bcr import bcr
+from .mrfz import mrfz
+from .gcores import gcores
+from .loli import loli
+from .pork_price import pprice
+from .bh3 import bh3
+from .hpoi import hpoi
+from .xlOfficial import xl
+import time
 
 __plugin_name__ = "rss 订阅"
+
+NOUPDATE = ["loli"]
+NOBROADCAST = ["gcores"]
+FULLTEXT = ["pprice"]
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -44,17 +49,16 @@ async def _():
 @nonebot.scheduler.scheduled_job("interval", minutes=20)
 # @on_command("ce", only_to_me=False, shell_like=True)
 async def __():
-    try:
-        await bcr()
-        await mrfz()
-        await gcores()
-        # await loli()
-        await pprice()
-        await xl()
-        await bh3()
-    except:
-        bot = nonebot.get_bot()
-        await bot.send_private_msg(user_id=545870222, message="rss 更新出现异常")
+    bot = nonebot.get_bot()
+    bot = nonebot.get_bot()
+    for key in doc:
+        try:
+            await handlerss(
+                bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT
+            )
+        except:
+            bot = nonebot.get_bot()
+            await bot.send_private_msg(user_id=545870222, message=f"rss「{key}」更新出现异常")
 
 
 @on_command("rss", only_to_me=False)
@@ -178,36 +182,10 @@ async def _(session: CommandSession):
                 session.finish("查询路由地址不能为空哦！")
             return
 
-    if "mrfz" in ls:
-        session.state["ls"].append((getmrfz, "mrfz"))
-        ls.remove("mrfz")
-
-    if "bcr" in ls:
-        session.state["ls"].append((getbcr, "bcr"))
-        ls.remove("bcr")
-
-    if "gcores" in ls:
-        session.state["ls"].append((getgcores, "gcores"))
-        ls.remove("gcores")
-
-    if "loli" in ls:
-        session.state["ls"].append((getloli, "loli"))
-        ls.remove("loli")
-
-    if "pprice" in ls:
-        session.state["ls"].append((getpprice, "pprice"))
-        ls.remove("pprice")
-
-    if "bh3" in ls:
-        session.state["ls"].append((getbh3, "bh3"))
-        ls.remove("bh3")
-
-    if "hpoi" in ls:
-        session.state["ls"].append((gethpoi, "hpoi"))
-        ls.remove("hpoi")
-    if "xl" in ls:
-        session.state["ls"].append((getxl, "xl"))
-        ls.remove("xl")
+    for key in doc:
+        if key in ls[:]:
+            session.state["ls"].append((gtfun(key), key))
+            ls.remove(key)
 
     if len(ls) > 0:
         await session.send(
@@ -253,10 +231,12 @@ async def unsubs(session: CommandSession):
 
 @on_command("up", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
 async def up(x):
-    await bcr()
-    await mrfz()
-    await gcores()
-    await hpoi()
-    await pprice()
-    await bh3()
-    await xl()
+    print(f"started at {time.strftime('%X')}")
+    bot = nonebot.get_bot()
+    for key in doc:
+        await handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT)
+    print(f"finished at {time.strftime('%X')}")
+
+
+def gtfun(name: str):
+    return getattr(sys.modules[__name__], name)

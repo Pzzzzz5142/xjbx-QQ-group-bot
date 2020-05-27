@@ -24,7 +24,7 @@ from .utils import sendrss
 from utils import *
 
 
-async def bh3():
+async def _bh3():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -69,7 +69,7 @@ def dfs(thing):
     return res
 
 
-async def getbh3(max_num: int = -1):
+async def bh3(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/mihoyo/bh3/latest")
 
     ress = [

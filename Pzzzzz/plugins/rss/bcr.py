@@ -17,7 +17,7 @@ import re
 import aiohttp
 
 
-async def bcr():
+async def _bcr():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -48,7 +48,7 @@ async def bcr():
                 await sendrss(item["qid"], bot, "bcr", ress)
 
 
-async def getbcr(max_num: int = -1):
+async def bcr(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/bilibili/user/dynamic/353840826")
 
     ress = [
@@ -81,7 +81,6 @@ async def getbcr(max_num: int = -1):
         if fdres == None:
             text = item.summary
         else:
-            print(fdres.string)
             text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
 
         while len(text) > 1 and text[-1] == "\n":

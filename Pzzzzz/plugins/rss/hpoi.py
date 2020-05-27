@@ -18,7 +18,7 @@ import aiohttp
 from bs4 import BeautifulSoup
 
 
-async def hpoi():
+async def _hpoi():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -49,7 +49,7 @@ async def hpoi():
                 await sendrss(item["qid"], bot, "hpoi", ress)
 
 
-async def gethpoi(max_num: int = -1):
+async def hpoi(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/hpoi/info/all")
 
     ress = [

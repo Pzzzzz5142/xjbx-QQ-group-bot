@@ -24,7 +24,7 @@ from .utils import sendrss
 from utils import *
 
 
-async def mrfz():
+async def _mrfz():
     bot = nonebot.get_bot()
 
     async with db.pool.acquire() as conn:
@@ -67,7 +67,7 @@ def dfs(thing):
     return res
 
 
-async def getmrfz(max_num: int = -1):
+async def mrfz(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/arknights/news")
 
     ress = [
