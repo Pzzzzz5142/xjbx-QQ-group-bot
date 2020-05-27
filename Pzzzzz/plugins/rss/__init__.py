@@ -31,7 +31,7 @@ import time
 __plugin_name__ = "rss 订阅"
 
 NOUPDATE = ["loli"]
-NOBROADCAST = ["gcores"]
+NOBROADCAST = ["gcores", "hpoi"]
 FULLTEXT = ["pprice"]
 
 
