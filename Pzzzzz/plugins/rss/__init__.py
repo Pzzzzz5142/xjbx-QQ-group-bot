@@ -50,14 +50,12 @@ async def _():
 # @on_command("ce", only_to_me=False, shell_like=True)
 async def __():
     bot = nonebot.get_bot()
-    bot = nonebot.get_bot()
     for key in doc:
         try:
             await handlerss(
                 bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT
             )
         except:
-            bot = nonebot.get_bot()
             await bot.send_private_msg(user_id=545870222, message=f"rss「{key}」更新出现异常")
 
 
