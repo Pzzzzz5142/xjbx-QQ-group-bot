@@ -51,6 +51,8 @@ async def _():
 async def __():
     bot = nonebot.get_bot()
     for key in doc:
+        if key in NOUPDATE:
+            continue
         try:
             await handlerss(
                 bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT
