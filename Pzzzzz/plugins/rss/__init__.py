@@ -30,8 +30,8 @@ import time
 
 __plugin_name__ = "rss 订阅"
 
-NOUPDATE = ["loli"]
-NOBROADCAST = ["gcores", "hpoi"]
+NOUPDATE = ["loli", "hpoi"]
+NOBROADCAST = ["gcores"]
 FULLTEXT = ["pprice"]
 
 
@@ -57,6 +57,7 @@ async def __():
             )
         except:
             await bot.send_private_msg(user_id=545870222, message=f"rss「{key}」更新出现异常")
+            logger.error(f"rss「{key}」更新出现异常", exc_info=True)
 
 
 @on_command("rss", only_to_me=False)

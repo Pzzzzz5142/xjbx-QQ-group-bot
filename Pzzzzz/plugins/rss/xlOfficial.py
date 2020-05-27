@@ -78,8 +78,8 @@ async def xl(max_num: int = -1):
 
         fdres = re.match(r".*?<br>", item.summary, re.S)
 
-        if fdres==None:
-            text=item.summary
+        if fdres == None:
+            text = item.summary
         else:
             text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
 
