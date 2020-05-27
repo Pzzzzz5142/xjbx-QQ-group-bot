@@ -180,6 +180,8 @@ async def _(session: CommandSession):
                 session.finish("查询路由地址不能为空哦！")
             return
 
+    ls = list(set(ls))
+
     for key in doc:
         if key in ls[:]:
             session.state["ls"].append((gtfun(key), key))
