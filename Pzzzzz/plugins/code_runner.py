@@ -101,7 +101,13 @@ async def cal(session: CommandSession):
         session.finish("没有输入内容哦！")
 
     await call_command(
-        session.bot, session.event, "run", current_arg="print({})".format(args)
+        session.bot,
+        session.event,
+        "run",
+        current_arg="""from math import *
+print({})""".format(
+            args
+        ),
     )
 
 

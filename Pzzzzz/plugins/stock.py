@@ -46,31 +46,33 @@ async def stock(session: CommandSession):
         await session.send(stk)
 
     if session.state["q"] != None:
-        await session.send("正在查询 " + session.state["q"] + "！")
-        async with aiohttp.ClientSession() as sess:
-            async with sess.get(qurl + session.state["q"], params=qdatas) as resp:
-                if resp.status != 200:
-                    session.finish(
-                        "获取股票信息失败，请检查股票代码是否输入正确！\n当前输入为「{}」".format(session.state["q"])
-                    )
-                ShitJson = await resp.json()
+        failed = []
+        for stk in session.state["q"]:
+            await session.send("正在查询 " + stk + "！")
+            async with aiohttp.ClientSession() as sess:
+                async with sess.get(qurl + stk, params=qdatas) as resp:
+                    if resp.status != 200:
+                        failed.append(stk)
+                        continue
+                    ShitJson = await resp.json()
 
-        ShitJson = ShitJson["quoteSummary"]["result"][0]["price"]
-        try:
-            currency = ShitJson["currency"]
-        except:
-            session.finish(
-                "获取股票信息失败，请检查股票代码是否输入正确！\n当前输入为「{}」".format(session.state["q"])
+            ShitJson = ShitJson["quoteSummary"]["result"][0]["price"]
+            try:
+                currency = ShitJson["currency"]
+            except:
+                fail.append(stk)
+                continue
+            res = (
+                f"公司名：{ShitJson['shortName']}\n"
+                + "当前货币单位为："
+                + currency
+                + f"\n当前股票价格为：{ShitJson['regularMarketPrice']['fmt']}"
             )
-        res = (
-            f"公司名：{ShitJson['shortName']}\n"
-            + "当前货币单位为："
-            + currency
-            + f"\n当前股票价格为：{ShitJson['regularMarketPrice']['fmt']}"
-        )
-        res += f"\n当日最高成交价格为：{ShitJson['regularMarketDayHigh']['fmt']}\n当日最低成交价格为：{ShitJson['regularMarketDayLow']['fmt']}\n变动幅度为：{ShitJson['regularMarketChangePercent']['fmt']}"
+            res += f"\n当日最高成交价格为：{ShitJson['regularMarketDayHigh']['fmt']}\n当日最低成交价格为：{ShitJson['regularMarketDayLow']['fmt']}\n变动幅度为：{ShitJson['regularMarketChangePercent']['fmt']}"
 
-        await session.send(res)
+            await session.send(res)
+        if len(failed) > 0:
+            session.finish("请检查以下股票代码是否输入正确！\n查询失败的股票代码为「{}」".format(failed))
 
     if session.state["i"]:
         async with db.pool.acquire() as conn:
@@ -95,7 +97,7 @@ async def stock(session: CommandSession):
             )
             values = [(i["stk"], i["nums"]) for i in values if i["nums"] > 0]
             if len(values) == 0:
-                session.finish("当前您未持股哦！", ensure_private=True)
+                session.finish(f"当前您未持股哦！拥有现金：{money}")
 
             if session.event.detail_type != "private":
                 await session.send(
@@ -397,7 +399,7 @@ async def _(session: CommandSession):
             help="列出前10个 Most Actives 股票清单",
         )
         parser.add_argument("--url", "-u", type=str, help="想查询的 Yahoo 链接")
-        parser.add_argument("--query", "-q", type=str, help="查询指定股票信息")
+        parser.add_argument("--query", "-q", nargs="+", help="查询指定股票信息")
         parser.add_argument(
             "--signup", "-i", action="store_true", default=False, help="注册"
         )
