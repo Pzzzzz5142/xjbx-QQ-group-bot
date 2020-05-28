@@ -52,6 +52,7 @@ async def loli(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
         )
     ]
 
@@ -68,7 +69,13 @@ async def loli(max_num: int = -1):
 
         text = [item.title + "\n" + pic + "链接：" + hourse(item["link"])]
 
-        ress.append((text, item["published"]))
+        ress.append(
+            (
+                text,
+                item["published"],
+                item["link"] if "link" in item and item["link"] != "" else "",
+            )
+        )
 
         cnt += 1
 

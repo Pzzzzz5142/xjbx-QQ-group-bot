@@ -119,7 +119,7 @@ async def stock(session: CommandSession):
                             price = float(ShitJson["regularMarketPrice"]["fmt"]) * nums
                             tot += price
                             app = f"\n价值：{price} USD"
-                    if cnt < 5:
+                    if cnt < 5 or session.state["h"] == 1:
                         res.append(f"股票代码：{item}\n持股数：{nums} 股" + app)
                     cnt += 1
             await session.send("以下是您持有的股份：", ensure_private=True)
@@ -402,7 +402,10 @@ async def _(session: CommandSession):
             "--signup", "-i", action="store_true", default=False, help="注册"
         )
         parser.add_argument(
-            "--list", "-l", action="store_true", default=False, help="查看持股"
+            "--list", "-l", action="store_true", default=False, help="查看 5 条持股"
+        )
+        parser.add_argument(
+            "--listall", "-la", action="store_true", default=False, help="查看所有持股"
         )
         sub = parser.add_subparsers()
 
@@ -429,7 +432,7 @@ async def _(session: CommandSession):
         session.state["s"] = argv.url if argv.url != None else argv.show
         session.state["q"] = argv.query
         session.state["i"] = argv.signup
-        session.state["h"] = argv.list
+        session.state["h"] = 1 if argv.listall else argv.list
         try:
             session.state["add"] = [i.lower() for i in argv.symbol]
         except:

@@ -12,3 +12,4 @@ config_debug.py
 /debug.sh
 /run_bot.sh
 a.html
+test_limit.py

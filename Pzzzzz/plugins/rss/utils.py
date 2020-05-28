@@ -30,7 +30,7 @@ async def handlerss(
 
         ress = await getfun()
 
-        res, dt = ress[0]
+        res, dt, lk = ress[0]
         if dt != db_dt:
             await conn.execute(f"update rss set dt = '{dt}' where id = '{source}'")
             if is_broadcast:
@@ -85,7 +85,7 @@ async def sendrss(
 
         success_dt = ""
         fail = 0
-        for res, dt in reversed(ress):
+        for res, dt, link in reversed(ress):
             if is_read == False and dt == qdt:
                 is_read = True
             if num[1] != -1 and cnt >= num[1]:
@@ -106,22 +106,33 @@ async def sendrss(
                 fail += 1
                 logger.error(f"Not ok here. Not ok message 「{see}」")
                 logger.error(f"Processing QQ 「{qid}」, Rss 「{source}」")
+                logger.error("Informing Pzzzzz!")
+                try:
+                    await bot.send_private_msg(
+                        user_id=545870222,
+                        message=f"Processing QQ 「{qid}」, Rss 「{source}」 error! ",
+                    )
+                except:
+                    logger.error("Inform Pzzzzz failed. ")
                 logger.error("Informing the user!")
                 try:
                     await bot.send_private_msg(
                         user_id=qid,
-                        message=f"该资讯发送不完整！丢失信息为：「{see}」，请联系管理员。",
+                        message=f"该资讯发送不完整！丢失信息为：「{see}」，请联系管理员。"
+                        + ("\n该消息来源：" + link if link != "" else "该资讯link未提供"),
                         auto_escape=True,
                     )
                 except:
                     try:
                         await bot.send_private_msg(
                             user_id=qid,
-                            message=f"该资讯发送不完整！丢失信息无法发送，请联系管理员。",
+                            message=f"该资讯发送不完整！丢失信息无法发送，请联系管理员。"
+                            + ("\n该消息来源：" + link if link != "" else "该资讯link未提供"),
                             auto_escape=True,
                         )
                     except:
                         logger.error("Informing failed!")
+                success_dt = dt
 
         try:
             await bot.send_private_msg(user_id=qid, message="=" * 19)
@@ -151,6 +162,7 @@ async def getrss(route: str, max_num: int = -1):
         (
             ["暂时没有资讯哦，可能是路由不存在！"],
             thing["entries"][0]["title"] if len(thing["entries"]) > 0 else "something",
+            "",
         )
     ]
 

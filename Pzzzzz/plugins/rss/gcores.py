@@ -65,6 +65,7 @@ async def gcores(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
         )
     ]
 
@@ -90,7 +91,13 @@ async def gcores(max_num: int = -1):
             title + "\n" + ((pic + "\n") if pic != None else "") + "传送门：" + item["link"]
         )
 
-        ress.append(([text], title[: min(80, len(title))]))
+        ress.append(
+            (
+                [text],
+                title[: min(80, len(title))],
+                item["link"] if "link" in item and item["link"] != "" else "",
+            )
+        )
         cnt += 1
 
     if len(ress) > 1:

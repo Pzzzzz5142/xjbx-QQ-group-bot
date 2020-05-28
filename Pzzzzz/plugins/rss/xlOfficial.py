@@ -59,6 +59,7 @@ async def xl(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
         )
     ]
 
@@ -99,7 +100,13 @@ async def xl(max_num: int = -1):
                 pic = await sendpic(sess, i)
                 if pic != None:
                     text.append(pic)
-        ress.append((text, item["published"]))
+        ress.append(
+            (
+                text,
+                item["published"],
+                item["link"] if "link" in item and item["link"] != "" else "",
+            )
+        )
 
         cnt += 1
 

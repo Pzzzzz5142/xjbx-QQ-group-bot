@@ -78,6 +78,7 @@ async def mrfz(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
         )
     ]
 
@@ -101,7 +102,13 @@ async def mrfz(max_num: int = -1):
         if "封禁" in res:
             continue
 
-        ress.append(([res], item["published"]))
+        ress.append(
+            (
+                [res],
+                item["published"],
+                item["link"] if "link" in item and item["link"] != "" else "",
+            )
+        )
 
     if len(ress) > 1:
         ress = ress[1:]

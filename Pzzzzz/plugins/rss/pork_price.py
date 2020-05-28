@@ -68,6 +68,7 @@ async def pprice(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
         )
     ]
 
@@ -77,7 +78,13 @@ async def pprice(max_num: int = -1):
 
         if max_num != -1 and cnt >= max_num:
             break
-        ress.append(([item["title"]], item["title"]))
+        ress.append(
+            (
+                [item["title"]],
+                item["title"],
+                item["link"] if "link" in item and item["link"] != "" else "",
+            )
+        )
 
         cnt += 1
 

@@ -60,6 +60,7 @@ async def hpoi(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
         )
     ]
     t_max_num = max_num
@@ -106,7 +107,9 @@ async def hpoi(max_num: int = -1):
             if not isinstance(x, str):
                 tm = x if tm == None or tm < x else tm
 
-        ress.append((text, tm))
+        ress.append(
+            (text, tm, item["link"] if "link" in item and item["link"] != "" else "",)
+        )
 
         cnt += 1
 
