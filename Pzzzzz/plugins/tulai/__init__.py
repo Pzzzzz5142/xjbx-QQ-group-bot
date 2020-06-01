@@ -16,16 +16,6 @@ async def tulai(session: CommandSession):
     await session.send(unescape(cq.image("activity.jpg")))
 
 
-@on_command("h3", aliases={"H3"}, only_to_me=False)
+@on_command("转生", aliases={"轮回", "八仙"}, only_to_me=False)
 async def tulai(session: CommandSession):
-    await session.send(unescape(cq.image("H3.jpg")))
-
-
-@on_command("孤儿", aliases={"装备"}, only_to_me=False)
-async def tulai(session: CommandSession):
-    await session.send(unescape(cq.image("gl.jpg")))
-
-
-@on_command("ghz", aliases={"公会战"}, only_to_me=False)
-async def tulai(session: CommandSession):
-    await session.send(unescape(cq.image("ghz.jpg")))
+    await session.send(unescape(cq.image("zs.jpg")))
