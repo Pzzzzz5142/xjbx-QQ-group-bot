@@ -20,6 +20,7 @@ from utils import doc, hourse
 async def handlerss(
     bot, source, getfun, is_broadcast: bool = True, is_fullText: bool = False
 ):
+    loop = asyncio.get_event_loop()
     async with db.pool.acquire() as conn:
         values = await conn.fetch(f"""select dt from rss where id = '{source}';""")
         if len(values) == 0:
@@ -27,8 +28,12 @@ async def handlerss(
             db_dt = "-1"
         else:
             db_dt = values[0]["dt"]
-
-        ress = await getfun()
+        try:
+            ress = await getfun()
+        except:
+            await bot.send_private_msg(user_id=545870222, message=f"rss「{key}」更新出现异常")
+            logger.error(f"rss「{source}」更新出现异常", exc_info=True)
+            return
 
         res, dt, lk = ress[0]
         if dt != db_dt:
@@ -47,10 +52,11 @@ async def handlerss(
         values = await conn.fetch(
             f"""select qid, dt from subs where rss = '{source}'; """
         )
-
         for item in values:
             if item["dt"] != dt:
-                await sendrss(item["qid"], bot, source, ress)
+                asyncio.run_coroutine_threadsafe(
+                    sendrss(item["qid"], bot, source, ress), loop,
+                )
 
 
 # num 第一个表示最获取的消息数，第二个表示在此基础上查看的消息数

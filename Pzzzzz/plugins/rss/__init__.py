@@ -50,16 +50,14 @@ async def _():
 # @on_command("ce", only_to_me=False, shell_like=True)
 async def __():
     bot = nonebot.get_bot()
+    loop = asyncio.get_event_loop()
     for key in doc:
         if key in NOUPDATE:
             continue
-        try:
-            await handlerss(
-                bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT
-            )
-        except:
-            await bot.send_private_msg(user_id=545870222, message=f"rss「{key}」更新出现异常")
-            logger.error(f"rss「{key}」更新出现异常", exc_info=True)
+        asyncio.run_coroutine_threadsafe(
+            handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT),
+            loop,
+        )
 
 
 @on_command("rss", only_to_me=False)
@@ -236,8 +234,12 @@ async def unsubs(session: CommandSession):
 async def up(x):
     print(f"started at {time.strftime('%X')}")
     bot = nonebot.get_bot()
+    loop = asyncio.get_event_loop()
     for key in doc:
-        await handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT)
+        asyncio.run_coroutine_threadsafe(
+            handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT),
+            loop,
+        )
     print(f"finished at {time.strftime('%X')}")
 
 
