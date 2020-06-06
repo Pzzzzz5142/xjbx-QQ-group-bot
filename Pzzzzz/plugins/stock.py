@@ -120,7 +120,7 @@ async def stock(session: CommandSession):
                             ShitJson = ShitJson["quoteSummary"]["result"][0]["price"]
                             price = float(ShitJson["regularMarketPrice"]["fmt"]) * nums
                             tot += price
-                            app = f"\n价值：{price} USD"
+                            app = f"\n价值：{price} USD\n今日变动幅度为：{ShitJson['regularMarketChangePercent']['fmt']}"
                     if cnt < 5 or session.state["h"] == 1:
                         res.append(f"股票代码：{item}\n持股数：{nums} 股" + app)
                     cnt += 1

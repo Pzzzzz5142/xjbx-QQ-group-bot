@@ -7,6 +7,7 @@ from aiohttp import ClientSession
 import nonebot
 import cq
 import re
+import base64
 import datetime
 
 doc = {
@@ -18,6 +19,18 @@ doc = {
     "bh3": "崩坏3",
     "hpoi": "Hpoi 手办wiki",
     "xl": "b站总运营 乐爷Official",
+    "pixiv_day": "Pixiv 每日热榜",
+    "pixiv_week": "Pixiv 每周热榜",
+    "pixiv_month": "Pixiv 每月热榜",
+    "pixiv_week_rookie": "Pixiv 每周新人榜",
+    "pixiv_week_original": "Pixiv 每周原创榜",
+    "pixiv_day_male": "Pixiv 每日热榜 男性向",
+    "pixiv_day_female": "Pixiv 每日热榜 女性向",
+    "pixiv_day_r18": "Pixiv 每日热榜 R-18",
+    "pixiv_week_r18": "Pixiv 每周热榜 R-18",
+    "pixiv_day_male_r18": "Pixiv 每日热榜 男性向 R-18",
+    "pixiv_day_female_r18": "Pixiv 每日热榜 女性向 R-18",
+    "pixiv_week_r18g": "Pixiv 每周热榜 R18g",
 }
 
 headers = {
@@ -84,15 +97,20 @@ async def sendpic(session: ClientSession, url: str):
             pic = None
         else:
             _, pic = path.split(url)
-            bot = nonebot.get_bot()
-            if not path.exists(bot.config.IMGPATH + pic):
-                with open(bot.config.IMGPATH + pic, "wb") as fl:
-                    while True:
-                        ck = await resp.content.read(8196)
-                        if not ck:
-                            break
-                        fl.write(ck)
-            pic = cq.image(pic)
+            if path.splitext(pic)[1] == ".gif":
+                bot = nonebot.get_bot()
+                if not path.exists(bot.config.IMGPATH + pic):
+                    with open(bot.config.IMGPATH + pic, "wb") as fl:
+                        while True:
+                            ck = await resp.content.read(8196)
+                            if not ck:
+                                break
+                            fl.write(ck)
+                pic = cq.image(pic)
+            else:
+                ShitData = await resp.content.read()
+                ShitBase64 = base64.b64encode(ShitData)
+                pic = cq.image("base64://" + str(ShitBase64, encoding="utf-8"))
     return pic
 
 

@@ -46,13 +46,27 @@ async def _():
         pass
 
 
+@nonebot.scheduler.scheduled_job("cron", hour="0,6,12,18", minute="0")
+async def bk():
+    bot = nonebot.get_bot()
+    async with db.pool.acquire() as conn:
+        ls = await bot.get_group_member_list(
+            group_id=bot.config.QGROUP, self_id=3418961367
+        )
+        await conn.execute("""delete from backup""")
+        for item in ls:
+            await conn.execute(
+                f"""insert into backup values({item['user_id']},'{item['card']}','{item['role']}')"""
+            )
+
+
 @nonebot.scheduler.scheduled_job("interval", minutes=20)
 # @on_command("ce", only_to_me=False, shell_like=True)
 async def __():
     bot = nonebot.get_bot()
     loop = asyncio.get_event_loop()
     for key in doc:
-        if key in NOUPDATE:
+        if key in NOUPDATE or "pixiv" in key:
             continue
         asyncio.run_coroutine_threadsafe(
             handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT),
@@ -185,8 +199,9 @@ async def _(session: CommandSession):
 
     for key in doc:
         if key in ls[:]:
-            session.state["ls"].append((gtfun(key), key))
-            ls.remove(key)
+            if "pixiv" not in key:
+                session.state["ls"].append((gtfun(key), key))
+                ls.remove(key)
 
     if len(ls) > 0:
         await session.send(

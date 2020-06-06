@@ -1,27 +1,24 @@
 from nonebot import on_command, CommandSession, on_startup
+from nonebot.command import call_command
 from nonebot.message import unescape
-from datetime import datetime
 import nonebot
 import asyncio
-import asyncpg
 import aiohttp
 from aiocqhttp.exceptions import Error as CQHttpError
-import os
 from nonebot.argparse import ArgumentParser
-import sys
 from nonebot.log import logger
-from random import randint
-import random
-import bisect
-import re
 from utils import *
 import cq
+from random import randint
+from .utils import imageProxy, imageProxy_cat
 
 __plugin_name__ = "以图搜图"
 
 url = r"https://saucenao.com/search.php"
 
 api = r"https://api.lolicon.app/setu/"
+
+searchapi = r"https://api.imjad.cn/pixiv/v2/"
 
 parm = {"apikey": "367219975ea6fec3027d38", "r18": "1", "size1200": "true"}
 data = {"db": "999", "output_type": "2", "numres": "3", "url": None}
@@ -32,10 +29,21 @@ async def st(session: CommandSession):
 
     purl = session.get("url", prompt="发送你想搜的图吧！")
 
-    if "r18" not in session.state:
-        res = await sauce(purl)
-        session.finish(unescape(res))
-    else:
+    if "flg" not in session.state:
+        session.state["flg"] = 1
+
+    if "rl" in session.state:
+        res, _id = await getRelated(
+            session.state["id"], 0 if session.state["flg"] == 1 else -1
+        )
+        await session.send(res)
+        if _id == -1:
+            session.finish()
+        session.state["id"] = _id
+        session.state["flg"] = 0
+        session.pause()
+
+    if "r18" in session.state:
         res = cq.image(purl)
         if session.event.detail_type == "private":
             await session.send("拿到url了！正在发送图片！")
@@ -57,12 +65,31 @@ async def st(session: CommandSession):
             except CQHttpError:
                 await session.send("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
             session.finish("未找到消息中的图片，搜索结束！")
+    elif "search" in session.state:
+        res, _id = await searchPic(session.state["search"])
+        await session.send(res)
+        session.state["id"] = _id
+        if _id == -1:
+            session.finish()
+        session.pause()
+    else:
+        res = await sauce(purl)
+        session.finish(unescape(res))
 
 
 @st.args_parser
 async def _(session: CommandSession):
     if session.is_first_run:
         return
+
+    if "flg" in session.state:
+        if session.current_arg_text == "rl":
+            session.state["rl"] = session.current_arg_text
+        else:
+            if session.state["flg"] == 1 and session.current_arg_text == "st":
+                await call_command(session.bot, session.event, "st")
+                session.finish()
+            session.finish("套娃结束！" if session.state["flg"] == 0 else None)
 
     if session.current_arg_text == "r16":
         session.finish(unescape(cq.image("http://116.62.5.101, cache=0")))
@@ -82,10 +109,13 @@ async def _(session: CommandSession):
         # await session.send("届到了届到了！！！！")
         return
 
-    if len(session.current_arg_images) == 0:
-        session.finish("未找到消息中的图片，搜索结束！")
-
-    session.state["url"] = session.current_arg_images[0]
+    elif len(session.current_arg_images) == 0:
+        if session.current_arg_text.strip() != "":
+            session.state["search"] = session.current_arg_text
+        else:
+            session.finish("嘛，什么都没输入嘛～～")
+    else:
+        session.state["url"] = session.current_arg_images[0]
 
 
 async def sauce(purl: str) -> str:
@@ -101,7 +131,10 @@ async def sauce(purl: str) -> str:
     if len(ShitJson["results"]) == 0:
         return "啥也没搜到"
 
-    murl = hourse(ShitJson["results"][0]["data"]["ext_urls"][0])
+    try:
+        murl = hourse(ShitJson["results"][0]["data"]["ext_urls"][0])
+    except:
+        murl = ""
 
     return (
         cq.image(ShitJson["results"][0]["header"]["thumbnail"])
@@ -130,3 +163,39 @@ async def sauce(purl: str) -> str:
         + str(ShitJson["results"][0]["header"]["similarity"])
         + "%"
     )
+
+
+async def searchPic(key_word: str):
+    datas = {"type": "search", "word": key_word}
+    async with aiohttp.ClientSession() as sess:
+        async with sess.get(searchapi, params=datas) as resp:
+            if resp.status != 200:
+                return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
+            ShitJson = await resp.json()
+        try:
+            res = cq.image(imageProxy(ShitJson["illusts"][0]["image_urls"]["medium"]))
+        except:
+            res = f"暂时没有 {key_word} 的结果哦～"
+        return (
+            res,
+            ShitJson["illusts"][0]["id"] if 0 < len(ShitJson["illusts"]) else -1,
+        )
+
+
+async def getRelated(_id, ind=-1):
+    datas = {"type": "related", "id": _id}
+    async with aiohttp.ClientSession() as sess:
+        async with sess.get(searchapi, params=datas) as resp:
+            if resp.status != 200:
+                return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
+            ShitJson = await resp.json()
+        if ind == -1 or ind >= len(ShitJson["illusts"]):
+            ind = randint(0, len(ShitJson["illusts"]))
+        try:
+            res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["medium"]))
+        except:
+            res = f"暂时没有 {_id} 的相关结果哦～"
+        return (
+            res,
+            ShitJson["illusts"][ind]["id"] if ind < len(ShitJson["illusts"]) else -1,
+        )

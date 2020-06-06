@@ -28,10 +28,15 @@ async def handlerss(
             db_dt = "-1"
         else:
             db_dt = values[0]["dt"]
+        kwargs = {}
+        if "pixiv" in source:
+            kwargs["mode"] = source[len("pixiv_") :]
         try:
-            ress = await getfun()
+            ress = await getfun(**kwargs)
         except:
-            await bot.send_private_msg(user_id=545870222, message=f"rss「{key}」更新出现异常")
+            await bot.send_private_msg(
+                user_id=545870222, message=f"rss「[{doc[source]}]」更新出现异常"
+            )
             logger.error(f"rss「{source}」更新出现异常", exc_info=True)
             return
 
@@ -97,48 +102,48 @@ async def sendrss(
             if num[1] != -1 and cnt >= num[1]:
                 break
             see = ""
-            try:
-                is_r = is_read
-                cnt += 1
-                await bot.send_private_msg(user_id=qid, message="=" * 19)
-                for text in res:
-                    see = text
+            is_r = is_read
+            cnt += 1
+            await bot.send_private_msg(user_id=qid, message="=" * 19)
+            for text in res:
+                see = text
+                try:
                     await bot.send_private_msg(
                         user_id=qid, message=("已读：\n" if is_r else "") + text
                     )
                     is_r = False
-                success_dt = dt
-            except CQHttpError:
-                fail += 1
-                logger.error(f"Not ok here. Not ok message 「{see}」")
-                logger.error(f"Processing QQ 「{qid}」, Rss 「{source}」")
-                logger.error("Informing Pzzzzz!")
-                try:
-                    await bot.send_private_msg(
-                        user_id=545870222,
-                        message=f"Processing QQ 「{qid}」, Rss 「{source}」 error! ",
-                    )
-                except:
-                    logger.error("Inform Pzzzzz failed. ")
-                logger.error("Informing the user!")
-                try:
-                    await bot.send_private_msg(
-                        user_id=qid,
-                        message=f"该资讯发送不完整！丢失信息为：「{see}」，请联系管理员。"
-                        + ("\n该消息来源：" + link if link != "" else "该资讯link未提供"),
-                        auto_escape=True,
-                    )
-                except:
+                    success_dt = dt
+                except CQHttpError:
+                    fail += 1
+                    logger.error(f"Not ok here. Not ok message 「{see}」")
+                    logger.error(f"Processing QQ 「{qid}」, Rss 「{source}」")
+                    logger.error("Informing Pzzzzz!")
+                    try:
+                        await bot.send_private_msg(
+                            user_id=545870222,
+                            message=f"Processing QQ 「{qid}」, Rss 「{source}」 error! ",
+                        )
+                    except:
+                        logger.error("Inform Pzzzzz failed. ")
+                    logger.error("Informing the user!")
                     try:
                         await bot.send_private_msg(
                             user_id=qid,
-                            message=f"该资讯发送不完整！丢失信息无法发送，请联系管理员。"
+                            message=f"该资讯发送不完整！丢失信息为：「{see}」，请联系管理员。"
                             + ("\n该消息来源：" + link if link != "" else "该资讯link未提供"),
                             auto_escape=True,
                         )
                     except:
-                        logger.error("Informing failed!")
-                success_dt = dt
+                        try:
+                            await bot.send_private_msg(
+                                user_id=qid,
+                                message=f"该资讯发送不完整！丢失信息无法发送，请联系管理员。"
+                                + ("\n该消息来源：" + link if link != "" else "该资讯link未提供"),
+                                auto_escape=True,
+                            )
+                        except:
+                            logger.error("Informing failed!")
+                    success_dt = dt
 
         try:
             await bot.send_private_msg(user_id=qid, message="=" * 19)
