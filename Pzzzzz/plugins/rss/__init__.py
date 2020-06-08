@@ -26,6 +26,7 @@ from .pork_price import pprice
 from .bh3 import bh3
 from .hpoi import hpoi
 from .xlOfficial import xl
+from .pixiv import pixiv
 import time
 
 __plugin_name__ = "rss 订阅"
@@ -199,9 +200,8 @@ async def _(session: CommandSession):
 
     for key in doc:
         if key in ls[:]:
-            if "pixiv" not in key:
-                session.state["ls"].append((gtfun(key), key))
-                ls.remove(key)
+            session.state["ls"].append((gtfun(key), key))
+            ls.remove(key)
 
     if len(ls) > 0:
         await session.send(
@@ -259,4 +259,6 @@ async def up(x):
 
 
 def gtfun(name: str):
+    if "pixiv" in name:
+        name = "pixiv"
     return getattr(sys.modules[__name__], name)

@@ -82,10 +82,15 @@ async def sendrss(
         cnt = 0
         is_read = False
         if ress == None:
+            kwargs = {}
+            if "pixiv" in source:
+                kwargs["mode"] = source[len("pixiv_") :]
+            else:
+                kwargs["max_num"] = num[0] if num[0] != -2 else -1
             if route != None:
                 ress = await getfun(route, (num[0] if num[0] != -2 else -1))
             else:
-                ress = await getfun((num[0] if num[0] != -2 else -1))
+                ress = await getfun(**kwargs)
         if num[0] == -2:
             for i in range(len(ress)):
                 if ress[i][1] == qdt:

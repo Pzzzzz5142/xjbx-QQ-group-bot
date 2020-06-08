@@ -2,7 +2,6 @@ from nonebot.message import unescape
 import asyncio
 import asyncpg
 import nonebot
-import pytz
 from aiocqhttp.exceptions import Error as CQHttpError
 from nonebot.log import logger
 from random import randint

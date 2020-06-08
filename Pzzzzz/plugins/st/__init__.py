@@ -10,7 +10,7 @@ from nonebot.log import logger
 from utils import *
 import cq
 from random import randint
-from .utils import imageProxy, imageProxy_cat
+from utils import imageProxy, imageProxy_cat
 
 __plugin_name__ = "以图搜图"
 
