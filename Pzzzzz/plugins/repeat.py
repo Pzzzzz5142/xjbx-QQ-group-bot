@@ -12,8 +12,7 @@ def sigmoid(num):
     return 1 / (1 + exp(-num))
 
 
-@on_natural_language(only_to_me=False)
-async def _(session: NLPSession):
+async def repeat(session: NLPSession):
     msg = session.msg.strip(" ")
     global tjmp
     if session.event.detail_type != "group":
@@ -33,3 +32,4 @@ async def _(session: NLPSession):
         await session.send(msg)
         now[0] = 0
         return
+

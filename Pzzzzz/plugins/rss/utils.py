@@ -41,6 +41,12 @@ async def handlerss(
             return
 
         res, dt, lk = ress[0]
+        if dt == "Grab Rss Error!":
+            await bot.send_private_msg(
+                user_id=545870222, message=f"rss「[{doc[source]}]」更新出现异常"
+            )
+            logger.error(f"rss「{source}」更新出现异常", exc_info=True)
+            return
         if dt != db_dt:
             await conn.execute(f"update rss set dt = '{dt}' where id = '{source}'")
             if is_broadcast:

@@ -20,7 +20,6 @@ import re
 from .utils import sendrss, getrss, handlerss
 from .bcr import bcr
 from .mrfz import mrfz
-from .gcores import gcores
 from .loli import loli
 from .pork_price import pprice
 from .bh3 import bh3

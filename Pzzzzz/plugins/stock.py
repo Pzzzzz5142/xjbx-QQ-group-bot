@@ -118,7 +118,7 @@ async def stock(session: CommandSession):
                         else:
                             ShitJson = await resp.json()
                             ShitJson = ShitJson["quoteSummary"]["result"][0]["price"]
-                            price = float(ShitJson["regularMarketPrice"]["fmt"]) * nums
+                            price = float(ShitJson["regularMarketPrice"]["raw"]) * nums
                             tot += price
                             app = f"\n价值：{price} USD\n今日变动幅度为：{ShitJson['regularMarketChangePercent']['fmt']}"
                     if cnt < 5 or session.state["h"] == 1:
@@ -166,7 +166,7 @@ async def stock(session: CommandSession):
                                 ShitJson = ShitJson["quoteSummary"]["result"][0][
                                     "price"
                                 ]
-                                price = float(ShitJson["regularMarketPrice"]["fmt"])
+                                price = float(ShitJson["regularMarketPrice"]["raw"])
                                 if isinstance(session.state["nums"], int):
                                     if money < session.state["nums"] * price:
                                         fail.append((item, "余额不足"))
@@ -298,7 +298,7 @@ async def stock(session: CommandSession):
                                     ShitJson = ShitJson["quoteSummary"]["result"][0][
                                         "price"
                                     ]
-                                    price = float(ShitJson["regularMarketPrice"]["fmt"])
+                                    price = float(ShitJson["regularMarketPrice"]["raw"])
                                     if isinstance(session.state["nums"], int):
                                         if nums < session.state["nums"]:
                                             fail.append(item, "出售支数大于拥有支数")
@@ -445,6 +445,19 @@ async def _(session: CommandSession):
             pass
         try:
             session.state["nums"] = "allin" if argv.allin else argv.nums
+            msg=f"{'买进' if 'add' in session.state else '抛售'}不能为负数哦！！！！！！！！！！！！！！！！！！！！！！！不能为负数哦！！！！！！！！！"
+            if session.state["nums"] < 0:
+                session.state.pop("nums")
+                try:
+                    session.state.pop("add")
+                except:
+                    pass
+                try:
+                    session.state.pop("sell")
+                except:
+                    pass                
+                session.finish(msg)
+                return
         except:
             pass
     else:

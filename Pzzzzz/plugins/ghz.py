@@ -20,19 +20,16 @@ async def cd(session: CommandSession):
     pass
 
 
-"""
 @nonebot.scheduler.scheduled_job("cron", hour="22", minute="0")
 async def _():
     bot = nonebot.get_bot()
     try:
         await bot.send_group_msg(
             group_id=bot.config.QGROUP,
-            message=unescape(unescape(cq.at("all")) +
-                             " Ciallo～(∠・ω< )⌒★，今天你出刀了吗？"),
+            message=unescape(unescape(cq.at("all")) + " Ciallo～(∠・ω< )⌒★，今天你出刀了吗？"),
         )
     except CQHttpError:
         pass
-"""
 
 
 @on_command("提醒", aliases={"non"}, only_to_me=False, permission=perm.SUPERUSER)

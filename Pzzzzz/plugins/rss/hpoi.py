@@ -18,43 +18,12 @@ import aiohttp
 from bs4 import BeautifulSoup
 
 
-async def _hpoi():
-    bot = nonebot.get_bot()
-
-    async with db.pool.acquire() as conn:
-        values = await conn.fetch(f"""select dt from rss where id = 'hpoi';""")
-        if len(values) == 0:
-            await conn.execute("""insert into rss values ('hpoi','-1')""")
-            db_dt = "-1"
-        else:
-            db_dt = values[0]["dt"]
-
-        ress = await gethpoi()
-
-        _, dt = ress[0]
-        if dt != db_dt:
-            await conn.execute(f"update rss set dt = '{dt}' where id = 'hpoi'")
-            try:
-                await bot.send_group_msg(
-                    group_id=bot.config.QGROUP,
-                    message=f"「{doc['hpoi']}」有新公告啦！\n输入 rss hpoi 即可查看！\n输入 订阅 hpoi 即可订阅！（注意订阅后的空格哦！）\n已订阅用户请检查私信。",
-                )
-            except CQHttpError:
-                pass
-
-        values = await conn.fetch(f"""select qid, dt from subs where rss = 'hpoi'; """)
-
-        for item in values:
-            if item["dt"] != dt:
-                await sendrss(item["qid"], bot, "hpoi", ress)
-
-
 async def hpoi(max_num: int = -1):
     thing = fp.parse(r"http://172.18.0.1:1200/hpoi/info/all")
 
     ress = [
         (
-            ["暂时没有有用的新咨询哦！"],
+            ["暂时没有有用的新资讯哦！"],
             (
                 thing["entries"][0]["title"]
                 if len(thing["entries"]) > 0
