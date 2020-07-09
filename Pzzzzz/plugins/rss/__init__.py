@@ -250,6 +250,8 @@ async def up(x):
     bot = nonebot.get_bot()
     loop = asyncio.get_event_loop()
     for key in doc:
+        if key in NOUPDATE or "pixiv" in key:
+            continue
         asyncio.run_coroutine_threadsafe(
             handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT),
             loop,

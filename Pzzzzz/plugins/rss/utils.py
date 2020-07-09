@@ -17,6 +17,9 @@ import re
 from utils import doc, hourse
 
 
+locks = {}
+
+
 async def handlerss(
     bot, source, getfun, is_broadcast: bool = True, is_fullText: bool = False
 ):
@@ -76,101 +79,107 @@ async def sendrss(
     qid: int, bot, source: str, ress=None, getfun=None, num=(-2, 3), route=None
 ):
     flg = 1
+    if qid not in locks:
+        locks[qid] = asyncio.Lock()
+    async with locks[qid]:
+        async with db.pool.acquire() as conn:
+            values = await conn.fetch(
+                f"""select dt from subs where qid={qid} and rss='{source}';"""
+            )
+            if len(values) > 0:
+                qdt = values[0]["dt"]
+            else:
+                qdt = None
+            cnt = 0
+            is_read = False
+            if ress == None:
+                kwargs = {}
+                if "pixiv" in source:
+                    kwargs["mode"] = source[len("pixiv_") :]
+                else:
+                    kwargs["max_num"] = num[0] if num[0] != -2 else -1
+                if route != None:
+                    ress = await getfun(route, (num[0] if num[0] != -2 else -1))
+                else:
+                    ress = await getfun(**kwargs)
+            if num[0] == -2:
+                for i in range(len(ress)):
+                    if ress[i][1] == qdt:
+                        ress = ress[:i]
+                        break
+            if num[1] != -1:
+                ress = ress[: min(len(ress), num[1])]
 
-    async with db.pool.acquire() as conn:
-        values = await conn.fetch(
-            f"""select dt from subs where qid={qid} and rss='{source}';"""
-        )
-        if len(values) > 0:
-            qdt = values[0]["dt"]
-        else:
-            qdt = None
-        cnt = 0
-        is_read = False
-        if ress == None:
-            kwargs = {}
-            if "pixiv" in source:
-                kwargs["mode"] = source[len("pixiv_") :]
-            else:
-                kwargs["max_num"] = num[0] if num[0] != -2 else -1
-            if route != None:
-                ress = await getfun(route, (num[0] if num[0] != -2 else -1))
-            else:
-                ress = await getfun(**kwargs)
-        if num[0] == -2:
-            for i in range(len(ress)):
-                if ress[i][1] == qdt:
-                    ress = ress[:i]
+            success_dt = ""
+            fail = 0
+            for res, dt, link in reversed(ress):
+                if is_read == False and dt == qdt:
+                    is_read = True
+                if num[1] != -1 and cnt >= num[1]:
                     break
-        if num[1] != -1:
-            ress = ress[: min(len(ress), num[1])]
-
-        success_dt = ""
-        fail = 0
-        for res, dt, link in reversed(ress):
-            if is_read == False and dt == qdt:
-                is_read = True
-            if num[1] != -1 and cnt >= num[1]:
-                break
-            see = ""
-            is_r = is_read
-            cnt += 1
-            await bot.send_private_msg(user_id=qid, message="=" * 19)
-            for text in res:
-                see = text
-                try:
-                    await bot.send_private_msg(
-                        user_id=qid, message=("已读：\n" if is_r else "") + text
-                    )
-                    is_r = False
-                    success_dt = dt
-                except CQHttpError:
-                    fail += 1
-                    logger.error(f"Not ok here. Not ok message 「{see}」")
-                    logger.error(f"Processing QQ 「{qid}」, Rss 「{source}」")
-                    logger.error("Informing Pzzzzz!")
+                see = ""
+                is_r = is_read
+                cnt += 1
+                await bot.send_private_msg(user_id=qid, message="=" * 19)
+                for text in res:
+                    see = text
                     try:
                         await bot.send_private_msg(
-                            user_id=545870222,
-                            message=f"Processing QQ 「{qid}」, Rss 「{source}」 error! ",
+                            user_id=qid, message=("已读：\n" if is_r else "") + text
                         )
-                    except:
-                        logger.error("Inform Pzzzzz failed. ")
-                    logger.error("Informing the user!")
-                    try:
-                        await bot.send_private_msg(
-                            user_id=qid,
-                            message=f"该资讯发送不完整！丢失信息为：「{see}」，请联系管理员。"
-                            + ("\n该消息来源：" + link if link != "" else "该资讯link未提供"),
-                            auto_escape=True,
-                        )
-                    except:
+                        is_r = False
+                        success_dt = dt
+                    except CQHttpError:
+                        fail += 1
+                        logger.error(f"Not ok here. Not ok message 「{see}」")
+                        logger.error(f"Processing QQ 「{qid}」, Rss 「{source}」")
+                        logger.error("Informing Pzzzzz!")
+                        try:
+                            await bot.send_private_msg(
+                                user_id=545870222,
+                                message=f"Processing QQ 「{qid}」, Rss 「{source}」 error! ",
+                            )
+                        except:
+                            logger.error("Inform Pzzzzz failed. ")
+                        logger.error("Informing the user!")
                         try:
                             await bot.send_private_msg(
                                 user_id=qid,
-                                message=f"该资讯发送不完整！丢失信息无法发送，请联系管理员。"
+                                message=f"该资讯发送不完整！丢失信息为：「{see}」，请联系管理员。"
                                 + ("\n该消息来源：" + link if link != "" else "该资讯link未提供"),
                                 auto_escape=True,
                             )
                         except:
-                            logger.error("Informing failed!")
-                    success_dt = dt
+                            try:
+                                await bot.send_private_msg(
+                                    user_id=qid,
+                                    message=f"该资讯发送不完整！丢失信息无法发送，请联系管理员。这可能是由于消息过长导致的"
+                                    + (
+                                        "\n该消息来源：" + link
+                                        if link != ""
+                                        else "该资讯link未提供"
+                                    ),
+                                    auto_escape=True,
+                                )
+                            except:
+                                logger.error("Informing failed!")
+                        success_dt = dt
 
-        try:
-            await bot.send_private_msg(user_id=qid, message="=" * 19)
-        except CQHttpError:
-            pass
-        try:
-            await bot.send_private_msg(
-                user_id=qid,
-                message=f"已发送 {cnt} 条「{doc[source] if source !='自定义路由' else route}」的资讯！{f'其中失败 {fail} 条！' if fail !=0 else ''}咕噜灵波～(∠・ω< )⌒★",
-            )
-        except CQHttpError:
-            logger.error(f"Send Ending Error! Processing QQ 「{qid}」")
-        if success_dt != "" and source != "自定义路由":
-            await conn.execute(
-                f"""update subs set dt = '{success_dt}' where qid = {qid} and rss = '{source}';"""
-            )
+            try:
+                await bot.send_private_msg(user_id=qid, message="=" * 19)
+            except CQHttpError:
+                pass
+            try:
+                await bot.send_private_msg(
+                    user_id=qid,
+                    message=f"已发送 {cnt} 条「{doc[source] if source !='自定义路由' else route}」的资讯！{f'其中失败 {fail} 条！' if fail !=0 else ''}咕噜灵波～(∠・ω< )⌒★",
+                )
+            except CQHttpError:
+                logger.error(f"Send Ending Error! Processing QQ 「{qid}」")
+            if success_dt != "" and source != "自定义路由":
+                await conn.execute(
+                    f"""update subs set dt = '{success_dt}' where qid = {qid} and rss = '{source}';"""
+                )
 
     return flg
 
