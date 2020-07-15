@@ -152,14 +152,22 @@ async def rss(session: CommandSession):
             )
 
     else:
+        loop = asyncio.get_event_loop()
         for item, nm in session.state["ls"]:
-            resp = await sendrss(
-                session.event.user_id, session.bot, nm, None, item, (1, 1)
+            asyncio.run_coroutine_threadsafe(
+                sendrss(
+                    session.event.user_id,
+                    session.bot,
+                    nm,
+                    None,
+                    item,
+                    (1, 1),
+                    feedBack=session.event.group_id
+                    if session.event.detail_type != "private"
+                    else False,
+                ),
+                loop,
             )
-            if resp and session.event.detail_type != "private":
-                await session.send(
-                    unescape(cq.at(session.event.user_id) + f"「{doc[nm]}」的资讯已私信，请查收。")
-                )
 
 
 @rss.args_parser

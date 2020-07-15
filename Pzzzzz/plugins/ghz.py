@@ -20,6 +20,7 @@ async def cd(session: CommandSession):
     pass
 
 
+"""
 @nonebot.scheduler.scheduled_job("cron", hour="22", minute="0")
 async def _():
     bot = nonebot.get_bot()
@@ -30,7 +31,7 @@ async def _():
         )
     except CQHttpError:
         pass
-
+"""
 
 """
 @on_command("提醒", aliases={"non"}, only_to_me=False, permission=perm.SUPERUSER)

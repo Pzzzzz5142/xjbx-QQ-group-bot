@@ -14,7 +14,8 @@ from db import db
 import cq
 import feedparser as fp
 import re
-from utils import doc, hourse
+import aiohttp
+from utils import doc, hourse, sendpic
 
 
 locks = {}
@@ -76,7 +77,14 @@ async def handlerss(
 # num 第一个表示最获取的消息数，第二个表示在此基础上查看的消息数
 # -1表示最大，-2表示到已读为止。
 async def sendrss(
-    qid: int, bot, source: str, ress=None, getfun=None, num=(-2, 3), route=None
+    qid: int,
+    bot,
+    source: str,
+    ress=None,
+    getfun=None,
+    num=(-2, 3),
+    route=None,
+    feedBack=False,
 ):
     flg = 1
     if qid not in locks:
@@ -180,8 +188,10 @@ async def sendrss(
                 await conn.execute(
                     f"""update subs set dt = '{success_dt}' where qid = {qid} and rss = '{source}';"""
                 )
-
-    return flg
+    if feedBack:
+        await bot.send_group_msg(
+            group_id=feedBack, message=cq.at(qid) + f"「{doc[source]}」的资讯已私信，请查收。"
+        )
 
 
 async def getrss(route: str, max_num: int = -1):
@@ -209,6 +219,74 @@ async def getrss(route: str, max_num: int = -1):
         text = [text]
 
         ress.append((text, item["published"] if "published" in item else item.title))
+
+        cnt += 1
+
+    if len(ress) > 1:
+        ress = ress[1:]
+
+    return ress
+
+
+async def rssBili(uid, max_num: int = -1):
+    thing = fp.parse(r"http://172.18.0.1:1200/bilibili/user/dynamic/" + str(uid))
+
+    ress = [
+        (
+            ["暂时没有有用的新资讯哦！"],
+            (
+                thing["entries"][0]["title"]
+                if len(thing["entries"]) > 0
+                else "Grab Rss Error!"
+            ),
+            "",
+        )
+    ]
+
+    cnt = 0
+
+    for item in thing["entries"]:
+
+        if max_num != -1 and cnt >= max_num:
+            break
+
+        if (
+            ("封禁公告" in item.summary)
+            or ("小讲堂" in item.summary)
+            or ("中奖" in item.summary)
+        ):
+            continue
+
+        fdres = re.match(r".*?<br>", item.summary, re.S)
+
+        if fdres == None:
+            text = item.summary
+        else:
+            text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
+
+        while len(text) > 1 and text[-1] == "\n":
+            text = text[:-1]
+
+        pics = re.findall(
+            r"https://(?:(?!https://).)*?\.(?:jpg|jpeg|png|gif|bmp|tiff|ai|cdr|eps)\"",
+            item.summary,
+            re.S,
+        )
+        text = [text]
+
+        async with aiohttp.ClientSession() as sess:
+            for i in pics:
+                i = i[:-1]
+                pic = await sendpic(sess, i)
+                if pic != None:
+                    text.append(pic)
+        ress.append(
+            (
+                text,
+                item["published"],
+                item["link"] if "link" in item and item["link"] != "" else "",
+            )
+        )
 
         cnt += 1
 

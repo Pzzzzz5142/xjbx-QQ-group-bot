@@ -11,7 +11,7 @@ import bisect
 from db import db
 import cq
 from utils import *
-from .utils import sendrss
+from .utils import sendrss, rssBili
 import feedparser as fp
 import re
 import aiohttp
@@ -49,68 +49,5 @@ async def _bcr():
 
 
 async def bcr(max_num: int = -1):
-    thing = fp.parse(r"http://172.18.0.1:1200/bilibili/user/dynamic/353840826")
+    return await rssBili(353840826, max_num)
 
-    ress = [
-        (
-            ["暂时没有有用的新公告哦！"],
-            (
-                thing["entries"][0]["title"]
-                if len(thing["entries"]) > 0
-                else "Grab Rss Error!"
-            ),
-            "",
-        )
-    ]
-
-    cnt = 0
-
-    for item in thing["entries"]:
-
-        if max_num != -1 and cnt >= max_num:
-            break
-
-        if (
-            ("封禁公告" in item.summary)
-            or ("小讲堂" in item.summary)
-            or ("中奖" in item.summary)
-        ):
-            continue
-
-        fdres = re.match(r".*?<br>", item.summary, re.S)
-
-        if fdres == None:
-            text = item.summary
-        else:
-            text = fdres.string[int(fdres.span()[0]) : fdres.span()[1] - len("<br>")]
-
-        while len(text) > 1 and text[-1] == "\n":
-            text = text[:-1]
-
-        pics = re.findall(
-            r"https://(?:(?!https://).)*?\.(?:jpg|jpeg|png|gif|bmp|tiff|ai|cdr|eps)\"",
-            item.summary,
-            re.S,
-        )
-        text = [text]
-
-        async with aiohttp.ClientSession() as sess:
-            for i in pics:
-                i = i[:-1]
-                pic = await sendpic(sess, i)
-                if pic != None:
-                    text.append(pic)
-        ress.append(
-            (
-                text,
-                item["published"],
-                item["link"] if "link" in item and item["link"] != "" else "",
-            )
-        )
-
-        cnt += 1
-
-    if len(ress) > 1:
-        ress = ress[1:]
-
-    return ress
