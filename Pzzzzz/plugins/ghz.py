@@ -31,9 +31,10 @@ async def _():
         )
     except CQHttpError:
         pass
-"""
 
 """
+
+
 @on_command("提醒", aliases={"non"}, only_to_me=False, permission=perm.SUPERUSER)
 async def tx(session: CommandSession):
     bot = nonebot.get_bot()
@@ -44,5 +45,4 @@ async def tx(session: CommandSession):
         )
     except CQHttpError:
         pass
-"""
 

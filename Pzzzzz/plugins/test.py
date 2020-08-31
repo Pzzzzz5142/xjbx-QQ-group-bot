@@ -45,3 +45,21 @@ async def test(session: CommandSession):
             await session.send(unescape("禁言" + cq.at(2682823919) + "成功"))
         except CQHttpError:
             await session.send(unescape("禁言" + cq.at(2682823919) + "失败"))
+
+
+@on_command("call", only_to_me=False, permission=perm.SUPERUSER)
+async def _(session: CommandSession):
+    await session.bot.send_group_msg(group_id=1037557679, message="Halo")
+
+
+@on_command("reply", only_to_me=False)
+async def _(session: CommandSession):
+    ind = session.event.message_id
+    session.finish(cq.reply(ind) + "这是一个回复哦哦哦！！！")
+
+
+@on_command("xml", only_to_me=False, permission=perm.SUPERUSER)
+async def _(session: CommandSession):
+    msg = cq.xml(session.current_arg_text.replace("\n", ""))
+    await session.send(msg, auto_escape=True)
+    await session.send(unescape(msg))
