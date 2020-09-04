@@ -294,3 +294,7 @@ async def rssBili(uid, max_num: int = -1):
         ress = ress[1:]
 
     return ress
+
+
+async def add_rss(name: str):
+    pass

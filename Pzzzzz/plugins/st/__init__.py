@@ -1,4 +1,5 @@
 import json
+from aiocqhttp import event
 from nonebot import on_command, CommandSession
 from nonebot.command import call_command
 from nonebot.message import unescape
@@ -66,7 +67,14 @@ async def st(session: CommandSession):
             session.finish("未找到消息中的图片，搜索结束！")
     elif "search" in session.state:
         res, _id = await searchPic(session.state["search"])
-        await session.send(cq.reply(session.event.message_id) + res)
+        await session.send(
+            (
+                cq.reply(session.event.message_id)
+                if session.event.detail_type != "private"
+                else ""
+            )
+            + res
+        )
         session.state["id"] = _id
         if _id == -1:
             session.finish()
@@ -105,7 +113,7 @@ async def _(session: CommandSession):
                 ShitData = await resp.read()
                 ShitData = json.loads(ShitData)
                 ShitData = ShitData["imgurl"]
-                await session.send(cq.image(ShitData))
+                session.finish(cq.image(ShitData + ", cache=0"))
 
     if session.current_arg_text == "i":
         # await session.send("正在搜索图片！")
@@ -179,19 +187,20 @@ async def sauce(purl: str) -> str:
 
 
 async def searchPic(key_word: str):
-    datas = {"type": "search", "word": key_word}
+    datas = {"type": "search", "word": key_word, "page": 2}
     async with aiohttp.ClientSession() as sess:
         async with sess.get(searchapi, params=datas) as resp:
             if resp.status != 200:
                 return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
             ShitJson = await resp.json()
+        ind = randint(0, len(ShitJson["illusts"]))
         try:
-            res = cq.image(imageProxy(ShitJson["illusts"][0]["image_urls"]["medium"]))
+            res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["medium"]))
         except:
             res = f"暂时没有 {key_word} 的结果哦～"
         return (
             res,
-            ShitJson["illusts"][0]["id"] if 0 < len(ShitJson["illusts"]) else -1,
+            ShitJson["illusts"][ind]["id"] if 0 < len(ShitJson["illusts"]) else -1,
         )
 
 
