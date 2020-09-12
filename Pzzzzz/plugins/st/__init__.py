@@ -200,7 +200,7 @@ async def searchPic(key_word: str):
             res = f"暂时没有 {key_word} 的结果哦～"
         return (
             res,
-            ShitJson["illusts"][ind]["id"] if 0 < len(ShitJson["illusts"]) else -1,
+            ShitJson["illusts"][ind]["id"] if ind < len(ShitJson["illusts"]) else res,
         )
 
 

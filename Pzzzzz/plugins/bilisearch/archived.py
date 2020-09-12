@@ -51,6 +51,7 @@ async def bilibili(session: CommandSession):
 
     for i in range(lmt):
         res = ""
+        res=r'[CQ:json,data={"app":"com.tencent.miniapp_01"&#44;"appID":"100951776"&#44;"bthirdappforward":true&#44;"bthirdappforwardforbackendswitch":true&#44;"config":{"autoSize":0&#44;"ctime":1599824266&#44;"forward":1&#44;"height":0&#44;"token":"e734c12b022b55be28389e6bd3cedf56"&#44;"type":"normal"&#44;"width":0}&#44;"desc":""&#44;"extra":{"app_type":1&#44;"appid":100951776}&#44;"meta":{"detail_1":{"appid":"1109937557"&#44;"desc":" 要来了！AMD首次宣布Zen3处理器/RDNA2显卡"&#44;"host":{"nick":"·"&#44;"uin":545870222}&#44;"icon":"http://i.gtimg.cn/open/app_icon/00/95/17/76//100951776_100_m.png"&#44;"preview":"https://external-30160.picsz.qpic.cn/2a3d18a451c20394e9f9766a9e193971/jpg1"&#44;"qqdocurl":"https://b23.tv/iIpk5A"&#44;"scene":1036&#44;"shareTemplateData":{}&#44;"shareTemplateId":"8C8E89B49BE609866298ADDFF2DBABA4"&#44;"title":"哔哩哔哩"&#44;"url":"m.q.qq.com/a/s/37addc0b7fec2c08419356150b32972d"}}&#44;"prompt":"&#91;QQ小程序&#93;哔哩哔哩"&#44;"ver":"0.0.0.1"&#44;"view":"view_8C8E89B49BE609866298ADDFF2DBABA4"}]'
         if "https" not in title[i].attrs["href"]:
             lk = "https:" + title[i].attrs["href"]
         else:

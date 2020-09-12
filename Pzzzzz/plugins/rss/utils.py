@@ -296,5 +296,10 @@ async def rssBili(uid, max_num: int = -1):
     return ress
 
 
-async def add_rss(name: str):
-    pass
+async def add_rss(name: str, owner: str = "sys"):
+    async with db.pool.acquire() as conn:
+        try:
+            await conn.execute(f"""insert into rss values ('{name}','-1','{owner}')""")
+        except:
+            return "该名称已被占据，开通失败"
+        return "ok"

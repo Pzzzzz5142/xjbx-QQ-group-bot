@@ -24,3 +24,7 @@ def xml(data: str):
 def music(tp: str, _id: str):
     return f"[CQ:music,type={tp},id={_id}]"
 
+
+def js(jsstr: str):
+    return f"[CQ:json,data={jsstr}]"
+
