@@ -2,15 +2,16 @@ from nonebot import on_command, CommandSession, get_bot
 import json
 from nonebot.message import escape as message_escape
 from aiohttp import ClientSession
-from nonebot.argparse import ArgumentParser
+import re
 import cq
 
 parm = {"type": "1", "s": "十年", "limit": 1}
 
 
-@on_command("点歌", only_to_me=False)
+@on_command("点歌", patterns="点歌.*", only_to_me=False)
 async def _(session: CommandSession):
     msg = session.current_arg.strip()
+    msg = re.sub("^点歌", "", msg)
     if msg == "":
         return
     parm["s"] = msg

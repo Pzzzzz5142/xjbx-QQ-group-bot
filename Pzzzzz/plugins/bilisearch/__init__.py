@@ -86,6 +86,24 @@ async def bilibili(session: CommandSession):
                             thing["description"],
                         ),
                     )
+                elif tp == "media_bangumi":
+                    await session.send(
+                        packbili(
+                            thing["url"],
+                            thing["title"],
+                            "https:" + thing["cover"],
+                            f"番剧哦！这事番剧！\\n全 {thing['ep_size']} 集哦哦哦！",
+                        )
+                    )
+                elif tp == "web_game":
+                    await session.send(
+                        packbili(
+                            thing["game_link"],
+                            thing["game_name"],
+                            thing["game_icon"],
+                            thing["summary"],
+                        )
+                    )
                 else:
                     cnt -= 1
                 if cnt >= lmt:

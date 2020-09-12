@@ -20,7 +20,7 @@ def packbili(url, title, preview, desc):
         + preview
         + '"&#44;"source_icon":""&#44;"source_url":""&#44;"tag":"哔哩哔哩"&#44;"title":"'
         + title
-        + '"}}&#44;"prompt":"&#91;分享&#93;'
+        + '"}}&#44;"prompt":"&#91;来自🍺🍐🍺🍐的分享&#93;'
         + title
         + '"&#44;"ver":"0.0.0.1"&#44;"view":"news"}]'
     )
