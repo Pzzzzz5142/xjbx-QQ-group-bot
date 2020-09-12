@@ -1,12 +1,11 @@
-from nonebot import on_command, CommandSession, on_startup
+import json
+from aiocqhttp import event
+from nonebot import on_command, CommandSession
 from nonebot.command import call_command
 from nonebot.message import unescape
 import nonebot
-import asyncio
 import aiohttp
 from aiocqhttp.exceptions import Error as CQHttpError
-from nonebot.argparse import ArgumentParser
-from nonebot.log import logger
 from utils import *
 import cq
 from random import randint
@@ -22,6 +21,7 @@ searchapi = r"https://api.imjad.cn/pixiv/v2/"
 
 parm = {"apikey": "367219975ea6fec3027d38", "r18": "1", "size1200": "true"}
 data = {"db": "999", "output_type": "2", "numres": "3", "url": None}
+datas = {"sort": "腿控", "format": "images"}
 
 
 @on_command("st", aliases={}, only_to_me=False)
@@ -67,7 +67,14 @@ async def st(session: CommandSession):
             session.finish("未找到消息中的图片，搜索结束！")
     elif "search" in session.state:
         res, _id = await searchPic(session.state["search"])
-        await session.send(res)
+        await session.send(
+            (
+                cq.reply(session.event.message_id)
+                if session.event.detail_type != "private"
+                else ""
+            )
+            + res
+        )
         session.state["id"] = _id
         if _id == -1:
             session.finish()
@@ -92,7 +99,21 @@ async def _(session: CommandSession):
             session.finish("套娃结束！" if session.state["flg"] == 0 else None)
 
     if session.current_arg_text == "r16":
-        session.finish(unescape(cq.image("http://116.62.5.101, cache=0")))
+        async with aiohttp.ClientSession() as sess:
+            async with sess.get("http://api.rosysun.cn/cos") as resp:
+                if resp.status != 200:
+                    return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
+                ShitJson = await resp.text()
+                await session.send(cq.image(ShitJson + ", cache=0"))
+            async with sess.get(
+                "https://api.uomg.com/api/rand.img3?sort=胖次猫&format=json"
+            ) as resp:
+                if resp.status != 200:
+                    return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
+                ShitData = await resp.read()
+                ShitData = json.loads(ShitData)
+                ShitData = ShitData["imgurl"]
+                session.finish(cq.image(ShitData + ", cache=0"))
 
     if session.current_arg_text == "i":
         # await session.send("正在搜索图片！")
@@ -166,19 +187,20 @@ async def sauce(purl: str) -> str:
 
 
 async def searchPic(key_word: str):
-    datas = {"type": "search", "word": key_word}
+    datas = {"type": "search", "word": key_word, "page": 2}
     async with aiohttp.ClientSession() as sess:
         async with sess.get(searchapi, params=datas) as resp:
             if resp.status != 200:
                 return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
             ShitJson = await resp.json()
+        ind = randint(0, len(ShitJson["illusts"]))
         try:
-            res = cq.image(imageProxy(ShitJson["illusts"][0]["image_urls"]["medium"]))
+            res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["medium"]))
         except:
             res = f"暂时没有 {key_word} 的结果哦～"
         return (
             res,
-            ShitJson["illusts"][0]["id"] if 0 < len(ShitJson["illusts"]) else -1,
+            ShitJson["illusts"][ind]["id"] if ind < len(ShitJson["illusts"]) else res,
         )
 
 

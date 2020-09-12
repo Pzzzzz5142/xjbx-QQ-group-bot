@@ -1,17 +1,13 @@
 from nonebot import on_command, CommandSession, on_startup, permission as perm
-from nonebot.command import call_command
+from nonebot.command import Command, call_command
 from nonebot.message import unescape
 import asyncio
 import asyncpg
-from datetime import datetime
 import nonebot
 from aiocqhttp.exceptions import Error as CQHttpError
 from nonebot.argparse import ArgumentParser
 import sys
 from nonebot.log import logger
-from random import randint
-import random
-import bisect
 from db import db
 import cq
 from utils import doc
@@ -181,6 +177,7 @@ async def _(session: CommandSession):
         subparser.add_argument(
             "-l", "--list", action="store_true", default=False, help="列出已订阅的源"
         )
+        subparser.add_argument("-a", "--add", help="开通rss源")
         parser.add_argument("rss", nargs="*", help="获取已存在的 rss 源资讯")
         argv = parser.parse_args(session.current_arg_text.strip().split(" "))
         session.state["ls"] = []
@@ -202,6 +199,10 @@ async def _(session: CommandSession):
             if len(session.state["ls"]) == 0:
                 session.finish("查询路由地址不能为空哦！")
             return
+        if argv.add != None:
+            await session.send(str(session.event.user_id))
+            result = await add_rss(argv.add.strip(), str(session.event.user_id))
+            session.finish(result)
 
     ls = list(set(ls))
 
@@ -265,6 +266,28 @@ async def up(x):
             loop,
         )
     print(f"finished at {time.strftime('%X')}")
+
+
+@on_command("带礼包", only_to_me=False, shell_like=True, permission=perm.SUPERUSER)
+async def _(session: CommandSession):
+    event = {
+        "user_id": session.event.user_id,
+        "message": session.event.message,
+        "post_type": "message",
+        "message_type": "private",
+        "raw_message": session.event.raw_message,
+        "sub_type": "friend",
+    }
+    if session.event.detail_type != "private":
+        event["message_type"] = "group"
+        event["sub_type"] = None
+        event['group_id']=session.event.group_id
+    await call_command(
+        session.bot,
+        session.event,
+        "rss",
+        current_arg="pixiv_day_r18 pixiv_week_r18 pixiv_day_male_r18",
+    )
 
 
 def gtfun(name: str):

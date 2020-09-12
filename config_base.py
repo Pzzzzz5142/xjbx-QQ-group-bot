@@ -26,6 +26,10 @@ IMGPATH = ""
 # 小牛翻译 API key
 NIUAPI = ""
 
+# 百度翻译 API key
+BAIDUAPI = ""
+BAIDUKey = ""
+
 # 代码运行 API key
 RUNCODEAPI = ""
 
