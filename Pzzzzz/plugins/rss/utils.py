@@ -22,7 +22,12 @@ locks = {}
 
 
 async def handlerss(
-    bot, source, getfun, is_broadcast: bool = True, is_fullText: bool = False
+    bot,
+    source,
+    getfun,
+    is_broadcast: bool = True,
+    is_fullText: bool = False,
+    broadcastgroup: list = [],
 ):
     loop = asyncio.get_event_loop()
     async with db.pool.acquire() as conn:
@@ -55,12 +60,15 @@ async def handlerss(
             await conn.execute(f"update rss set dt = '{dt}' where id = '{source}'")
             if is_broadcast:
                 try:
-                    await bot.send_group_msg(
-                        group_id=bot.config.QGROUP,
-                        message=res[0]
-                        if is_fullText
-                        else f"「{doc[source]}」有新公告啦！\n输入 rss {source} 即可查看！\n输入 订阅 {source} 即可订阅！（注意订阅后的空格哦！）\n已订阅用户请检查私信。",
-                    )
+                    if len(broadcastgroup) == 0:
+                        broadcastgroup.append(bot.config.QGROUP)
+                    for gp_id in broadcastgroup:
+                        await bot.send_group_msg(
+                            group_id=gp_id,
+                            message=res[0]
+                            if is_fullText
+                            else f"「{doc[source]}」有新公告啦！\n输入 rss {source} 即可查看！\n输入 订阅 {source} 即可订阅！（注意订阅后的空格哦！）\n已订阅用户请检查私信。",
+                        )
                 except CQHttpError:
                     pass
 

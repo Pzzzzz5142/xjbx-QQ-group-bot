@@ -69,13 +69,22 @@ async def bilibili(session: CommandSession):
             for thing in data["data"]:
                 cnt += 1
                 if tp == "bili_user":
-                    await session.send(
+                    print(
                         packbili(
                             r"https://space.bilibili.com/" + str(thing["mid"]),
                             thing["uname"] + "的空间",
                             "https:" + thing["upic"],
                             thing["usign"],
                         )
+                    )
+                    await session.send(
+                        packbili(
+                            r"https://space.bilibili.com/" + str(thing["mid"]),
+                            thing["uname"] + "的空间",
+                            "https:" + thing["upic"],
+                            thing["usign"],
+                        ),
+
                     )
                 elif tp == "video":
                     await session.send(

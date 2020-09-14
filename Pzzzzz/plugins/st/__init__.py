@@ -1,3 +1,4 @@
+import asyncio
 import json
 from aiocqhttp import event
 from nonebot import on_command, CommandSession
@@ -93,8 +94,12 @@ async def _(session: CommandSession):
         if session.current_arg_text == "rl":
             session.state["rl"] = session.current_arg_text
         else:
-            if session.state["flg"] == 1 and session.current_arg_text == "st":
-                await call_command(session.bot, session.event, "st")
+            if session.state["flg"] == 1:
+                pst = session.current_arg_text.split(" ")
+                cmd = pst[0]
+                flg = await call_command(
+                    session.bot, session.event, cmd, current_arg=" ".join(pst[1:])
+                )
                 session.finish()
             session.finish("套娃结束！" if session.state["flg"] == 0 else None)
 
@@ -104,7 +109,7 @@ async def _(session: CommandSession):
                 if resp.status != 200:
                     return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
                 ShitJson = await resp.text()
-                await session.send(cq.image(ShitJson + ", cache=0"))
+                await session.send(cq.image(ShitJson + ",cache=0"))
             async with sess.get(
                 "https://api.uomg.com/api/rand.img3?sort=胖次猫&format=json"
             ) as resp:
@@ -113,7 +118,7 @@ async def _(session: CommandSession):
                 ShitData = await resp.read()
                 ShitData = json.loads(ShitData)
                 ShitData = ShitData["imgurl"]
-                session.finish(cq.image(ShitData + ", cache=0"))
+                session.finish(cq.image(ShitData + ",cache=0"))
 
     if session.current_arg_text == "i":
         # await session.send("正在搜索图片！")
@@ -187,14 +192,15 @@ async def sauce(purl: str) -> str:
 
 
 async def searchPic(key_word: str):
-    datas = {"type": "search", "word": key_word, "page": 2}
+    datas = {"type": "search", "word": key_word, "page": 1}
     async with aiohttp.ClientSession() as sess:
         async with sess.get(searchapi, params=datas) as resp:
             if resp.status != 200:
                 return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
             ShitJson = await resp.json()
-        ind = randint(0, len(ShitJson["illusts"]))
+        ind = 10000000
         try:
+            ind = randint(0, len(ShitJson["illusts"]))
             res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["medium"]))
         except:
             res = f"暂时没有 {key_word} 的结果哦～"
