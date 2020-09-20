@@ -1,6 +1,7 @@
-from nonebot import on_command, CommandSession, on_startup, permission as perm
+from nonebot import on_command, CommandSession, on_startup
+from nonebot.plugin import perm
 from nonebot.command import Command, call_command
-from nonebot.message import unescape
+from nonebot.message import unescape, escape
 import asyncio
 import asyncpg
 import nonebot
@@ -13,7 +14,7 @@ import cq
 from utils import doc
 import feedparser as fp
 import re
-from .utils import sendrss, getrss, handlerss
+from .utils import sendrss, getrss, handlerss, AutoReply
 from .bcr import bcr
 from .mrfz import mrfz
 from .loli import loli
@@ -29,7 +30,9 @@ __plugin_name__ = "rss 订阅"
 NOUPDATE = ["loli", "hpoi"]
 NOBROADCAST = ["gcores"]
 FULLTEXT = ["pprice"]
-BROADCASTGROUP=[145029700,]
+BROADCASTGROUP = [
+    145029700,
+]
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
@@ -212,15 +215,22 @@ async def _(session: CommandSession):
             session.state["ls"].append((gtfun(key), key))
             ls.remove(key)
 
-    if len(ls) > 0:
+    if len(ls) > 0 and " ".join(ls).strip() != "":
         await session.send(
             unescape(
                 "没有添加「{}」的订阅源！请联系".format(" ".join(ls)) + cq.at(545870222) + "添加订阅！"
             )
         )
     if len(session.state["ls"]) == 0:
-        session.finish(
+        await session.send(
             "本次资讯{}为空哦！".format("查看" if session.state["rss"] != [] else "订阅")
+        )
+        session.finish(
+            AutoReply(
+                "Rss 指令帮助菜单",
+                "以下是 rss 指令支持的源",
+                [(i, j) for i, j in doc.items() if "r18" not in i],
+            )
         )
 
 
@@ -282,7 +292,7 @@ async def _(session: CommandSession):
     if session.event.detail_type != "private":
         event["message_type"] = "group"
         event["sub_type"] = None
-        event['group_id']=session.event.group_id
+        event["group_id"] = session.event.group_id
     await call_command(
         session.bot,
         session.event,

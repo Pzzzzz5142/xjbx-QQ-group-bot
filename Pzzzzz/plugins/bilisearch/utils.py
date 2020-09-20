@@ -28,6 +28,8 @@ def packbili(url, title, preview, desc):
         + title
         + '"}}&#44;"prompt":"&#91;来自🍺🍐🍺🍐的分享&#93;'
         + title
+        + "\\n关爱电脑用户，你我同行\\n"
+        + url
         + '"&#44;"ver":"0.0.0.1"&#44;"view":"news"}]'
     )
     return a

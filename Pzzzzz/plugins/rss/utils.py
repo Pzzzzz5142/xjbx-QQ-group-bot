@@ -1,5 +1,5 @@
 from nonebot import on_command, CommandSession, on_startup
-from nonebot.message import unescape
+from nonebot.message import unescape, escape
 import asyncio
 import asyncpg
 from datetime import datetime
@@ -311,3 +311,32 @@ async def add_rss(name: str, owner: str = "sys"):
         except:
             return "该名称已被占据，开通失败"
         return "ok"
+
+
+def AutoReply(prompt, title, thing: list) -> str:
+    res = "[CQ:json,data=" + escape(
+        '{"app":"com.tencent.autoreply","desc":"","view":"autoreply","ver":"0.0.0.1","prompt":"['
+        + prompt
+        + ']","meta":{"metadata":{"title":"'
+        + title
+        + '","buttons":['
+    )
+    thing = [("a", "b")]
+    tmp = [
+        '{"slot":'
+        + str(ind + 1)
+        + ',"action_data":"'
+        + i[0]
+        + '","name":"'
+        + i[1]
+        + '","action":"notify"}'
+        for ind, i in enumerate(thing)
+    ]
+    res += escape(
+        ",".join(tmp)
+        + '],"type":"guest","token":"LAcV49xqyE57S17B8ZT6FU7odBveNMYJzux288tBD3c="}},"config":{"forward":1,"showSender":1}}'
+    )
+    res += "]"
+    print(res)
+    return res
+
