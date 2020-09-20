@@ -2,6 +2,8 @@ from nonebot import on_natural_language, NLPSession
 from math import exp
 from random import random
 
+from nonebot.command import call_command
+
 tjmp = {}
 
 
@@ -18,10 +20,19 @@ async def repeat(session: NLPSession):
     if session.event.detail_type != "group":
         return
     if session.event.group_id not in tjmp:
-        tjmp[session.event.group_id] = [0, "", ""]
+        tjmp[session.event.group_id] = [0, "", "", 0]
     now = tjmp[session.event.group_id]
     if msg == now[2]:
         now[0] += 1
+    if "pixiv" in msg and "rss " in msg and "r18" in msg:
+        now[-1] += 1
+    else:
+        now[-1] = 0
+        return
+    if now[-1] > 3:
+        await call_command(session.bot, session.event, "怜悯")
+        now[-1] = 0
+        return
     if msg == "" or msg == now[1] or msg != now[2]:
         now[0] = 0
         now[2] = msg

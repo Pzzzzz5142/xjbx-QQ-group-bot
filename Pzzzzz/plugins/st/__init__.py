@@ -3,7 +3,7 @@ import json
 from aiocqhttp import event
 from nonebot import on_command, CommandSession
 from nonebot.command import call_command
-from nonebot.message import unescape
+from nonebot.message import unescape, MessageSegment, escape
 import nonebot
 import aiohttp
 from aiocqhttp.exceptions import Error as CQHttpError
@@ -23,6 +23,20 @@ searchapi = r"https://api.imjad.cn/pixiv/v2/"
 parm = {"apikey": "367219975ea6fec3027d38", "r18": "1", "size1200": "true"}
 data = {"db": "999", "output_type": "2", "numres": "3", "url": None}
 datas = {"sort": "腿控", "format": "images"}
+
+
+@on_command("带礼包的怜悯", aliases=("怜悯"), only_to_me=False)
+async def _(session: CommandSession):
+    x = (
+        "[CQ:json,data="
+        + escape(
+            '{"app":"com.tencent.autoreply","desc":"","view":"autoreply","ver":"0.0.0.1","prompt":"[可怜的人儿啊，请收下这份怜悯]","meta":{"metadata":{"title":"大礼包，向来不患寡而患不均","buttons":[{"slot":1,"action_data":"'
+            + "rss pixiv_day_r18 pixiv_week_r18"
+            + '","name":"点我领取带礼包的怜悯","action":"notify"}],"type":"guest","token":"LAcV49xqyE57S17B8ZT6FU7odBveNMYJzux288tBD3c="}},"config":{"forward":1,"showSender":1}}'
+        )
+        + "]"
+    )
+    await session.send(x)
 
 
 @on_command("st", aliases={}, only_to_me=False)
@@ -95,12 +109,7 @@ async def _(session: CommandSession):
             session.state["rl"] = session.current_arg_text
         else:
             if session.state["flg"] == 1:
-                pst = session.current_arg_text.split(" ")
-                cmd = pst[0]
-                flg = await call_command(
-                    session.bot, session.event, cmd, current_arg=" ".join(pst[1:])
-                )
-                session.finish()
+                session.switch(session.current_arg_text)
             session.finish("套娃结束！" if session.state["flg"] == 0 else None)
 
     if session.current_arg_text == "r16":
