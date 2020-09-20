@@ -1,9 +1,8 @@
-import asyncio
 import json
 from aiocqhttp import event
+from aiocqhttp.message import MessageSegment
 from nonebot import on_command, CommandSession
-from nonebot.command import call_command
-from nonebot.message import unescape, MessageSegment, escape
+from nonebot.message import unescape, escape
 import nonebot
 import aiohttp
 from aiocqhttp.exceptions import Error as CQHttpError
