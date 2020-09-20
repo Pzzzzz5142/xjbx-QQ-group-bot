@@ -29,6 +29,7 @@ __plugin_name__ = "rss 订阅"
 NOUPDATE = ["loli", "hpoi"]
 NOBROADCAST = ["gcores"]
 FULLTEXT = ["pprice"]
+BROADCASTGROUP=[145029700,]
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")

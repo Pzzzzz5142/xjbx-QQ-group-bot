@@ -75,7 +75,8 @@ async def bilibili(session: CommandSession):
                             thing["uname"] + "的空间",
                             "https:" + thing["upic"],
                             thing["usign"],
-                        )
+                        ),
+
                     )
                 elif tp == "video":
                     await session.send(

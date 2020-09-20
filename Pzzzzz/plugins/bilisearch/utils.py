@@ -13,7 +13,13 @@ def packbili(url, title, preview, desc):
     )
     a = (
         '[CQ:json,data={"app":"com.tencent.structmsg"&#44;"config":{"autosize":true&#44;"forward":true&#44;"type":"normal"}&#44;"desc":"新闻"&#44;"extra":{"app_type":1&#44;"appid":100951776}&#44;"meta":{"news":{"action":""&#44;"android_pkg_name":""&#44;"app_type":1&#44;"appid":100951776&#44;"desc":"'
-        + desc.replace("\n", "\\n")
+        + desc.replace("&", "&amp")
+        .replace(",", "&#44;")
+        .replace("[", "&#91;")
+        .replace("]", "&#93;")
+        .replace('<em class="keyword">', "")
+        .replace("</em>", "")
+        .replace("\n", "\\n")
         + '"&#44;"jumpUrl":"'
         + url
         + '"&#44;"preview":"'
