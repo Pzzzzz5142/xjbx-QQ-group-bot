@@ -1,10 +1,6 @@
 from nonebot import on_command, CommandSession, on_startup
 from nonebot.message import unescape, escape
 import asyncio
-import asyncpg
-from datetime import datetime
-import nonebot
-import pytz
 from aiocqhttp.exceptions import Error as CQHttpError
 import os
 from nonebot.argparse import ArgumentParser
@@ -60,8 +56,6 @@ async def handlerss(
             await conn.execute(f"update rss set dt = '{dt}' where id = '{source}'")
             if is_broadcast:
                 try:
-                    if len(broadcastgroup) == 0:
-                        broadcastgroup.append(bot.config.QGROUP)
                     for gp_id in broadcastgroup:
                         await bot.send_group_msg(
                             group_id=gp_id,

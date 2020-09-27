@@ -38,12 +38,16 @@ BROADCASTGROUP = [
 @nonebot.scheduler.scheduled_job("cron", hour="5", minute="0")
 async def _():
     bot = nonebot.get_bot()
-    try:
-        await bot.send_group_msg(
-            group_id=bot.config.QGROUP, message=f"Ciallo～(∠・ω< )⌒★，早上好。"
-        )
-    except CQHttpError:
-        pass
+    async with db.pool.acquire() as conn:
+        values = await conn.fetch("select gid from mg where morningcall = true")
+        for item in values:
+            item = item["gid"]
+            try:
+                await bot.send_group_msg(
+                    group_id=int(item), message=f"Ciallo～(∠・ω< )⌒★，早上好。"
+                )
+            except CQHttpError:
+                pass
 
 
 @nonebot.scheduler.scheduled_job("cron", hour="0,6,12,18", minute="0")
@@ -61,17 +65,26 @@ async def bk():
 
 
 @nonebot.scheduler.scheduled_job("interval", minutes=20)
-# @on_command("ce", only_to_me=False, shell_like=True)
 async def __():
     bot = nonebot.get_bot()
     loop = asyncio.get_event_loop()
-    for key in doc:
-        if key in NOUPDATE or "pixiv" in key:
-            continue
-        asyncio.run_coroutine_threadsafe(
-            handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT),
-            loop,
-        )
+    async with db.pool.acquire() as conn:
+        values = await conn.fetch("select gid from mg where rss = true")
+        values = [int(item["gid"]) for item in values]
+        for key in doc:
+            if key in NOUPDATE or "pixiv" in key:
+                continue
+            asyncio.run_coroutine_threadsafe(
+                handlerss(
+                    bot,
+                    key,
+                    gtfun(key),
+                    key not in NOBROADCAST,
+                    key in FULLTEXT,
+                    values,
+                ),
+                loop,
+            )
 
 
 @on_command("rss", only_to_me=False)
@@ -209,6 +222,13 @@ async def _(session: CommandSession):
             session.finish(result)
 
     ls = list(set(ls))
+    if session.event.detail_type == "group":
+        async with db.pool.acquire() as conn:
+            values = await conn.fetch(
+                "select safe from mg where gid = {}".format(session.event.group_id)
+            )
+            if len(values) > 0 and values[0]["safe"]:
+                ls = [i for i in ls if "r18" not in i]
 
     for key in doc:
         if key in ls[:]:
@@ -269,13 +289,24 @@ async def up(x):
     print(f"started at {time.strftime('%X')}")
     bot = nonebot.get_bot()
     loop = asyncio.get_event_loop()
-    for key in doc:
-        if key in NOUPDATE or "pixiv" in key:
-            continue
-        asyncio.run_coroutine_threadsafe(
-            handlerss(bot, key, gtfun(key), key not in NOBROADCAST, key in FULLTEXT),
-            loop,
-        )
+    async with db.pool.acquire() as conn:
+        values = await conn.fetch("select gid from mg where rss = true")
+        print(values[0]["gid"])
+        values = [int(item["gid"]) for item in values]
+        for key in doc:
+            if key in NOUPDATE or "pixiv" in key:
+                continue
+            asyncio.run_coroutine_threadsafe(
+                handlerss(
+                    bot,
+                    key,
+                    gtfun(key),
+                    key not in NOBROADCAST,
+                    key in FULLTEXT,
+                    values,
+                ),
+                loop,
+            )
     print(f"finished at {time.strftime('%X')}")
 
 

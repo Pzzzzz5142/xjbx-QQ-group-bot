@@ -1,4 +1,5 @@
 import json
+from unittest.result import failfast
 from aiocqhttp import event
 from aiocqhttp.message import MessageSegment
 from nonebot import on_command, CommandSession
@@ -6,8 +7,10 @@ from nonebot.message import unescape, escape
 import nonebot
 import aiohttp
 from aiocqhttp.exceptions import Error as CQHttpError
+from six import with_metaclass
 from utils import *
 import cq
+from db import db
 from random import randint
 from utils import imageProxy, imageProxy_cat
 
@@ -80,7 +83,14 @@ async def st(session: CommandSession):
                 await session.send("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
             session.finish("未找到消息中的图片，搜索结束！")
     elif "search" in session.state:
-        res, _id = await searchPic(session.state["search"])
+        safe = False
+        if session.event.detail_type == "group":
+            async with db.pool.acquire() as conn:
+                values = await conn.fetch(
+                    "select safe from mg where gid = {}".format(session.event.group_id)
+                )
+                safe = len(values) > 1 and values[0]["safe"]
+        res, _id = await searchPic(session.state["search"], safe)
         await session.send(
             (
                 cq.reply(session.event.message_id)
@@ -199,7 +209,7 @@ async def sauce(purl: str) -> str:
     )
 
 
-async def searchPic(key_word: str):
+async def searchPic(key_word: str, safe=False):
     datas = {"type": "search", "word": key_word, "page": 1}
     async with aiohttp.ClientSession() as sess:
         async with sess.get(searchapi, params=datas) as resp:
@@ -207,9 +217,16 @@ async def searchPic(key_word: str):
                 return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
             ShitJson = await resp.json()
         ind = 10000000
+
         try:
-            ind = randint(0, len(ShitJson["illusts"]))
-            res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["medium"]))
+            tt = ShitJson["illusts"]
+            if safe:
+                tt = [i for i in tt if "R-18" not in [j["name"] for j in i["tags"]]]
+                print("safetilize")
+            ind = randint(0, len(tt))
+            res = cq.image(imageProxy(tt[ind]["image_urls"]["medium"]))
+            ShitJson["illusts"] = tt
+
         except:
             res = f"暂时没有 {key_word} 的结果哦～"
         return (
