@@ -22,7 +22,9 @@ api = r"https://api.lolicon.app/setu/"
 
 searchapi = r"https://api.imjad.cn/pixiv/v2/"
 
-parm = {"apikey": "367219975ea6fec3027d38", "r18": "1", "size1200": "true"}
+bot=nonebot.get_bot()
+
+parm = {"apikey": bot.config.LoliAPI, "r18": "1", "size1200": "true"}
 data = {"db": "999", "output_type": "2", "numres": "3", "url": None}
 datas = {"sort": "腿控", "format": "images"}
 
@@ -160,6 +162,23 @@ async def _(session: CommandSession):
             session.finish("嘛，什么都没输入嘛～～")
     else:
         session.state["url"] = session.current_arg_images[0]
+
+@on_command('来份涩图',patterns="^来.份.*(涩|色)图",only_to_me=False)
+async def sst(session:CommandSession):
+    msg=session.current_arg_text.strip()
+    if 'r18' in msg or 'R18' in msg:
+        parm['r18']=1
+    else:
+        parm['r18']=0
+    async with aiohttp.ClientSession() as sess:
+        async with sess.get(api, headers=headers, params=parm) as resp:
+            if resp.status != 200:
+                session.finish("网络错误：" + str(resp.status))
+            ShitJson = await resp.json()
+
+    if ShitJson["quota"] == 0:
+        session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")
+    session.finish(cq.image(ShitJson["data"][0]["url"]))
 
 
 async def sauce(purl: str) -> str:

@@ -15,7 +15,7 @@ async def pixiv(mode: str = "day"):
 
     now -= timedelta(days=2)
 
-    ress = [([f"在尝试 {retry} 遍之后，还是没有爬到图片呢。。。"], "Grab Rss Error!", "",)]
+    ress = [([f"在尝试 {retry} 遍之后，还是没有爬到图片呢。。。"], "Grab Rss Error!", "", "")]
 
     datas = {"mode": mode, "type": "rank", "date": now.strftime("%Y-%m-%d")}
 
@@ -38,7 +38,7 @@ async def pixiv(mode: str = "day"):
         for item in ShitJson["illusts"]:
             res.append(cq.image(imageProxy(item["image_urls"]["medium"])))
             _id = item["id"]
-        ress.append((res, _id, ""))
+        ress.append((res, _id, "", ""))
 
     if len(ress) > 1:
         ress = ress[1:]

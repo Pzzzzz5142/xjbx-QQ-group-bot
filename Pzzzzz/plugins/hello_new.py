@@ -13,6 +13,6 @@ async def hello(session: NoticeSession):
 
 @on_request("friend")
 async def frd(session: RequestSession):
-    await session.approve()
+    # await session.approve()
     await session.send("你好啊，新朋友！")
 

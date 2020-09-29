@@ -33,3 +33,5 @@ BAIDUKey = ""
 # 代码运行 API key
 RUNCODEAPI = ""
 
+LoliAPI = ""
+

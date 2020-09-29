@@ -81,6 +81,7 @@ async def bh3(max_num: int = -1):
                 else "Grab Rss Error!"
             ),
             "",
+            "",
         )
     ]
 
@@ -109,6 +110,7 @@ async def bh3(max_num: int = -1):
                 [res],
                 item["published"],
                 item["link"] if "link" in item and item["link"] != "" else "",
+                item["title"],
             )
         )
 

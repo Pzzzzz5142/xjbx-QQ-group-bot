@@ -31,6 +31,18 @@ async def mg(session: CommandSession):
     session.finish("{}")
 
 
+@on_command("grant", only_to_me=False, permission=perm.SUPERUSER)
+async def mg(session: CommandSession):
+    a = session.current_arg_text.strip().split()
+    async with db.pool.acquire() as conn:
+        for i in a:
+            await conn.execute(
+                "insert into mg (gid,white) values ({},{})".format(int(i), True)
+            )
+
+    await session.send("已给群「{}」基础版授权。".format(" 、".join(a)))
+
+
 @message_preprocessor
 async def _(bot: NoneBot, event: aiocqhttp.Event, plugin_manager: PluginManager):
     if event.detail_type != "group":

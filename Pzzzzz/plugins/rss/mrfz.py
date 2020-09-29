@@ -24,38 +24,6 @@ from .utils import sendrss
 from utils import *
 
 
-async def _mrfz():
-    bot = nonebot.get_bot()
-
-    async with db.pool.acquire() as conn:
-        values = await conn.fetch(f"""select dt from rss where id = 'mrfz';""")
-        if len(values) == 0:
-            await conn.execute("""insert into rss values ('mrfz','-1')""")
-            db_dt = "-1"
-        else:
-            db_dt = values[0]["dt"]
-
-        ress = await getmrfz()
-
-        _, dt = ress[0]
-
-        if dt != db_dt:
-            await conn.execute(f"update rss set dt = '{dt}' where id = 'mrfz'")
-            try:
-                await bot.send_group_msg(
-                    group_id=bot.config.QGROUP,
-                    message=f"「{doc['mrfz']}」有新公告啦！\n输入 rss mrfz 即可查看！\n输入 订阅 mrfz 即可订阅！（注意订阅后的空格哦！）\n已订阅用户请检查私信。",
-                )
-            except CQHttpError:
-                pass
-
-        values = await conn.fetch(f"""select qid, dt from subs where rss = 'mrfz'; """)
-
-        for item in values:
-            if item["dt"] != dt:
-                await sendrss(item["qid"], bot, "mrfz", ress)
-
-
 def dfs(thing):
     if isinstance(thing, str):
         return thing
@@ -78,6 +46,7 @@ async def mrfz(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
             "",
         )
     ]
@@ -107,6 +76,7 @@ async def mrfz(max_num: int = -1):
                 [res],
                 item["published"],
                 item["link"] if "link" in item and item["link"] != "" else "",
+                item["title"],
             )
         )
 

@@ -174,7 +174,6 @@ async def rss(session: CommandSession):
                     nm,
                     None,
                     item,
-                    (1, 1),
                     feedBack=session.event.group_id
                     if session.event.detail_type != "private"
                     else False,
