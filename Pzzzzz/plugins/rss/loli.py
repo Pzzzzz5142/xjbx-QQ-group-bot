@@ -42,6 +42,7 @@ async def _loli():
 
 
 async def loli(max_num: int = -1):
+    return None
     thing = fp.parse(r"http://172.18.0.1:1200/hhgal")
 
     ress = [
@@ -52,6 +53,7 @@ async def loli(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
             "",
         )
     ]
@@ -74,6 +76,7 @@ async def loli(max_num: int = -1):
                 text,
                 item["published"],
                 item["link"] if "link" in item and item["link"] != "" else "",
+                item["title"],
             )
         )
 

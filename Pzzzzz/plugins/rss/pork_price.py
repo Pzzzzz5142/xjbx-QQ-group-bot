@@ -68,6 +68,7 @@ async def pprice(max_num: int = -1):
                 else "Grab Rss Error!"
             ),
             "",
+            "",
         )
     ]
 
@@ -82,6 +83,7 @@ async def pprice(max_num: int = -1):
                 [item["title"]],
                 item["title"],
                 item["link"] if "link" in item and item["link"] != "" else "",
+                item["title"],
             )
         )
 

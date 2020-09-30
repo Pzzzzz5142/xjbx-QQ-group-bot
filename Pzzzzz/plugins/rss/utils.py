@@ -1,10 +1,6 @@
 from nonebot import on_command, CommandSession, on_startup
 from nonebot.message import unescape, escape
 import asyncio
-import asyncpg
-from datetime import datetime
-import nonebot
-import pytz
 from aiocqhttp.exceptions import Error as CQHttpError
 import os
 from nonebot.argparse import ArgumentParser
@@ -49,7 +45,7 @@ async def handlerss(
             logger.error(f"rss「{source}」更新出现异常", exc_info=True)
             return
 
-        res, dt, lk = ress[0]
+        res, dt, lk, _ = ress[0]
         if dt == "Grab Rss Error!":
             await bot.send_private_msg(
                 user_id=545870222, message=f"rss「[{doc[source]}]」更新出现异常"
@@ -57,17 +53,28 @@ async def handlerss(
             logger.error(f"rss「{source}」更新出现异常", exc_info=True)
             return
         if dt != db_dt:
+            preview = f"{doc[source]} - {source}:"
+            mx = 5
+            for item in ress:
+                if item[1] != db_dt:
+                    mx -= 1
+                    preview += "\n"
+                    preview += item[-1]
+                    preview += "\n▲" + item[2]
+                    if mx == 0:
+                        break
+                else:
+                    break
             await conn.execute(f"update rss set dt = '{dt}' where id = '{source}'")
+            await conn.execute(f"update rss set pre = '{db_dt}' where id = '{source}'")
             if is_broadcast:
                 try:
-                    if len(broadcastgroup) == 0:
-                        broadcastgroup.append(bot.config.QGROUP)
                     for gp_id in broadcastgroup:
                         await bot.send_group_msg(
                             group_id=gp_id,
                             message=res[0]
                             if is_fullText
-                            else f"「{doc[source]}」有新公告啦！\n输入 rss {source} 即可查看！\n输入 订阅 {source} 即可订阅！（注意订阅后的空格哦！）\n已订阅用户请检查私信。",
+                            else preview + f"\n\n回复 rss {source} 获取详细信息",
                         )
                 except CQHttpError:
                     pass
@@ -94,7 +101,7 @@ async def sendrss(
     route=None,
     feedBack=False,
 ):
-    flg = 1
+    isP = "pixiv" in source
     if qid not in locks:
         locks[qid] = asyncio.Lock()
     async with locks[qid]:
@@ -105,7 +112,10 @@ async def sendrss(
             if len(values) > 0:
                 qdt = values[0]["dt"]
             else:
-                qdt = None
+                values = await conn.fetch(
+                    f"""select pre from rss where id='{source}';"""
+                )
+                qdt = values[0]["pre"]
             cnt = 0
             is_read = False
             if ress == None:
@@ -121,6 +131,12 @@ async def sendrss(
             if num[0] == -2:
                 for i in range(len(ress)):
                     if ress[i][1] == qdt:
+                        if i == 0:
+                            try:
+                                ress = ress[:1]
+                            except:
+                                ress = ress
+                            break
                         ress = ress[:i]
                         break
             if num[1] != -1:
@@ -128,7 +144,7 @@ async def sendrss(
 
             success_dt = ""
             fail = 0
-            for res, dt, link in reversed(ress):
+            for res, dt, link, _ in reversed(ress):
                 if is_read == False and dt == qdt:
                     is_read = True
                 if num[1] != -1 and cnt >= num[1]:
@@ -136,6 +152,8 @@ async def sendrss(
                 see = ""
                 is_r = is_read
                 cnt += 1
+                if isP:
+                    await asyncio.sleep(1)
                 await bot.send_private_msg(user_id=qid, message="=" * 19)
                 for text in res:
                     see = text
@@ -143,6 +161,8 @@ async def sendrss(
                         await bot.send_private_msg(
                             user_id=qid, message=("已读：\n" if is_r else "") + text
                         )
+                        if "[CQ:image" in text and not isP:
+                            await asyncio.sleep(1)
                         is_r = False
                         success_dt = dt
                     except CQHttpError:
@@ -293,6 +313,7 @@ async def rssBili(uid, max_num: int = -1):
                 text,
                 item["published"],
                 item["link"] if "link" in item and item["link"] != "" else "",
+                item["title"],
             )
         )
 

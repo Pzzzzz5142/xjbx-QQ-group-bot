@@ -1,9 +1,3 @@
-from nonebot.message import unescape
-import asyncio
-import asyncpg
-import nonebot
-import pytz
-from aiocqhttp.exceptions import Error as CQHttpError
 from nonebot.log import logger
 from random import randint
 import random
@@ -29,6 +23,7 @@ async def hpoi(max_num: int = -1):
                 if len(thing["entries"]) > 0
                 else "Grab Rss Error!"
             ),
+            "",
             "",
         )
     ]
@@ -77,7 +72,12 @@ async def hpoi(max_num: int = -1):
                 tm = x if tm == None or tm < x else tm
 
         ress.append(
-            (text, tm, item["link"] if "link" in item and item["link"] != "" else "",)
+            (
+                text,
+                tm,
+                item["link"] if "link" in item and item["link"] != "" else "",
+                None,
+            )
         )
 
         cnt += 1

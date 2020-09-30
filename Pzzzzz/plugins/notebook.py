@@ -55,6 +55,7 @@ async def notebook(session: CommandSession):
         group.add_argument("-l", "--list", action="store_true", help="查看记录")
         group.add_argument("-d", "--delt", type=str, help="删除记录")
         group.add_argument("-c", "--cls", action="store_true", help="清空记录")
+        group.add_argument("-ls", "--listsort", action="store_true")
 
         args = parser.parse_args(session.argv)
     else:
@@ -126,6 +127,24 @@ async def notebook(session: CommandSession):
         async with db.pool.acquire() as conn:
             values = await conn.fetch(
                 """select * from notebook where qid={0} order by ind;""".format(
+                    session.event.user_id
+                )
+            )
+        if len(values) == 0:
+            session.finish("并没有找到任何记录，蛮遗憾的。")
+        log = "\n"
+        for item in values:
+            if item["ind"] % 10 == 0 and item["ind"] != 0:
+                await session.send(log[2:])
+                log = "\n"
+            log += "\n{0}. {1}".format(item["ind"] + 1, item["item"])
+        await session.send(log[2:])
+        session.finish("以上")
+
+    elif session.is_first_run and args.listsort == True:
+        async with db.pool.acquire() as conn:
+            values = await conn.fetch(
+                """select * from notebook where qid={0} order by item;""".format(
                     session.event.user_id
                 )
             )
