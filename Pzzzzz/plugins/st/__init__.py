@@ -163,9 +163,10 @@ async def _(session: CommandSession):
     else:
         session.state["url"] = session.current_arg_images[0]
 
-@on_command('来份涩图',patterns="^来.份.*(涩|色)图",only_to_me=False)
+@on_command('来份涩图',patterns="^来.*份.*(涩|色)图",only_to_me=False)
 async def sst(session:CommandSession):
     msg=session.current_arg_text.strip()
+    print(msg)
     if 'r18' in msg or 'R18' in msg:
         parm['r18']=1
     else:
@@ -175,6 +176,7 @@ async def sst(session:CommandSession):
             if resp.status != 200:
                 session.finish("网络错误：" + str(resp.status))
             ShitJson = await resp.json()
+    print(ShitJson)
 
     if ShitJson["quota"] == 0:
         session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")

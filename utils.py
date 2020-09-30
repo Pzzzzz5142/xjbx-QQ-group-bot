@@ -9,6 +9,7 @@ import cq
 import re
 import base64
 import datetime
+from db import db
 
 doc = {
     "mrfz": "明日方舟",
@@ -131,4 +132,10 @@ def imageProxy(url: str) -> str:
 
 
 def imageProxy_cat(url):
+    pass
+
+async def ckperm(conn=None):
+    if conn==None:
+        conn=db.pool.acquire()
+        conn.done()
     pass
