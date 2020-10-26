@@ -134,8 +134,9 @@ def imageProxy(url: str) -> str:
 def imageProxy_cat(url):
     pass
 
-async def ckperm(conn=None):
-    if conn==None:
-        conn=db.pool.acquire()
-        conn.done()
-    pass
+
+async def cksafe(gid: int):
+    async with db.pool.acquire() as conn:
+        values = await conn.fetch("select safe from mg where gid = {}".format(gid))
+        safe = len(values) > 0 and values[0]["safe"]
+        return safe

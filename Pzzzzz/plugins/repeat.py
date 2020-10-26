@@ -22,19 +22,24 @@ async def repeat(session: NLPSession):
     if session.event.group_id not in tjmp:
         tjmp[session.event.group_id] = [0, "", "", 0]
     now = tjmp[session.event.group_id]
-    if msg == now[2]:
-        now[0] += 1
-    if "pixiv" in msg and "rss " in msg and "r18" in msg:
-        now[-1] += 1
-    else:
-        now[-1] = 0
-        return
-    if now[-1] > 3:
-        await call_command(session.bot, session.event, "怜悯")
-        now[-1] = 0
-        return
+    try:
+        if msg == now[2]:
+            now[0] += 1
+        if "pixiv" in msg and "rss " in msg and "r18" in msg:
+            now[-1] += 1
+        else:
+            now[-1] = 0
+            raise Exception
+        if now[-1] > 3:
+            await call_command(session.bot, session.event, "怜悯")
+            now[-1] = 0
+            raise Exception
+    except:
+        pass
+    if session.event.group_id==1037557679:
+        print(tjmp)
     if msg == "" or msg == now[1] or msg != now[2]:
-        now[0] = 0
+        now[0] = 1
         now[2] = msg
         return
     now[2] = msg

@@ -19,7 +19,7 @@ def packbili(url, title, preview, desc):
         .replace("]", "&#93;")
         .replace('<em class="keyword">', "")
         .replace("</em>", "")
-        .replace("\n", "\\n")
+        .replace("\n", "\\n")[:30]
         + '"&#44;"jumpUrl":"'
         + url
         + '"&#44;"preview":"'

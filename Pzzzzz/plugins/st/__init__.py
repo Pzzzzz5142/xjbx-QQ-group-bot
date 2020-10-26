@@ -12,7 +12,7 @@ from utils import *
 import cq
 from db import db
 from random import randint
-from utils import imageProxy, imageProxy_cat
+from utils import imageProxy, imageProxy_cat, cksafe
 
 __plugin_name__ = "以图搜图"
 
@@ -22,7 +22,7 @@ api = r"https://api.lolicon.app/setu/"
 
 searchapi = r"https://api.imjad.cn/pixiv/v2/"
 
-bot=nonebot.get_bot()
+bot = nonebot.get_bot()
 
 parm = {"apikey": bot.config.LoliAPI, "r18": "1", "size1200": "true"}
 data = {"db": "999", "output_type": "2", "numres": "3", "url": None}
@@ -87,11 +87,7 @@ async def st(session: CommandSession):
     elif "search" in session.state:
         safe = False
         if session.event.detail_type == "group":
-            async with db.pool.acquire() as conn:
-                values = await conn.fetch(
-                    "select safe from mg where gid = {}".format(session.event.group_id)
-                )
-                safe = len(values) > 1 and values[0]["safe"]
+            safe = await cksafe(session.event.group_id)
         res, _id = await searchPic(session.state["search"], safe)
         await session.send(
             (
@@ -163,14 +159,19 @@ async def _(session: CommandSession):
     else:
         session.state["url"] = session.current_arg_images[0]
 
-@on_command('来份涩图',patterns="^来.*份.*(涩|色)图",only_to_me=False)
-async def sst(session:CommandSession):
-    msg=session.current_arg_text.strip()
+
+@on_command("来份涩图", patterns="^来.*份.*(涩|色)图", only_to_me=False)
+async def sst(session: CommandSession):
+    msg = session.current_arg_text.strip()
     print(msg)
-    if 'r18' in msg or 'R18' in msg:
-        parm['r18']=1
+    if session.event.detail_type == "group":
+        safe = await cksafe(session.event.group_id)
     else:
-        parm['r18']=0
+        safe = False
+    if ("r18" in msg or "R18" in msg) and not safe:
+        parm["r18"] = 1
+    else:
+        parm["r18"] = 0
     async with aiohttp.ClientSession() as sess:
         async with sess.get(api, headers=headers, params=parm) as resp:
             if resp.status != 200:
