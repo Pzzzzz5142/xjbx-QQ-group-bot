@@ -36,8 +36,6 @@ async def repeat(session: NLPSession):
             raise Exception
     except:
         pass
-    if session.event.group_id==1037557679:
-        print(tjmp)
     if msg == "" or msg == now[1] or msg != now[2]:
         now[0] = 1
         now[2] = msg

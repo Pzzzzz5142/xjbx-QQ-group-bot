@@ -1,26 +1,29 @@
 import json
-from unittest.result import failfast
-from aiocqhttp import event
-from aiocqhttp.message import MessageSegment
 from nonebot import on_command, CommandSession
 from nonebot.message import unescape, escape
 import nonebot
 import aiohttp
 from aiocqhttp.exceptions import Error as CQHttpError
-from six import with_metaclass
 from utils import *
 import cq
-from db import db
 from random import randint
+import random
 from utils import imageProxy, imageProxy_cat, cksafe
 
 __plugin_name__ = "以图搜图"
+random.seed(datetime.datetime.now())
 
 url = r"https://saucenao.com/search.php"
+pixivicurl = "https://api.pixivic.com/"
 
 api = r"https://api.lolicon.app/setu/"
 
 searchapi = r"https://api.imjad.cn/pixiv/v2/"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
+    "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJwZXJtaXNzaW9uTGV2ZWwiOjEsInJlZnJlc2hDb3VudCI6MSwiaXNCYW4iOjEsInVzZXJJZCI6NTkyMDA4LCJpYXQiOjE2MDU0MTkwODksImV4cCI6MTYwNTU5MTg4OX0.yj7q2vvf3gfOsYfKXdy_5PCtNAT4skPmIgZZxrx1F2ev_wlM8qOVxh7PNT0PKCDuboUqzjMxuG5W9YNSHIw3jA",
+    "Referer": "https://pixivic.com/",
+}
 
 bot = nonebot.get_bot()
 
@@ -43,10 +46,16 @@ async def _(session: CommandSession):
     await session.send(x)
 
 
-@on_command("st", aliases={}, only_to_me=False)
+@on_command("st", aliases={}, patterns="^st(0-9)*", only_to_me=False)
 async def st(session: CommandSession):
 
     purl = session.get("url", prompt="发送你想搜的图吧！")
+    msg = session.current_arg.strip()
+    msg = re.sub("^st", "", msg)
+    try:
+        SanityLevel = int(msg)
+    except:
+        SanityLevel = 4
 
     if "flg" not in session.state:
         session.state["flg"] = 1
@@ -85,10 +94,10 @@ async def st(session: CommandSession):
                 await session.send("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
             session.finish("未找到消息中的图片，搜索结束！")
     elif "search" in session.state:
-        safe = False
         if session.event.detail_type == "group":
-            safe = await cksafe(session.event.group_id)
-        res, _id = await searchPic(session.state["search"], safe)
+            if await cksafe(session.event.group_id):
+                SanityLevel = 4
+        res, _id = await searchPic(session.state["search"], SanityLevel)
         await session.send(
             (
                 cq.reply(session.event.message_id)
@@ -163,7 +172,6 @@ async def _(session: CommandSession):
 @on_command("来份涩图", patterns="^来.*份.*(涩|色)图", only_to_me=False)
 async def sst(session: CommandSession):
     msg = session.current_arg_text.strip()
-    print(msg)
     if session.event.detail_type == "group":
         safe = await cksafe(session.event.group_id)
     else:
@@ -173,15 +181,24 @@ async def sst(session: CommandSession):
     else:
         parm["r18"] = 0
     async with aiohttp.ClientSession() as sess:
-        async with sess.get(api, headers=headers, params=parm) as resp:
+        async with sess.get(api, params=parm) as resp:
             if resp.status != 200:
                 session.finish("网络错误：" + str(resp.status))
             ShitJson = await resp.json()
-    print(ShitJson)
 
     if ShitJson["quota"] == 0:
         session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")
-    session.finish(cq.image(ShitJson["data"][0]["url"]))
+    data = ShitJson["data"][0]
+    _id = await session.send(
+        """发送中，。，。，。\npixiv id:{}\ntitle:{}\n作者:{}\ntgas:{}""".format(
+            data["pid"],
+            data["title"],
+            data["author"],
+            "、".join(["#" + i for i in data["tags"]]),
+        ),
+        at_sender=True,
+    )
+    session.finish(cq.reply(_id) + cq.image(ShitJson["data"][0]["url"]))
 
 
 async def sauce(purl: str) -> str:
@@ -231,29 +248,43 @@ async def sauce(purl: str) -> str:
     )
 
 
-async def searchPic(key_word: str, safe=False):
-    datas = {"type": "search", "word": key_word, "page": 1}
+async def searchPic(key_word: str, safe: bool = True, maxSanityLevel: int = 4):
+    datas = {
+        "keyword": key_word,
+        "pageSize": 15,
+        "page": 1,
+        "searchType": "original",
+        "illustType": "illust",
+        "maxSanityLevel": maxSanityLevel,
+    }
     async with aiohttp.ClientSession() as sess:
-        async with sess.get(searchapi, params=datas) as resp:
+        async with sess.get(
+            pixivicurl + "illustrations", params=datas, headers=headers
+        ) as resp:
             if resp.status != 200:
-                return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
+                return "网络错误哦，咕噜灵波～(∠・ω< )⌒★", 0
             ShitJson = await resp.json()
-        ind = 10000000
-
+        _id = None
         try:
-            tt = ShitJson["illusts"]
-            if safe:
-                tt = [i for i in tt if "R-18" not in [j["name"] for j in i["tags"]]]
-                print("safetilize")
-            ind = randint(0, len(tt))
-            res = cq.image(imageProxy(tt[ind]["image_urls"]["medium"]))
-            ShitJson["illusts"] = tt
-
-        except:
+            pics = ShitJson["data"]
+            ind = randint(0, len(pics))
+            res = await sendpic(
+                sess,
+                imageProxy(pics[ind]["imageUrls"][0]["large"], "img.cheerfun.dev"),
+                headers=headers,
+            )
+            if "失败" in res:
+                res = cq.image(
+                    "https://i.pixiv.cat/" + pics[ind]["imageUrls"][0]["large"]
+                )
+            print(res)
+            _id = pics[ind]["id"]
+            print(_id)
+        except KeyError:
             res = f"暂时没有 {key_word} 的结果哦～"
         return (
             res,
-            ShitJson["illusts"][ind]["id"] if ind < len(ShitJson["illusts"]) else res,
+            _id if _id != None else res,
         )
 
 
@@ -267,7 +298,7 @@ async def getRelated(_id, ind=-1):
         if ind == -1 or ind >= len(ShitJson["illusts"]):
             ind = randint(0, len(ShitJson["illusts"]))
         try:
-            res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["medium"]))
+            res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["large"]))
         except:
             res = f"暂时没有 {_id} 的相关结果哦～"
         return (

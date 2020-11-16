@@ -290,7 +290,6 @@ async def up(x):
     loop = asyncio.get_event_loop()
     async with db.pool.acquire() as conn:
         values = await conn.fetch("select gid from mg where rss = true")
-        print(values[0]["gid"])
         values = [int(item["gid"]) for item in values]
         for key in doc:
             if key in NOUPDATE or "pixiv" in key:

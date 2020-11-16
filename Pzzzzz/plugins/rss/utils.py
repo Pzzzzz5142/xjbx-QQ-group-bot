@@ -358,6 +358,5 @@ def AutoReply(prompt, title, thing: list) -> str:
         + '],"type":"guest","token":"LAcV49xqyE57S17B8ZT6FU7odBveNMYJzux288tBD3c="}},"config":{"forward":1,"showSender":1}}'
     )
     res += "]"
-    print(res)
     return res
 

@@ -1,3 +1,5 @@
+import json
+import aiohttp
 from nonebot import on_command, CommandSession
 from random import randint
 from nonebot.log import logger
@@ -10,6 +12,7 @@ import re
 import base64
 import datetime
 from db import db
+
 
 doc = {
     "mrfz": "明日方舟",
@@ -88,30 +91,34 @@ def hourse(url: str) -> str:
     return url
 
 
-async def sendpic(session: ClientSession, url: str):
-    fd = re.search(r"\?", url)
-    if fd != None:
-        url = url[: fd.span()[0]]
-    async with session.get(url) as resp:
-        if resp.status != 200:
-            pic = None
-        else:
-            _, pic = path.split(url)
-            if path.splitext(pic)[1] == ".gif":
-                bot = nonebot.get_bot()
-                if not path.exists(bot.config.IMGPATH + pic):
-                    with open(bot.config.IMGPATH + pic, "wb") as fl:
-                        while True:
-                            ck = await resp.content.read(8196)
-                            if not ck:
-                                break
-                            fl.write(ck)
-                pic = cq.image(pic)
+async def sendpic(session: ClientSession, url: str, **kwargs):
+    try:
+        fd = re.search(r"\?", url)
+        if fd != None:
+            url = url[: fd.span()[0]]
+        async with session.get(url, **kwargs) as resp:
+            if resp.status != 200:
+                pic = None
             else:
-                ShitData = await resp.content.read()
-                ShitBase64 = base64.b64encode(ShitData)
-                pic = cq.image("base64://" + str(ShitBase64, encoding="utf-8"))
-    return pic
+                _, pic = path.split(url)
+                if path.splitext(pic)[1] == ".gif":
+                    bot = nonebot.get_bot()
+                    if not path.exists(bot.config.IMGPATH + pic):
+                        with open(bot.config.IMGPATH + pic, "wb") as fl:
+                            while True:
+                                ck = await resp.content.read(8196)
+                                if not ck:
+                                    break
+                                fl.write(ck)
+                    pic = cq.image(pic)
+                else:
+                    ShitData = await resp.content.read()
+                    ShitBase64 = base64.b64encode(ShitData)
+                    pic = cq.image("base64://" + str(ShitBase64, encoding="utf-8"))
+
+        return pic
+    except:
+        return "下载图片失败"
 
 
 def transtime(tm: str, fmt: str = "%a, %d %b %Y %H:%M:%S %Z"):
@@ -122,8 +129,8 @@ def transtime(tm: str, fmt: str = "%a, %d %b %Y %H:%M:%S %Z"):
     return tm
 
 
-def imageProxy(url: str) -> str:
-    result = url.replace("i.pximg.net", "pximg.pixiv-viewer.workers.dev")
+def imageProxy(url: str, prox: str = "pximg.pixiv-viewer.workers.dev") -> str:
+    result = url.replace("i.pximg.net", prox)
 
     result = result.replace("_10_webp", "_70")
     result = result.replace("_webp", "")
@@ -140,3 +147,37 @@ async def cksafe(gid: int):
         values = await conn.fetch("select safe from mg where gid = {}".format(gid))
         safe = len(values) > 0 and values[0]["safe"]
         return safe
+
+
+async def getSetu(r18: bool) -> str:
+    async with aiohttp.ClientSession() as sess:
+        async with sess.get(
+            "https://cdn.jsdelivr.net/gh/ipchi9012/setu_pics@latest/setu{}_index.js".format(
+                "_r18" if r18 else ""
+            )
+        ) as resp:
+            if resp.status != 200:
+                return "网络错误：" + str(resp.status)
+            ShitText = await resp.text()
+            ind1, ind2 = ShitText.index("("), ShitText.index(")")
+            ShitText = ShitText[ind1 + 1 : ind2]
+            ShitList = json.loads(ShitText)
+            ind1 = randint(0, len(ShitList))
+
+        async with sess.get(
+            "https://cdn.jsdelivr.net/gh/ipchi9012/setu_pics@latest/{}.js".format(
+                ShitList[ind1]
+            )
+        ) as resp:
+            if resp.status != 200:
+                return "网络错误：" + str(resp.status)
+            ShitText = await resp.text()
+            ind1 = ShitText.index("(")
+            ShitText = ShitText[ind1 + 1 : -1]
+            ShitList = json.loads(ShitText)
+            ind1 = randint(0, len(ShitList))
+            return cq.image(
+                "https://cdn.jsdelivr.net/gh/ipchi9012/setu_pics@latest/"
+                + ShitList[ind1]["path"]
+            )
+
