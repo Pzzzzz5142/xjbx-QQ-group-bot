@@ -35,3 +35,5 @@ RUNCODEAPI = ""
 
 LoliAPI = ""
 
+USERNAME =''
+PASSWORD =''

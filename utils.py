@@ -1,18 +1,19 @@
+import asyncio
 import json
 import aiohttp
-from nonebot import on_command, CommandSession
-from random import randint
+from aiohttp.client_reqrep import ClientResponse
 from nonebot.log import logger
 import logging
 import os.path as path
 from aiohttp import ClientSession
 import nonebot
+from six import with_metaclass
 import cq
 import re
 import base64
 import datetime
 from db import db
-
+import random
 
 doc = {
     "mrfz": "明日方舟",
@@ -80,10 +81,11 @@ def swFormatter(thing: str):
 
 def hourse(url: str) -> str:
     a = url
+    random.seed(datetime.datetime.now())
     try:
         url = list(url)
         for i in range(5):
-            url.insert(randint(0, len(url)), "🐎")
+            url.insert(random.randint(0, len(url)), "🐎")
         url = "".join(url)
     except:
         url = "（打🐎失败，请复制到浏览器中打开，不要直接打开！）" + a
@@ -98,7 +100,10 @@ async def sendpic(session: ClientSession, url: str, **kwargs):
             url = url[: fd.span()[0]]
         async with session.get(url, **kwargs) as resp:
             if resp.status != 200:
-                pic = None
+                print(await resp.text("utf-8"))
+                return "下载图片失败，网络错误 {}。原因 {}".format(
+                    resp.status, await resp.text("utf-8")
+                )
             else:
                 _, pic = path.split(url)
                 if path.splitext(pic)[1] == ".gif":
@@ -139,7 +144,43 @@ def imageProxy(url: str, prox: str = "pximg.pixiv-viewer.workers.dev") -> str:
 
 
 def imageProxy_cat(url):
-    pass
+    return url.replace("i.pximg.net", "i.pixiv.cat")
+
+
+async def catPixiv(_id: int, p=None, **kwargs):
+    parm = {"id": _id}
+    async with aiohttp.ClientSession() as session:
+        async with session.get("https://api.imjad.cn/pixiv/v2/", params=parm) as resp:
+            if resp.status != 200:
+                return ["网络错误哦！{}".format(resp.status)]
+            ShitJson = await resp.json()
+            total = ShitJson["illust"]["page_count"]
+        if p != None:
+            if p == "*":
+                if total > 1:
+                    return [
+                        "这是一个有多页的pid！",
+                        (
+                            cq.image("https://pixiv.cat/{}-{}.jpg".format(_id, i))
+                            for i in range(1, total + 1)
+                        ),
+                    ]
+                else:
+                    return [cq.image("https://pixiv.cat/{}.jpg".format(_id))]
+            elif p > 0 and p <= total:
+                return [
+                    cq.image(
+                        "https://pixiv.cat/{}-{}.jpg".format(_id, p)
+                        if total > 1
+                        else "https://pixiv.cat/{}.jpg".format(_id)
+                    )
+                ]
+            else:
+                return ["页数不对哦~~ 这个 id 只有 {} 页".format(total)]
+        if total > 1:
+            return ["这是一个有多页的pid！", cq.image("https://pixiv.cat/{}-1.jpg".format(_id))]
+        else:
+            return [cq.image("https://pixiv.cat/{}.jpg".format(_id))]
 
 
 async def cksafe(gid: int):
@@ -150,6 +191,7 @@ async def cksafe(gid: int):
 
 
 async def getSetu(r18: bool) -> str:
+    random.seed(datetime.datetime.now())
     async with aiohttp.ClientSession() as sess:
         async with sess.get(
             "https://cdn.jsdelivr.net/gh/ipchi9012/setu_pics@latest/setu{}_index.js".format(
@@ -162,7 +204,7 @@ async def getSetu(r18: bool) -> str:
             ind1, ind2 = ShitText.index("("), ShitText.index(")")
             ShitText = ShitText[ind1 + 1 : ind2]
             ShitList = json.loads(ShitText)
-            ind1 = randint(0, len(ShitList))
+            ind1 = random.randint(0, len(ShitList))
 
         async with sess.get(
             "https://cdn.jsdelivr.net/gh/ipchi9012/setu_pics@latest/{}.js".format(
@@ -175,9 +217,12 @@ async def getSetu(r18: bool) -> str:
             ind1 = ShitText.index("(")
             ShitText = ShitText[ind1 + 1 : -1]
             ShitList = json.loads(ShitText)
-            ind1 = randint(0, len(ShitList))
+            ind1 = random.randint(0, len(ShitList))
             return cq.image(
                 "https://cdn.jsdelivr.net/gh/ipchi9012/setu_pics@latest/"
                 + ShitList[ind1]["path"]
             )
 
+
+async def ocr():
+    pass

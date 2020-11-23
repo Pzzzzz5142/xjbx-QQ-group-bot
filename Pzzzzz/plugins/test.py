@@ -19,14 +19,6 @@ async def test(session: CommandSession):
     if args.end:
         try:
             await bot.set_group_ban(
-                group_id=bot.config.QGROUP, user_id=3313437849, duration=0
-            )
-            await session.send(unescape("解除禁言" + cq.at(3313437849) + "成功"))
-        except CQHttpError:
-            await session.send(unescape("解除禁言" + cq.at(3313437849) + "失败"))
-
-        try:
-            await bot.set_group_ban(
                 group_id=bot.config.QGROUP, user_id=2682823919, duration=0
             )
             await session.send(unescape("解除禁言" + cq.at(2682823919) + "成功"))
@@ -34,12 +26,6 @@ async def test(session: CommandSession):
             await session.send(unescape("解除禁言" + cq.at(2682823919) + "失败"))
 
     else:
-        try:
-            await bot.set_group_ban(group_id=bot.config.QGROUP, user_id=3313437849)
-            await session.send(unescape("禁言" + cq.at(3313437849) + "成功"))
-        except CQHttpError:
-            await session.send(unescape("禁言" + cq.at(3313437849) + "失败"))
-
         try:
             await bot.set_group_ban(group_id=bot.config.QGROUP, user_id=2682823919)
             await session.send(unescape("禁言" + cq.at(2682823919) + "成功"))

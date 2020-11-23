@@ -10,7 +10,8 @@ tjmp = {}
 def sigmoid(num):
     if num < 1:
         return -1
-    num -= 1
+    num -= 3
+    print(1 / (1 + exp(-num)))
     return 1 / (1 + exp(-num))
 
 

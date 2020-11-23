@@ -1,4 +1,7 @@
 import json
+
+import base64
+from re import S
 from nonebot import on_command, CommandSession
 from nonebot.message import unescape, escape
 import nonebot
@@ -6,12 +9,10 @@ import aiohttp
 from aiocqhttp.exceptions import Error as CQHttpError
 from utils import *
 import cq
-from random import randint
 import random
 from utils import imageProxy, imageProxy_cat, cksafe
 
 __plugin_name__ = "以图搜图"
-random.seed(datetime.datetime.now())
 
 url = r"https://saucenao.com/search.php"
 pixivicurl = "https://api.pixivic.com/"
@@ -21,7 +22,7 @@ api = r"https://api.lolicon.app/setu/"
 searchapi = r"https://api.imjad.cn/pixiv/v2/"
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
-    "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJwZXJtaXNzaW9uTGV2ZWwiOjEsInJlZnJlc2hDb3VudCI6MSwiaXNCYW4iOjEsInVzZXJJZCI6NTkyMDA4LCJpYXQiOjE2MDU0MTkwODksImV4cCI6MTYwNTU5MTg4OX0.yj7q2vvf3gfOsYfKXdy_5PCtNAT4skPmIgZZxrx1F2ev_wlM8qOVxh7PNT0PKCDuboUqzjMxuG5W9YNSHIw3jA",
+    "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJwZXJtaXNzaW9uTGV2ZWwiOjEsInJlZnJlc2hDb3VudCI6MSwiaXNCYW4iOjEsInVzZXJJZCI6NTkyMDA4LCJpYXQiOjE2MDU4NzIzMzEsImV4cCI6MTYwNjA0NTEzMX0.h8EzXhflPXxQcIBS8nTm8E8mL-SStmsybmsYM24hdBFCKIEsZfYzuzdsfgB7GJWsB2GGuoZCCaBRT1l7Amjp4Q",
     "Referer": "https://pixivic.com/",
 }
 
@@ -30,6 +31,40 @@ bot = nonebot.get_bot()
 parm = {"apikey": bot.config.LoliAPI, "r18": "1", "size1200": "true"}
 data = {"db": "999", "output_type": "2", "numres": "3", "url": None}
 datas = {"sort": "腿控", "format": "images"}
+
+
+@on_command("login", only_to_me=False)
+async def login(session: CommandSession):
+    parm = {"username": bot.config.USERNAME, "password": bot.config.PASSWORD}
+
+    if session.is_first_run:
+        async with aiohttp.ClientSession() as sess:
+            async with sess.get(pixivicurl + "verificationCode") as resp:
+                if resp.status != 200:
+                    session.finish("获取验证码失败")
+                ShitJson = await resp.json()
+                img = ShitJson["data"]["imageBase64"]
+                vid = ShitJson["data"]["vid"]
+                session.state["imageBase64"] = img
+                session.state["vid"] = vid
+                session.get("img", prompt=cq.image("base64://" + img))
+    q = {"vid": session.state["vid"], "value": session.state["img"]}
+    async with aiohttp.ClientSession() as sess:
+        async with sess.post(pixivicurl + "users/token", params=q, json=parm) as resp:
+            if resp.status != 200:
+                session.finish("验证🐎错误！")
+            headers["Authorization"] = resp.headers["Authorization"]
+            print(resp.headers["Authorization"])
+            await session.send(cq.reply(session.event.message_id) + "正确！")
+            imgdata = base64.b64decode(session.state["imageBase64"])
+            file = open("/root/image/{}.jpg".format(session.state["img"].lower()), "wb")
+            file.write(imgdata)
+            file.close()
+
+
+@login.args_parser
+async def _123(session: CommandSession):
+    session.state[session.current_key] = session.current_arg_text.strip()
 
 
 @on_command("带礼包的怜悯", aliases=("怜悯"), only_to_me=False)
@@ -48,14 +83,15 @@ async def _(session: CommandSession):
 
 @on_command("st", aliases={}, patterns="^st(0-9)*", only_to_me=False)
 async def st(session: CommandSession):
+    if session.is_first_run:
+        msg = session.current_arg.strip()
+        msg = re.sub("^st", "", msg)
+        try:
+            session.state["SanityLevel"] = int(msg) if msg != "" else 0
+        except:
+            session.finish()
 
     purl = session.get("url", prompt="发送你想搜的图吧！")
-    msg = session.current_arg.strip()
-    msg = re.sub("^st", "", msg)
-    try:
-        SanityLevel = int(msg)
-    except:
-        SanityLevel = 4
 
     if "flg" not in session.state:
         session.state["flg"] = 1
@@ -71,33 +107,15 @@ async def st(session: CommandSession):
         session.state["flg"] = 0
         session.pause()
 
-    if "r18" in session.state:
-        res = cq.image(purl)
-        if session.event.detail_type == "private":
-            await session.send("拿到url了！正在发送图片！")
-            await session.send(unescape(res))
-            await session.send("图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★")
-        else:
-            try:
-                bot = nonebot.get_bot()
-                await bot.send_private_msg(
-                    user_id=session.event.user_id, message="拿到url了！正在发送图片！",
-                )
-                await bot.send_private_msg(
-                    user_id=session.event.user_id, message=res,
-                )
-                await bot.send_private_msg(
-                    user_id=session.event.user_id,
-                    message="图片发送完成，但是收不收得到就是缘分了！咕噜灵波～(∠・ω< )⌒★",
-                )
-            except CQHttpError:
-                await session.send("网络错误哦！咕噜灵波～(∠・ω< )⌒★")
-            session.finish("未找到消息中的图片，搜索结束！")
-    elif "search" in session.state:
+    if "search" in session.state:
         if session.event.detail_type == "group":
             if await cksafe(session.event.group_id):
-                SanityLevel = 4
-        res, _id = await searchPic(session.state["search"], SanityLevel)
+                session.state["SanityLevel"] = 4
+            else:
+                session.state["SanityLevel"] = 10
+        res, _id = await searchPic(
+            session.state["search"], session.state["SanityLevel"]
+        )
         await session.send(
             (
                 cq.reply(session.event.message_id)
@@ -145,21 +163,6 @@ async def _(session: CommandSession):
                 ShitData = ShitData["imgurl"]
                 session.finish(cq.image(ShitData + ",cache=0"))
 
-    if session.current_arg_text == "i":
-        # await session.send("正在搜索图片！")
-        async with aiohttp.ClientSession() as sess:
-            async with sess.get(api, headers=headers, params=parm) as resp:
-                if resp.status != 200:
-                    session.finish("网络错误：" + str(resp.status))
-                ShitJson = await resp.json()
-
-        if ShitJson["quota"] == 0:
-            session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")
-        session.state["url"] = ShitJson["data"][0]["url"]
-        session.state["r18"] = 1
-        # await session.send("届到了届到了！！！！")
-        return
-
     elif len(session.current_arg_images) == 0:
         if session.current_arg_text.strip() != "":
             session.state["search"] = session.current_arg_text
@@ -185,20 +188,23 @@ async def sst(session: CommandSession):
             if resp.status != 200:
                 session.finish("网络错误：" + str(resp.status))
             ShitJson = await resp.json()
-
-    if ShitJson["quota"] == 0:
-        session.finish(f"api调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']} 秒。")
-    data = ShitJson["data"][0]
-    _id = await session.send(
-        """发送中，。，。，。\npixiv id:{}\ntitle:{}\n作者:{}\ntgas:{}""".format(
-            data["pid"],
-            data["title"],
-            data["author"],
-            "、".join(["#" + i for i in data["tags"]]),
-        ),
-        at_sender=True,
-    )
-    session.finish(cq.reply(_id) + cq.image(ShitJson["data"][0]["url"]))
+            if ShitJson["quota"] == 0:
+                session.finish(
+                    f"返回码：{ShitJson['code']}\napi调用额度已耗尽，距离下一次调用额度恢复还剩 {ShitJson['quota_min_ttl']+1} 秒。"
+                )
+            data = ShitJson["data"][0]
+            _id = await session.send(
+                """发送中，。，。，。\npixiv id:{}\ntitle:{}\n作者:{}\ntgas:{}""".format(
+                    data["pid"],
+                    data["title"],
+                    data["author"],
+                    "、".join(["#" + i for i in data["tags"]]),
+                ),
+                at_sender=True,
+            )
+            print("1232312321")
+            print(cq.image(ShitJson["data"][0]["url"]))
+            await session.send(cq.image(ShitJson["data"][0]["url"]))
 
 
 async def sauce(purl: str) -> str:
@@ -248,7 +254,7 @@ async def sauce(purl: str) -> str:
     )
 
 
-async def searchPic(key_word: str, safe: bool = True, maxSanityLevel: int = 4):
+async def searchPic(key_word: str, maxSanityLevel: int = 4):
     datas = {
         "keyword": key_word,
         "pageSize": 15,
@@ -262,25 +268,36 @@ async def searchPic(key_word: str, safe: bool = True, maxSanityLevel: int = 4):
             pixivicurl + "illustrations", params=datas, headers=headers
         ) as resp:
             if resp.status != 200:
-                return "网络错误哦，咕噜灵波～(∠・ω< )⌒★", 0
+                return (
+                    f"网络 {resp.status} 错误哦，咕噜灵波～(∠・ω< )⌒★\n\n如果是401错误，请回复 login 来帮忙识别一下验证🐎哦",
+                    0,
+                )
             ShitJson = await resp.json()
         _id = None
+        Good = [ind for ind in range(0, len(ShitJson["data"]))]
         try:
-            pics = ShitJson["data"]
-            ind = randint(0, len(pics))
-            res = await sendpic(
-                sess,
-                imageProxy(pics[ind]["imageUrls"][0]["large"], "img.cheerfun.dev"),
-                headers=headers,
-            )
-            if "失败" in res:
-                res = cq.image(
-                    "https://i.pixiv.cat/" + pics[ind]["imageUrls"][0]["large"]
+            while len(Good) != 0:
+                pics = ShitJson["data"]
+                ind = random.randint(0, len(Good))
+                ind = Good[ind]
+                res = await sendpic(
+                    sess,
+                    imageProxy(pics[ind]["imageUrls"][0]["large"], "img.cheerfun.dev"),
+                    headers=headers,
                 )
-            print(res)
-            _id = pics[ind]["id"]
-            print(_id)
+                if "失败" in res:
+                    if "404" in res:
+                        Good.remove(ind)
+                        continue
+                    else:
+                        res = cq.image(
+                            imageProxy_cat(pics[ind]["imageUrls"][0]["large"])
+                        )
+                _id = pics[ind]["id"]
+                break
         except KeyError:
+            res = f"暂时没有 {key_word} 的结果哦～"
+        if _id == None:
             res = f"暂时没有 {key_word} 的结果哦～"
         return (
             res,
@@ -290,13 +307,14 @@ async def searchPic(key_word: str, safe: bool = True, maxSanityLevel: int = 4):
 
 async def getRelated(_id, ind=-1):
     datas = {"type": "related", "id": _id}
+    random.seed(datetime.datetime.now())
     async with aiohttp.ClientSession() as sess:
         async with sess.get(searchapi, params=datas) as resp:
             if resp.status != 200:
                 return "网络错误哦，咕噜灵波～(∠・ω< )⌒★"
             ShitJson = await resp.json()
         if ind == -1 or ind >= len(ShitJson["illusts"]):
-            ind = randint(0, len(ShitJson["illusts"]))
+            ind = random.randint(0, len(ShitJson["illusts"]))
         try:
             res = cq.image(imageProxy(ShitJson["illusts"][ind]["image_urls"]["large"]))
         except:
