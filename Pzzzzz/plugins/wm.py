@@ -69,7 +69,6 @@ async def _(session: CommandSession):
         parser.add_argument("--to", "-t", type=str, default="no")
         parser.add_argument("token", type=str, default="", nargs="+")
         argv = parser.parse_args(session.current_arg.split(" "))
-        print(argv)
 
         arg = " ".join(argv.token)
 

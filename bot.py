@@ -5,8 +5,8 @@ import db
 import config
 import config_debug
 import argparse
-import asyncio
 from utils import init
+
 
 if __name__ == "__main__":
 
